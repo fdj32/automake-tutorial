@@ -1,0 +1,31 @@
+1. Code tutorial.cxx
+2. autoscan to generate configure.scan
+3. cp configure.scan configure.ac
+4. edit configure.ac
+AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS])
+AC_INIT(Tutorial, 1.0, fdj32@163.com)
+5. edit configure.ac
+AM_INIT_AUTOMAKE(Tutorial, 1.0) # It is required in generating aclocal.m4
+6. aclocal to generate aclocal.m4
+7. autoconf to generate configure
+8. autoheader to generate config.h.in
+9. create file Makefile.am
+AUTOMAKE_OPTIONS=foreign
+bin_PROGRAMS = Tutorial
+Tutorial_SOURCES = tutorial.cxx
+10. automake --add-missing to generate Makefile.in
+11. ./configure to generate Makefile
+12. make
+13. ./Tutorial
+Usage: ./Tutorial number
+14 ./Tutorial 81
+The square root of 81 is 9
+
+
+Holly Shit!!!
+
+autoscan+aclocal+autoconf+autoheader+Makefile.am+automake+configure is much more complex than cmake.
+
+See:
+http://www.cnblogs.com/xf-linux-arm-java-android/p/3590770.html
+
