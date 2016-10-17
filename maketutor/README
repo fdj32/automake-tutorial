@@ -1,0 +1,15 @@
+http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/
+
+make -f 1.mk
+make -f 2.mk
+make -f 3.mk
+make -f 4.mk
+make -f 5.mk
+make -f clean.mk
+make clean -f 1.mk
+make clean -f 2.mk
+make clean -f 3.mk
+make clean -f 4.mk
+make clean -f 5.mk
+
+
