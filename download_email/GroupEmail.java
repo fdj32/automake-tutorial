@@ -21,7 +21,13 @@ public class GroupEmail {
 		{"SocketTimeoutException invoking https://ws.firstdataglobalgateway.com/fdggwsapi/services: Read timed out", "fdggtimeout"},
 		{"MSServer1_1 : process returns null response.", "null_response"},
 		{"java.lang.StringIndexOutOfBoundsException: start > length()", "StringIndexOutOfBoundsException"},
-		{"PTCommunication : An exception occurred while creating a socket", "PTCommunication"}
+		{"PTCommunication : An exception occurred while creating a socket", "PTCommunication"},
+		{"FirstDataE4Gateway : Gateway exception.HTTP status code:522", "FirstDataE4Gateway522"},
+		{"getTransactionID() returns null", "getTransactionID_returns_null"},
+		{"String or binary data would be truncated", "data_over_length"},
+		{"FirstDataE4Gateway : Gateway exception.HTTP status code:500", "FirstDataE4Gateway500"},
+		{"Moneris4CANGateway : validation error", "moneris4can_validation_error"},
+		{"FirstDataE4Gateway : Gateway exception.HTTP status code:502", "FirstDataE4Gateway502"}
 		};
 	
 	private static final String WORK_DIR = "/media/nfeng/d/Outlook/save/1017/";
