@@ -1,0 +1,14 @@
+https://launchpad.net/wsrep/
+
+wsrep API defines a set of application callbacks and replication library calls necessary to implement synchronous writeset replication of transactional databases and similar applications. It aims to abstract and isolate replication implementation from application details. Although the main target of this interface is a certification-based multi-master replication, it is equally suitable for both asynchronous and synchronous master/slave replication.
+
+Application callbacks provide management of transaction write sets:
+
+* populating of write sets, in the sending side
+* applying of write sets, in the receiving end
+
+The applying of received writesets is done by high priority transaction(s).
+
+There are also calls for providing "total order isolated" processing of certain SQL statements. This feature guarantees that each database server in the cluster process the SQL statement in the same order and uninterrupted. .e.g. all DDL statements need to be processed isolated, to maintain data consistency in the cluster.
+
+Mailing list: http://groups.google.com/group/codership-team?hl=en
