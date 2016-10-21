@@ -67,11 +67,11 @@ public class DownLoadEmail {
 			line = sc.nextLine();
 			domainUsername = line;
 			
-			//System.out.println("3.What's your domain password ?");
-			//line = sc.nextLine().trim();
-			//domainPassword = line;
-			char[] password = System.console().readPassword("3.What's your domain password: "); 
-			domainPassword = new String(password);
+			System.out.println("3.What's your domain password ?");
+			line = sc.nextLine().trim();
+			domainPassword = line;
+			//char[] password = System.console().readPassword("3.What's your domain password: "); 
+			//domainPassword = new String(password);
 			
 			System.out.println("4.What's the absolute path of the folder you want to download emails ?");
 			line = sc.nextLine().trim();
@@ -120,16 +120,19 @@ public class DownLoadEmail {
 		FindItemsResults<Item> findResults = service.findItems(folder.getId(), filters, view);
 		count = findResults.getTotalCount();
 		String fileName = null;
+		int errors = 0;
 		for(Item item : findResults) {
 			try {
 				EmailMessage message = EmailMessage.bind(service, item.getId());
 				fileName = sdf.format(message.getDateTimeSent()) + CHAR_SEED[RandomUtils.nextInt(0, 51)] + ".txt";
 				FileUtils.writeStringToFile(new File(downloadFolder + fileName), MessageBody.getStringFromMessageBody(message.getBody()));
 			} catch (Exception e) {
+				errors++;
 				continue;
 			}
 		}
 		System.out.println("There are " + count + " alerts between " + dateBgn + " and " + dateEnd);
+		System.out.println("There are " + errors + " errors");
 		service.close();
 	}
 	
