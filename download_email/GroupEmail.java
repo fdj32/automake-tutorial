@@ -36,8 +36,15 @@ public class GroupEmail {
 	private static final String WORK_DIR = "D:/Outlook/save/1020/";
 	
 	public static void main(String[] args) throws Exception {
+		String workDir = null;
+		if(null != args && 1 == args.length) {
+			workDir = args[0];
+		} else {
+			workDir = WORK_DIR;
+		}
+		workDir += workDir.endsWith("/") ? "" : "/"; 
 		for(String[] strs : KEY_WORD_VS_SUB_FOLDER) {
-			groupEmailFiles(WORK_DIR, strs[0], strs[1]);
+			groupEmailFiles(workDir, strs[0], strs[1]);
 		}
 	}
 	
