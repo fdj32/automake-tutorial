@@ -27,10 +27,13 @@ public class GroupEmail {
 		{"String or binary data would be truncated", "data_over_length"},
 		{"FirstDataE4Gateway : Gateway exception.HTTP status code:500", "FirstDataE4Gateway500"},
 		{"Moneris4CANGateway : validation error", "moneris4can_validation_error"},
-		{"FirstDataE4Gateway : Gateway exception.HTTP status code:502", "FirstDataE4Gateway502"}
+		{"FirstDataE4Gateway : Gateway exception.HTTP status code:502", "FirstDataE4Gateway502"},
+		{"Transaction Not Completed  Timed Out", "moneris4usa"},
+		{"Security Data : UsernameToken authentication failed.", "cybersource"},
+		{"No Pre-auth corresponds to the store Id and order Id and transaction Id entered", "moneris_complete"}
 		};
 	
-	private static final String WORK_DIR = "/media/nfeng/d/Outlook/save/1017/";
+	private static final String WORK_DIR = "D:/Outlook/save/1020/";
 	
 	public static void main(String[] args) throws Exception {
 		for(String[] strs : KEY_WORD_VS_SUB_FOLDER) {

@@ -67,8 +67,9 @@ public class DownLoadEmail {
 			line = sc.nextLine();
 			domainUsername = line;
 			
-//			System.out.println("3.What's your domain password ?");
-//			line = sc.nextLine().trim();
+			//System.out.println("3.What's your domain password ?");
+			//line = sc.nextLine().trim();
+			//domainPassword = line;
 			char[] password = System.console().readPassword("3.What's your domain password: "); 
 			domainPassword = new String(password);
 			
@@ -120,9 +121,13 @@ public class DownLoadEmail {
 		count = findResults.getTotalCount();
 		String fileName = null;
 		for(Item item : findResults) {
-			EmailMessage message = EmailMessage.bind(service, item.getId());
-			fileName = sdf.format(message.getDateTimeSent()) + CHAR_SEED[RandomUtils.nextInt(0, 51)] + ".txt";
-			FileUtils.writeStringToFile(new File(downloadFolder + fileName), MessageBody.getStringFromMessageBody(message.getBody()));
+			try {
+				EmailMessage message = EmailMessage.bind(service, item.getId());
+				fileName = sdf.format(message.getDateTimeSent()) + CHAR_SEED[RandomUtils.nextInt(0, 51)] + ".txt";
+				FileUtils.writeStringToFile(new File(downloadFolder + fileName), MessageBody.getStringFromMessageBody(message.getBody()));
+			} catch (Exception e) {
+				continue;
+			}
 		}
 		System.out.println("There are " + count + " alerts between " + dateBgn + " and " + dateEnd);
 		service.close();
