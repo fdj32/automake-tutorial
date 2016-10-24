@@ -1,5 +1,6 @@
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -32,8 +33,9 @@ public class DownLoadEmail {
 	private static String domainPassword;
 	private static String downloadFolder;
 	private static String emailFolder;
-	private static String dateBgn;
-	private static String dateEnd;
+	private static String date;
+	private static int totalAlerts = 0;
+	private static int totalErrors = 0;
 	
 	public static void main(String[] args) throws Exception {
 		getParam();
@@ -43,11 +45,10 @@ public class DownLoadEmail {
 	private static void printParam(){
 		System.out.println("Email Address  : " + emailAddress);
 		System.out.println("Domain Username: " + domainUsername);
-		System.out.println("Domain Password: " + "I can't tell you here!");
+		System.out.println("Domain Password: " + domainPassword);
 		System.out.println("Download Folder: " + downloadFolder);
 		System.out.println("Emain Folder   : " + emailFolder);
-		System.out.println("Date Time Begin: " + dateBgn);
-		System.out.println("Date Time End  : " + dateEnd);
+		System.out.println("Date [yyyyMMdd]: " + date);
 	}
 	
 	private static void getParam(){
@@ -81,17 +82,14 @@ public class DownLoadEmail {
 			line = sc.nextLine().trim();
 			emailFolder = line;
 			
-			System.out.println("6.DateTime Begin in format yyyyMMddHHmmss ?");
+			System.out.println("6.Date [yyyyMMdd] ?");
 			line = sc.nextLine().trim();
-			dateBgn = line;
+			date = line;
 			
-			System.out.println("7.DateTime End in format yyyyMMddHHmmss ?");
-			line = sc.nextLine().trim();
-			dateEnd = line;
-			
-			System.out.println("8.Confirm with the answers (y/n):");
+			System.out.println("7.Confirm with the answers (y/n):");
 			printParam();
 			line = sc.nextLine().trim();
+
 			if("y".equalsIgnoreCase(line)||"yes".equalsIgnoreCase(line)) {
 				confirmed = true;
 			}
@@ -100,25 +98,27 @@ public class DownLoadEmail {
 	}
 	
 	private static void downloadEmail() throws Exception {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		Date dBgn = sdf.parse(dateBgn);
-		Date dEnd = sdf.parse(dateEnd);
 		ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
 		ExchangeCredentials credentials = ExchangeCredentials.getExchangeCredentialsFromNetworkCredential(domainUsername, domainPassword, DOMAIN);
 		service.setCredentials(credentials);
 		service.autodiscoverUrl(emailAddress);
 		
 		Folder folder = findFolder(service, emailFolder);
-		int count = folder.getTotalCount();
-		System.out.println("Total Count is " + count);
-		ItemView view = new ItemView(count);
 		
-		SearchFilter.IsGreaterThanOrEqualTo dateBgnFilter = new SearchFilter.IsGreaterThanOrEqualTo(EmailMessageSchema.DateTimeSent, dBgn);
-		SearchFilter.IsLessThanOrEqualTo dateEndFilter = new SearchFilter.IsLessThanOrEqualTo(EmailMessageSchema.DateTimeSent, dEnd);
-		SearchFilter.SearchFilterCollection filters = new SearchFilter.SearchFilterCollection(LogicalOperator.And, dateBgnFilter, dateEndFilter);
-		
-		FindItemsResults<Item> findResults = service.findItems(folder.getId(), filters, view);
-		count = findResults.getTotalCount();
+		for(int i = 0; i < 24; i++) {
+			downloadByHour(service, folder, i);
+		}
+		System.out.println("Total Alerts: " + totalAlerts + " total download Errors: " + totalErrors);
+		service.close();
+	}
+	
+	private static void downloadByHour(ExchangeService service, Folder folder, int hour) throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		SearchFilter sf = searchFilterWithInOneHour(hour);
+		FindItemsResults<Item> findResults = service.findItems(folder.getId(), sf, new ItemView(10000));
+		int count = findResults.getTotalCount();
+		totalAlerts += count;
+		System.out.println("There are alerts: " + count);
 		String fileName = null;
 		int errors = 0;
 		for(Item item : findResults) {
@@ -131,9 +131,25 @@ public class DownLoadEmail {
 				continue;
 			}
 		}
-		System.out.println("There are " + count + " alerts between " + dateBgn + " and " + dateEnd);
-		System.out.println("There are " + errors + " errors");
-		service.close();
+		totalErrors += errors;
+		System.out.println("There are download errors: " + errors + " in total: " + count);
+	}
+	
+	private static SearchFilter searchFilterWithInOneHour(int hour) throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat full = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date day = sdf.parse(date);
+		Calendar cBgn = Calendar.getInstance();
+		cBgn.setTime(day);
+		cBgn.set(Calendar.HOUR_OF_DAY, hour);
+		Calendar cEnd = (Calendar)(cBgn.clone());
+		cEnd.add(Calendar.HOUR, 1);
+		System.out.println("Start timestamp : " + full.format(cBgn.getTime()));
+		System.out.println("End timestamp   : " + full.format(cEnd.getTime()));
+		SearchFilter.IsGreaterThanOrEqualTo dateBgnFilter = new SearchFilter.IsGreaterThanOrEqualTo(EmailMessageSchema.DateTimeSent, cBgn.getTime());
+		SearchFilter.IsLessThanOrEqualTo dateEndFilter = new SearchFilter.IsLessThanOrEqualTo(EmailMessageSchema.DateTimeSent, cEnd.getTime());
+		SearchFilter.SearchFilterCollection filters = new SearchFilter.SearchFilterCollection(LogicalOperator.And, dateBgnFilter, dateEndFilter);
+		return filters;
 	}
 	
 	public static Folder findFolder(ExchangeService service, String displayName) throws Exception {
