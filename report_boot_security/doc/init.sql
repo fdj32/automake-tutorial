@@ -24,5 +24,10 @@ desc group_members;
 desc groups;
 desc users;   
 
+select * from authorities;
+select * from group_authorities;
+select * from group_members;
+select * from groups;
+select * from users;
 
 truncate table authorities;

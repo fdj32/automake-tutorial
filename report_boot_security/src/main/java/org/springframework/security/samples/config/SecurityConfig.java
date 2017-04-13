@@ -18,7 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public DataSource dataSource() {
 		DriverManagerDataSource dmds = new DriverManagerDataSource();
 		dmds.setDriverClassName("com.mysql.jdbc.Driver");
-		dmds.setUrl("jdbc:mysql://127.0.0.1:3306/report");
+		dmds.setUrl("jdbc:mysql://127.0.0.1:3306/report?characterEncoding=utf8&useSSL=true");
 		dmds.setUsername("root");
 		dmds.setPassword("root");
 		return dmds;
