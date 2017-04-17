@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -26,10 +27,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests().antMatchers("/csrf").permitAll();
 		http.authorizeRequests().antMatchers("/css/**", "/index").permitAll();
 //		http.authorizeRequests().antMatchers("/user/**").hasRole("USER");
 		http.authorizeRequests().antMatchers("/user/**").hasAuthority("USER_AUTHORITY");
+		http.authorizeRequests().antMatchers("/gs-guide-websocket").hasAuthority("USER_AUTHORITY");
+		http.authorizeRequests().antMatchers("/gs-guide-websocket/**").hasAuthority("USER_AUTHORITY");
+		http.authorizeRequests().antMatchers("/topic/**").hasAuthority("USER_AUTHORITY"); // /topic/greetings
+		http.authorizeRequests().antMatchers("/app/**").hasAuthority("USER_AUTHORITY"); // /app/hello
+		http.authorizeRequests().antMatchers("/ws/**").hasAuthority("USER_AUTHORITY");
+		
 		http.formLogin().loginPage("/login").failureUrl("/login-error");
+		System.out.println("SecurityConfig configure");
+		
 	}
 	
 	@Bean

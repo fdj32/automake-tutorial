@@ -30,6 +30,11 @@ public class MainController {
 	public String root() {
 		return "redirect:/index";
 	}
+	
+	@RequestMapping("/ws")
+	public String ws() {
+		return "ws";
+	}
 
 	@RequestMapping("/index")
 	public String index() {
