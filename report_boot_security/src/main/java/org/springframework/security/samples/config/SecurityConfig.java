@@ -4,27 +4,20 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @EnableWebSecurity
+@Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	@Bean
-	public DataSource dataSource() {
-		DriverManagerDataSource dmds = new DriverManagerDataSource();
-		dmds.setDriverClassName("com.mysql.jdbc.Driver");
-		dmds.setUrl("jdbc:mysql://127.0.0.1:3306/report?characterEncoding=utf8&useSSL=true");
-		dmds.setUsername("root");
-		dmds.setPassword("root");
-		return dmds;
-	}
-
+	@Autowired
+	private DataSource dataSource;
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/csrf").permitAll();
@@ -45,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public JdbcUserDetailsManager jdbcUserDetailsManager() {
 		JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
-		jdbcUserDetailsManager.setDataSource(dataSource());
+		jdbcUserDetailsManager.setDataSource(dataSource);
 		jdbcUserDetailsManager.setEnableGroups(true);
 		jdbcUserDetailsManager.setEnableAuthorities(false);
 		return jdbcUserDetailsManager;
@@ -56,7 +49,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			throws Exception {
 //		auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
 		auth.userDetailsService(jdbcUserDetailsManager()); // Enable Group
-		
-		//auth.jdbcAuthentication().dataSource(dataSource());
+//		auth.jdbcAuthentication().dataSource(dataSource);
 	}
 }
