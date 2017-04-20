@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/csrf").permitAll();
-		http.authorizeRequests().antMatchers("/css/**", "/index").permitAll();
+		http.authorizeRequests().antMatchers("/css/**", "/index", "/welcome").permitAll();
 //		http.authorizeRequests().antMatchers("/user/**").hasRole("USER");
 		http.authorizeRequests().antMatchers("/user/**").hasAuthority("USER_AUTHORITY");
 		http.authorizeRequests().antMatchers("/gs-guide-websocket").hasAuthority("USER_AUTHORITY");

@@ -17,13 +17,20 @@ package org.springframework.security.samples;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 /**
  * @author Joe Grandja
  */
 @SpringBootApplication
-public class InsecureApplication {
+public class InsecureApplication extends SpringBootServletInitializer {
 
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(InsecureApplication.class);
+	}
+	
 	public static void main(String[] args) {
 		SpringApplication.run(InsecureApplication.class, args);
 	}
