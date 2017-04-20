@@ -17,13 +17,10 @@
 	href="/webjars/font-awesome/css/font-awesome.min.css">
 
 <!-- CSS App -->
-<link rel="stylesheet" type="text/css"
-	href="https://jhipster.github.io/css/style.css">
-<link rel="stylesheet" type="text/css"
-	href="https://jhipster.github.io/css/themes/flat-blue.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/flat-blue.css">
 
-<link rel="stylesheet" type="text/css"
-	href="https://jhipster.github.io/css/home.css">
+<link rel="stylesheet" type="text/css" href="css/home.css">
 
 <!-- Bootstrap Docs CSS subset to get icon -->
 <!--<link href="/css/bootstrap-docs.css" rel="stylesheet">-->
@@ -228,14 +225,12 @@
 		<!-- /#wrapper -->
 	</div>
 	<!-- Javascript Libs -->
-	<script type="text/javascript"
-		src="/webjars/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
 	<script type="text/javascript"
 		src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 
 	<!--App Javascript -->
-	<script type="text/javascript"
-		src="https://jhipster.github.io/js/app.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
 
 </body>
 
