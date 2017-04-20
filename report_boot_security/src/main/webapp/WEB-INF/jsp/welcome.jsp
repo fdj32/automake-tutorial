@@ -14,7 +14,7 @@
 <link rel="stylesheet" type="text/css"
 	href="/webjars/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
-	href="https://jhipster.github.io/lib/css/font-awesome.min.css">
+	href="/webjars/font-awesome/css/font-awesome.min.css">
 
 <!-- CSS App -->
 <link rel="stylesheet" type="text/css"
