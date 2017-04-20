@@ -12,15 +12,10 @@
 
 <!-- CSS Libs -->
 <link rel="stylesheet" type="text/css"
-	href="https://jhipster.github.io/lib/css/bootstrap.min.css">
+	href="/webjars/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
 	href="https://jhipster.github.io/lib/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css"
-	href="https://jhipster.github.io/lib/css/animate.min.css">
-<link rel="stylesheet" type="text/css"
-	href="https://jhipster.github.io/lib/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css"
-	href="https://jhipster.github.io/lib/css/dataTables.bootstrap.css">
+
 <!-- CSS App -->
 <link rel="stylesheet" type="text/css"
 	href="https://jhipster.github.io/css/style.css">
@@ -236,9 +231,7 @@
 	<script type="text/javascript"
 		src="/webjars/jquery/jquery.min.js"></script>
 	<script type="text/javascript"
-		src="https://jhipster.github.io/lib/js/bootstrap.min.js"></script>
-	<script type="text/javascript"
-		src="https://jhipster.github.io/lib/js/jquery.easing.min.js"></script>
+		src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 
 	<!--App Javascript -->
 	<script type="text/javascript"
