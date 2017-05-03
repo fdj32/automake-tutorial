@@ -73,13 +73,13 @@
 						<ul class="nav navbar-nav" ng-switch="vm.isAuthenticated()">
 							<li>
 								<a ui-sref="home">
-									<span class="icon fa fa-home"></span>
+									<span class="glyphicon glyphicon-home"></span>
 									<span class="title">Home</span>
 								</a>
 							</li>
 							<li class="panel panel-default dropdown">
 								<a data-toggle="collapse" href="#dropdown-1">
-									<span class="icon fa fa-road"></span>
+									<span class="glyphicon glyphicon-th-list"></span>
 									<span class="title">Entities</span>
 								</a>
 								<!-- Dropdown level 1 -->
@@ -87,44 +87,52 @@
 									<div class="panel-body">
 										<ul class="nav navbar-nav">
 											<li>
-												<a ui-sref="region-my-suffix">
-													<i class="fa fa-fw fa-stack-overflow"></i>Region My Suffix
-												</a>
+												<a ui-sref="region-my-suffix" ng-click="vm.collapseNavbar()">
+                                    				<span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                    				<span >Region My Suffix</span>
+                                				</a>
 											</li>
 											<li>
-												<a ui-sref="country-my-suffix">
-													<i class="fa fa-fw fa-desktop"></i>Country My Suffix
-												</a>
+												<a ui-sref="country-my-suffix" ng-click="vm.collapseNavbar()">
+                                    				<span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                    				<span >Country My Suffix</span>
+                                				</a>
 											</li>
 											<li>
-												<a ui-sref="location-my-suffix">
-													<i class="fa fa-fw fa-desktop"></i>Location My Suffix
-												</a>
+												<a ui-sref="location-my-suffix" ng-click="vm.collapseNavbar()">
+                                    				<span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                    				<span >Location My Suffix</span>
+                                				</a>
 											</li>
 											<li>
-												<a ui-sref="department-my-suffix">
-													<i class="fa fa-fw fa-desktop"></i>Department My Suffix
-												</a>
+												<a ui-sref="department-my-suffix" ng-click="vm.collapseNavbar()">
+                                    				<span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                    				<span >Department My Suffix</span>
+                                				</a>
 											</li>
 											<li>
-												<a ui-sref="task-my-suffix">
-													<i class="fa fa-fw fa-desktop"></i>Task My Suffix
-												</a>
+												<a ui-sref="task-my-suffix" ng-click="vm.collapseNavbar()">
+                                    				<span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                    				<span >Task My Suffix</span>
+                                				</a>
 											</li>
 											<li>
-												<a ui-sref="employee-my-suffix">
-													<i class="fa fa-fw fa-desktop"></i>Employee My Suffix
-												</a>
+												<a ui-sref="employee-my-suffix" ng-click="vm.collapseNavbar()">
+                                    				<span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                    				<span >Employee My Suffix</span>
+                                				</a>
 											</li>
 											<li>
-												<a ui-sref="job-my-suffix">
-													<i class="fa fa-fw fa-desktop"></i>Job My Suffix
-												</a>
+												<a ui-sref="job-my-suffix" ng-click="vm.collapseNavbar()">
+                                    				<span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                    				<span >Job My Suffix</span>
+                                				</a>
 											</li>
 											<li>
-												<a ui-sref="job-history-my-suffix">
-													<i class="fa fa-fw fa-desktop"></i>Job History My Suffix
-												</a>
+												<a ui-sref="job-history-my-suffix" ng-click="vm.collapseNavbar()">
+                                    				<span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                    				<span >Job History My Suffix</span>
+                                				</a>
 											</li>
 										</ul>
 									</div>
@@ -133,7 +141,7 @@
 							
 							<li class="panel panel-default dropdown">
 								<a data-toggle="collapse" href="#dropdown-2">
-									<span class="icon fa fa-road"></span>
+									<span class="glyphicon glyphicon-user"></span>
 									<span class="title">Account</span>
 								</a>
 								<!-- Dropdown level 1 -->
@@ -141,34 +149,40 @@
 									<div class="panel-body">
 										<ul class="nav navbar-nav">
 											<li>
-												<a ui-sref="settings">
-													<i class="fa fa-fw fa-stack-overflow"></i>Settings
-												</a>
+												<a ui-sref="settings" ng-click="vm.collapseNavbar()">
+                                					<span class="glyphicon glyphicon-wrench"></span>&nbsp;
+                                					<span>Settings</span>
+                            					</a>
 											</li>
 											<li>
-												<a ui-sref="password">
-													<i class="fa fa-fw fa-stack-overflow"></i>Password
-												</a>
+												<a ui-sref="password" ng-click="vm.collapseNavbar()">
+                                					<span class="glyphicon glyphicon-lock"></span>&nbsp;
+                                					<span>Password</span>
+                            					</a>
 											</li>
 											<li>
-												<a ui-sref="sessions">
-													<i class="fa fa-fw fa-stack-overflow"></i>Sessions
-												</a>
+												<a ui-sref="sessions" ng-click="vm.collapseNavbar()">
+                                					<span class="glyphicon glyphicon-cloud"></span>&nbsp;
+                                					<span>Sessions</span>
+                            					</a>
 											</li>
 											<li>
 												<a href="" ng-click="vm.logout()" id="logout">
-													<i class="fa fa-fw fa-stack-overflow"></i>Sign out
-												</a>
+                                					<span class="glyphicon glyphicon-log-out"></span>&nbsp;
+                                					<span>Sign out</span>
+                            					</a>
 											</li>
 											<li>
 												<a href="" ng-click="vm.login()" id="login">
-													<i class="fa fa-fw fa-stack-overflow"></i>Sign in
-												</a>
+                                					<span class="glyphicon glyphicon-log-in"></span>&nbsp;
+                                					<span>Sign in</span>
+                            					</a>
 											</li>
 											<li>
-												<a ui-sref="register">
-													<i class="fa fa-fw fa-stack-overflow"></i>Register
-												</a>
+												<a ui-sref="register" ng-click="vm.collapseNavbar()">
+                                					<span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
+                                					<span>Register</span>
+                            					</a>
 											</li>
 										</ul>
 									</div>
@@ -177,7 +191,7 @@
 							
 							<li class="panel panel-default dropdown">
 								<a data-toggle="collapse" href="#dropdown-3">
-									<span class="icon fa fa-road"></span>
+									<span class="glyphicon glyphicon-tower"></span>
 									<span class="title">Administration</span>
 								</a>
 								<!-- Dropdown level 1 -->
@@ -186,44 +200,52 @@
 									<div class="panel-body">
 										<ul class="nav navbar-nav">
 											<li>
-												<a ui-sref="user-management">
-													<i class="fa fa-fw fa-stack-overflow"></i>User management
-												</a>
+												<a ui-sref="user-management" ng-click="vm.collapseNavbar()">
+                                					<span class="glyphicon glyphicon-user"></span>&nbsp;
+                                					<span>User management</span>
+                            					</a>
 											</li>
 											<li>
-												<a ui-sref="jhi-tracker">
-													<i class="fa fa-fw fa-stack-overflow"></i>User tracker
-												</a>
+												<a ui-sref="jhi-tracker" ng-click="vm.collapseNavbar()">
+                                					<span class="glyphicon glyphicon-eye-open"></span>&nbsp;
+                                					<span>User tracker</span>
+                            					</a>
 											</li>
 											<li>
-												<a ui-sref="jhi-metrics">
-													<i class="fa fa-fw fa-stack-overflow"></i>Metrics
-												</a>
+												<a ui-sref="jhi-metrics" ng-click="vm.collapseNavbar()">
+                                					<span class="glyphicon glyphicon-dashboard"></span>&nbsp;
+                                					<span>Metrics</span>
+                            					</a>
 											</li>
 											<li>
-												<a ui-sref="jhi-health">
-													<i class="fa fa-fw fa-stack-overflow"></i>Health
-												</a>
+												<a ui-sref="jhi-health" ng-click="vm.collapseNavbar()">
+                                					<span class="glyphicon glyphicon-heart"></span>&nbsp;
+                                					<span>Health</span>
+                            					</a>
 											</li>
 											<li>
-												<a ui-sref="jhi-configuration">
-													<i class="fa fa-fw fa-stack-overflow"></i>Configuration
-												</a>
+												<a ui-sref="jhi-configuration" ng-click="vm.collapseNavbar()">
+                                					<span class="glyphicon glyphicon-list-alt"></span>&nbsp;
+                                					<span>Configuration</span>
+                            					</a>
 											</li>
 											<li>
-												<a ui-sref="audits">
-													<i class="fa fa-fw fa-stack-overflow"></i>Audits
-												</a>
+												<a ui-sref="audits" ng-click="vm.collapseNavbar()">
+                                					<span class="glyphicon glyphicon-bell"></span>&nbsp;
+                                					<span>Audits</span>
+                            					</a>
 											</li>
 											<li>
-												<a ui-sref="logs">
-													<i class="fa fa-fw fa-stack-overflow"></i>Logs
-												</a>
+												<a ui-sref="logs" ng-click="vm.collapseNavbar()">
+                                					<span class="glyphicon glyphicon-tasks"></span>&nbsp;
+                                					<span>Logs</span>
+                            					</a>
 											</li>
 											<li ng-show="vm.swaggerEnabled">
-												<a ui-sref="docs">
-													<i class="fa fa-fw fa-stack-overflow"></i>API
-												</a>
+												<a ui-sref="docs" ng-click="vm.collapseNavbar()">
+                                					<span class="glyphicon glyphicon-book"></span>&nbsp;
+                                					<span>API</span>
+                            					</a>
 											</li>
 											<li ng-hide="vm.inProduction">
 												<a href='/h2-console' target="_tab" ng-click="vm.collapseNavbar()">
