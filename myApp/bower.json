@@ -16,7 +16,7 @@
     "angular-ui-router": "0.3.1",
     "bootstrap": "3.3.7",
     "bootstrap-ui-datetime-picker": "2.4.3",
-    "jquery": "3.1.0",
+    "jquery": "^2.2.3",
     "json3": "3.3.2",
     "messageformat": "0.3.1",
     "modernizr": "3.3.1",
@@ -36,7 +36,11 @@
     "flot.curvedlines": "^1.1.1",
     "flot.orderbars": "*",
     "flot-spline": "^0.8.2",
+    "fastclick": "^1.0.6",
+    "Chart.js": "^2.0.2",
+    "gauge.js": "gauge.js#^1.2.1",
     "jqvmap": "https://github.com/christianesperar/jqvmap.git#master",
+    "skycons": "https://github.com/darkskyapp/skycons.git",
     "bootstrap-daterangepicker": "https://github.com/christianesperar/bootstrap-daterangepicker.git#master"
   },
   "overrides": {
