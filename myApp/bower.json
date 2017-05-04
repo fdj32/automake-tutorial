@@ -25,10 +25,19 @@
     "sockjs-client": "1.1.1",
     "stomp-websocket": "2.3.4",
     "swagger-ui": "2.1.5",
-    "font-awesome": "4.5.0"
+    "font-awesome": "4.5.0",
+    "bootstrap-progressbar": "0.9.0",
+    "iCheck": "icheck#^1.0.2",
+    "nprogress": "^0.2.0"
   },
   "devDependencies": {
-    "angular-mocks": "1.5.8"
+    "angular-mocks": "1.5.8",
+    "DateJS": "^1.0.0-rc3",
+    "flot.curvedlines": "^1.1.1",
+    "flot.orderbars": "*",
+    "flot-spline": "^0.8.2",
+    "jqvmap": "https://github.com/christianesperar/jqvmap.git#master",
+    "bootstrap-daterangepicker": "https://github.com/christianesperar/bootstrap-daterangepicker.git#master"
   },
   "overrides": {
     "angular": {
