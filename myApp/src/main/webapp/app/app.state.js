@@ -15,6 +15,11 @@
                     templateUrl: 'app/layouts/navbar/navbar.html',
                     controller: 'NavbarController',
                     controllerAs: 'vm'
+                },
+                'profile@': {
+                    templateUrl: 'app/layouts/profile/profile.html',
+                    controller: 'ProfileController',
+                    controllerAs: 'vm'
                 }
             },
             resolve: {

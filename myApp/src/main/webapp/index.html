@@ -32,15 +32,8 @@
             <div class="clearfix"></div>
 
             <!-- menu profile quick info -->
-            <div class="profile clearfix">
-              <div class="profile_pic">
-                <img src="content/images/img.jpg" alt="..." class="img-circle profile_img">
-              </div>
-              <div class="profile_info">
-                <span>Welcome,</span>
-                <h2>John Doe</h2>
-              </div>
-            </div>
+            <div ui-view="profile" ng-cloak>
+			</div>
             <!-- /menu profile quick info -->
 
             <br />
@@ -153,6 +146,7 @@
     <script src="app/services/auth/activate.service.js"></script>
     <script src="app/services/auth/account.service.js"></script>
     <script src="app/layouts/navbar/navbar.controller.js"></script>
+    <script src="app/layouts/profile/profile.controller.js"></script>
     <script src="app/layouts/error/error.state.js"></script>
     <script src="app/home/home.state.js"></script>
     <script src="app/home/home.controller.js"></script>
