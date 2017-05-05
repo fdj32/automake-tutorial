@@ -139,3 +139,8 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
+
+######################
+# Bower components
+######################
+src/main/webapp/bower_components
