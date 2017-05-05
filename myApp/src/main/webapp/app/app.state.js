@@ -17,8 +17,8 @@
                     controllerAs: 'vm'
                 },
                 'profile@': {
-                    templateUrl: 'app/layouts/profile/profile.html',
-                    controller: 'ProfileController',
+                    templateUrl: 'app/layouts/navbar/profile.html',
+                    controller: 'NavbarController',
                     controllerAs: 'vm'
                 }
             },
