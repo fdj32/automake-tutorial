@@ -20,6 +20,11 @@
                     templateUrl: 'app/layouts/navbar/profile.html',
                     controller: 'NavbarController',
                     controllerAs: 'vm'
+                },
+                'topnav@': {
+                    templateUrl: 'app/layouts/navbar/topnav.html',
+                    controller: 'NavbarController',
+                    controllerAs: 'vm'
                 }
             },
             resolve: {
