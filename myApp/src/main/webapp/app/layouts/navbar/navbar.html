@@ -2,13 +2,13 @@
 	<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 		<div class="menu_section">
 			<ul class="nav side-menu" ng-switch="vm.isAuthenticated()">
-				<li class="dropdown" ng-switch-when="true">
+				<li class="dropdown">
 				<a data-toggle="collapse" href="#dropdown-1"> <span
 						class="glyphicon glyphicon-th-list"></span> <span class="title">Entities</span>
 						<span class="fa fa-chevron-down"></span>
 				</a>
 					<div id="dropdown-1" class="panel-collapse collapse">
-						<ul class="nav">
+						<ul class="nav" ng-switch-when="true">
 							<li ui-sref-active="active"><a ui-sref="region-my-suffix"
 								ng-click="vm.collapseNavbar()"> <span
 									class="glyphicon glyphicon-asterisk"></span>&nbsp; <span>Region
@@ -92,14 +92,14 @@
 						</ul>
 					</div></li>
 
-				<li class="dropdown" ng-switch-when="true" has-authority="ROLE_ADMIN">
+				<li class="dropdown">
 					<a data-toggle="collapse"
 					href="#dropdown-3"> <span class="glyphicon glyphicon-tower"></span>
 						<span class="title">Administration</span> <span
 						class="fa fa-chevron-down"></span>
 					</a>
 					<div id="dropdown-3" class="panel-collapse collapse">
-						<ul class="nav">
+						<ul class="nav" ng-switch-when="true" has-authority="ROLE_ADMIN">
 							<li ui-sref-active="active"><a ui-sref="user-management"
 								ng-click="vm.collapseNavbar()"> <span
 									class="glyphicon glyphicon-user"></span>&nbsp; <span>User
@@ -165,3 +165,10 @@
 	</a>
 </div>
 <!-- /menu footer buttons -->
+<script>
+$(function () {
+    return $(".menu_section .nav .dropdown").on('show.bs.collapse', function () {
+        return $(".menu_section .nav .dropdown .collapse").collapse('hide');
+    });
+});
+</script>
