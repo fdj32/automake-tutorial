@@ -3,6 +3,7 @@
 
     angular
         .module('myApp', [
+        	'ngAnimate',
             'ngStorage',
             'ngResource',
             'ngCookies',
