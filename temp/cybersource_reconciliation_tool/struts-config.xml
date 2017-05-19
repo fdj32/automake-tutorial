@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+          "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+<!--
+
+     This is a blank Struts configuration file with an example
+
+     welcome action/page and other commented sample elements.
+
+
+
+     Tiles and the Struts Validator are configured using the factory defaults
+
+     and are ready-to-use.
+
+
+
+     NOTE: If you have a generator tool to create the corresponding Java classes
+
+     for you, you could include the details in the "form-bean" declarations.
+
+     Otherwise, you would only define the "form-bean" element itself, with the
+
+     corresponding "name" and "type" attributes, as shown here.
+
+-->
+
+	<!-- ==================================== Data Source Configuration -->
+	<!--
+
+ <data-sources>
+
+   <data-source>
+
+     <set-property
+
+        property="autoCommit"
+
+        value="false"/>
+
+     <set-property
+
+        property="description"
+
+        value="Example Data Source Configuration"/>
+
+     <set-property
+
+        property="driverClass"
+
+        value="org.postgresql.Driver"/>
+
+     <set-property
+
+        property="maxCount"
+
+        value="4"/>
+
+     <set-property
+
+        property="minCount"
+
+        value="2"/>
+
+     <set-property
+
+        property="password"
+
+        value="mypassword"/>
+
+     <set-property
+
+        property="url"
+
+        value="jdbc:postgresql://localhost/mydatabase"/>
+
+     <set-property
+
+        property="user"
+
+        value="myusername"/>
+
+   </data-source>
+
+ </data-sources>
+
+-->
+	<!-- ======================================== Form Bean Definitions -->
+	<form-beans>
+		<form-bean name="listForm" type="com.active.objects.List"/>
+		<form-bean name="editCCAccountForm" type="com.active.app.msadmin.wallet.EditCCAccountForm" />
+		<form-bean name="searchCCAccountForm" type="com.active.app.msadmin.wallet.SearchCCAccountForm" />
+		<form-bean name="searchPassCodeForm" type="com.active.app.msadmin.passcode.SearchPassCodeForm" />
+		<!-- sample form bean descriptor for an ActionForm
+
+        <form-bean
+
+            name="inputForm"
+
+            type="app.InputForm"/>
+
+    end sample -->
+		<!-- sample form bean descriptor for a DynaActionForm
+
+        <form-bean
+
+            name="logonForm"
+
+            type="org.apache.struts.action.DynaActionForm">
+
+            <form-property
+
+                name="username"
+
+                type="java.lang.String"/>
+
+            <form-property
+
+                name="password"
+
+                type="java.lang.String"/>
+
+    end sample -->
+	</form-beans>
+	<!-- ================================= Global Exception Definitions -->
+	<global-exceptions>
+		
+        <exception type="java.lang.Exception"
+
+            key="errors.general"
+
+            handler="com.active.app.msadmin.ActionExceptionHandler"/>
+
+    
+
+		
+		<!-- sample exception handler
+
+        <exception
+
+            key="expired.password"
+
+            type="app.ExpiredPasswordException"
+
+            path="/changePassword.jsp"/>
+
+        end sample -->
+	</global-exceptions>
+	<!-- =================================== Global Forward Definitions -->
+	<global-forwards>
+		<!-- Default forward to "Welcome" action -->
+		<!-- Demonstrates using index.jsp to forward -->
+		<forward name="noaccess" path="/NoAccess.do"/>
+		<forward name="home" path="/home.do"/>
+		<forward name="ccTerminal" path="/ccTerminal.do"/>
+		<forward name="ecpTerminal" path="/ecpTerminal.do"/>
+		<forward name="batchTerminal" path="/batchTerminal.do"/>
+		<forward name="adminMAI" path="/adminMAI.do"/>
+		<forward name="dailyDetail" path="/dailyDetail.do"/>
+		<forward name="dailyReport" path="/dailyReport.do"/>
+		<forward name="customReport" path="/customReport.do"/>
+		<forward name="search" path="/search.do"/>
+		<forward name="searchByRef" path="/searchByRef.do"/>
+		<forward name="summary" path="/summary.do"/>
+		<forward name="batchSummary" path="/batchSummary.do"/>
+		<forward name="batchSummaryReport" path="/batchSummaryReport.do"/>
+		<forward name="batchDetails" path="/batchDetails.do"/>
+		<forward name="lnf" path="/lnf.do"/>
+		<forward name="login" path="/login.do"/>
+		<forward name="logout" path="/logout.do"/>
+		<forward name="password" path="/password.do"/>
+		<forward name="passwordReset" path="/passwordReset.do"/>
+		<forward name="adminUser" path="/adminUser.do"/>
+		<forward name="activityLog" path="/activityLog.do"/>
+		<forward name="monitor" path="/monitor.do"/>
+		<forward name="adminContract" path="/adminContract.do"/>
+		<forward name="adminOrg" path="/adminOrg.do"/>
+		<forward name="contractReport" path="/contractReport.do"/>
+		<forward name="adminIndex" path="/adminIndex.do"/>
+		<forward name="reportIndex" path="/reportIndex.do"/>
+		<forward name="searchIndex" path="/searchIndex.do"/>
+		<forward name="terminalIndex" path="/terminalIndex.do"/>
+		<forward name="supportIndex" path="/supportIndex.do"/>
+		<forward name="supportFAQ" path="/supportFAQ.do"/>
+		<forward name="supportDocs" path="/supportDocs.do"/>
+		<forward name="supportAPI" path="/supportAPI.do"/>
+		<forward name="settlement" path="/settlement.do"/>
+		<forward name="walletIndex" path="/walletIndex.do"/>
+		<forward name="adminAppKey" path="/adminAppKey.do"/>
+		<forward name="adminCryptoPool" path="/adminCryptoPool.do"/>
+		<forward name="batchPendingReport" path="/batchPendingReport.do"/>
+		<forward name="accountUpdateSummary" path="/accountUpdateSummary.do"/>
+		<forward name="amexRefresherBatch" path="/amexRefresherBatch.do"/>
+		<forward name="amexRefresher" path="/amexRefresher.do"/>
+		<forward name="batchCaptureReport" path="/batchCaptureReport.do"/>
+		<forward name="recapture" path="/recapture.do"/>
+		<forward name="lockedMerchantAccount" path="/lockedMerchantAccount.do"/>
+		<forward name="checkCybersourceReport" path="/checkCybersourceReport.do"/>
+	</global-forwards>
+	<!-- =================================== Action Mapping Definitions -->
+	<action-mappings>
+		<!-- Default "Welcome" action -->
+		<!-- Forwards to Welcome.jsp -->
+		<action path="/NoAccess" type="org.apache.struts.actions.ForwardAction" parameter="/pages/NoAccess.jsp"/>
+		<action path="/home" type="org.apache.struts.actions.ForwardAction" parameter="/pages/home.jsp"/>
+		<action path="/adminMAI" type="org.apache.struts.actions.ForwardAction" parameter="/pages/adminMAI.jsp"/>
+		<action path="/ccTerminal" type="org.apache.struts.actions.ForwardAction" parameter="/pages/ccTerminal.jsp"/>
+		<action path="/ecpTerminal" type="org.apache.struts.actions.ForwardAction" parameter="/pages/ecpTerminal.jsp"/>
+		<action path="/batchTerminal" type="org.apache.struts.actions.ForwardAction" parameter="/pages/batchTerminal.jsp"/>
+		<action path="/dailyDetail" type="org.apache.struts.actions.ForwardAction" parameter="/pages/dailyDetail.jsp"/>
+		<action path="/dailyReport" type="org.apache.struts.actions.ForwardAction" parameter="/pages/dailyReport.jsp"/>
+		<action path="/customReport" type="org.apache.struts.actions.ForwardAction" parameter="/pages/customReport.jsp"/>
+		<action path="/search" type="org.apache.struts.actions.ForwardAction" parameter="/pages/search.jsp"/>
+		<action path="/searchByRef" type="org.apache.struts.actions.ForwardAction" parameter="/pages/searchByRef.jsp"/>
+		<action path="/summary" type="org.apache.struts.actions.ForwardAction" parameter="/pages/summary.jsp"/>
+		<action path="/batchSummary" type="org.apache.struts.actions.ForwardAction" parameter="/pages/batchSummary.jsp"/>
+		<action path="/batchSummaryReport" type="org.apache.struts.actions.ForwardAction" parameter="/pages/batchSummaryReport.jsp"/>
+		<action path="/batchDetails" type="org.apache.struts.actions.ForwardAction" parameter="/pages/batchDetails.jsp"/>
+		<action path="/lnf" type="org.apache.struts.actions.ForwardAction" parameter="/pages/lnf.jsp"/>
+		<action path="/login" type="org.apache.struts.actions.ForwardAction" parameter="/pages/login.jsp"/>
+		<action path="/logout" type="org.apache.struts.actions.ForwardAction" parameter="/pages/logout.jsp"/>
+		<action path="/password" type="org.apache.struts.actions.ForwardAction" parameter="/pages/password.jsp"/>
+		<action path="/passwordReset" type="org.apache.struts.actions.ForwardAction" parameter="/pages/password.jsp?reset=true"/>
+		<action path="/adminUser" type="org.apache.struts.actions.ForwardAction" parameter="/pages/adminUser.jsp"/>
+		<action path="/activityLog" type="org.apache.struts.actions.ForwardAction" parameter="/pages/activityLog.jsp"/>
+		<action path="/adminContract" type="org.apache.struts.actions.ForwardAction" parameter="/pages/adminContract.jsp"/>
+		<action path="/adminOrg" type="org.apache.struts.actions.ForwardAction" parameter="/pages/adminOrg.jsp"/>
+		<action path="/contractReport" type="org.apache.struts.actions.ForwardAction" parameter="/pages/contractReport.jsp"/>
+		<action path="/adminIndex" type="org.apache.struts.actions.ForwardAction" parameter="/pages/adminIndex.jsp"/>
+		<action path="/searchIndex" type="org.apache.struts.actions.ForwardAction" parameter="/pages/searchIndex.jsp"/>
+		<action path="/reportIndex" type="org.apache.struts.actions.ForwardAction" parameter="/pages/reportIndex.jsp"/>
+		<action path="/terminalIndex" type="org.apache.struts.actions.ForwardAction" parameter="/pages/terminalIndex.jsp"/>
+		<action path="/supportIndex" type="org.apache.struts.actions.ForwardAction" parameter="/pages/supportIndex.jsp"/>
+		<action path="/supportFAQ" type="org.apache.struts.actions.ForwardAction" parameter="/pages/supportFAQ.jsp"/>
+		<action path="/supportDocs" type="org.apache.struts.actions.ForwardAction" parameter="/pages/supportDocs.jsp"/>
+		<action path="/supportAPI" type="org.apache.struts.actions.ForwardAction" parameter="/pages/supportAPI.jsp"/>
+		<action path="/settlement" type="org.apache.struts.actions.ForwardAction" parameter="/pages/settlement.jsp"/>
+		<action path="/walletIndex" type="org.apache.struts.actions.ForwardAction" parameter="/pages/walletIndex.jsp"/>
+		<action path="/updateCCAccountIndex" type="org.apache.struts.actions.ForwardAction" parameter="/pages/updateCCAccountIndex.jsp"/>
+		<action path="/updateCCAccount" type="org.apache.struts.actions.ForwardAction" parameter="/pages/updateCCAccount.jsp"/>
+		<action path="/adminAppKey" type="org.apache.struts.actions.ForwardAction" parameter="/pages/adminAppKey.jsp"/>
+		<action path="/adminCryptoPool" type="org.apache.struts.actions.ForwardAction" parameter="/pages/adminCryptoPool.jsp"/>
+		<action path="/monitor" type="org.apache.struts.actions.ForwardAction" parameter="/pages/monitor.jsp"/>
+		<action path="/searchCCAccount" type="com.active.app.msadmin.wallet.SearchCCAccountAction"
+		 name="searchCCAccountForm" scope="session" validate="true" parameter="do" input="/pages/updateCCAccountIndex.jsp" >
+          <forward name="next" path="/updateCCAccountIndex.do" redirect="true" />                   
+      	</action>
+      	<action path="/editCCAccount" type="com.active.app.msadmin.wallet.EditCCAccountAction" 
+      	 name="editCCAccountForm" scope="session" validate="true" parameter="do" 
+      	 input="/pages/updateCCAccount.jsp">
+      	  <set-property property="cancellable" value="true"/>
+          <forward name="showEdit" path="/updateCCAccount.do" redirect="true" /> 
+          <forward name="showList" path="/searchCCAccount.do?do=search" redirect="true" />
+      	</action>
+      	<action path="/batchPendingReport" type="org.apache.struts.actions.ForwardAction" parameter="/pages/batchPendingReport.jsp"/>
+      	
+      	<action path="/passcodes" type="org.apache.struts.actions.ForwardAction" parameter="/pages/passcode.jsp"/>
+      	
+      	<action path="/passcode" type="com.active.app.msadmin.passcode.PassCodeAction"
+         name="searchPassCodeForm" scope="session" validate="true" parameter="do" input="/pages/passcode.jsp" >
+          <forward name="next" path="/passcodes.do" redirect="false" />                   
+        </action>
+        
+        <action path="/accountUpdateSummary" type="org.apache.struts.actions.ForwardAction" parameter="/pages/accountUpdateSummary.jsp"/>
+        <action path="/amexRefresherBatch" type="org.apache.struts.actions.ForwardAction" parameter="/pages/amexRefresherBatch.jsp"/>
+        <action path="/amexRefresher" type="org.apache.struts.actions.ForwardAction" parameter="/pages/amexRefresher.jsp"/>
+        <action path="/batchCaptureReport" type="org.apache.struts.actions.ForwardAction" parameter="/pages/batchCaptureReport.jsp"/>
+        <action path="/recapture" type="org.apache.struts.actions.ForwardAction" parameter="/pages/recapture.jsp"/>
+		<action path="/lockedMerchantAccount" type="org.apache.struts.actions.ForwardAction" parameter="/pages/lockedMerchantAccount.jsp"/>
+        <action path="/checkCybersourceReport" type="org.apache.struts.actions.ForwardAction" parameter="/pages/checkCybersourceReport.jsp"/>
+		<!-- sample input and input submit actions
+
+
+
+        <action
+
+            path="/Input"
+
+            type="org.apache.struts.actions.ForwardAction"
+
+            parameter="/pages/Input.jsp"/>
+
+
+
+        <action
+
+            path="/InputSubmit"
+
+            type="app.InputAction"
+
+            name="inputForm"
+
+            scope="request"
+
+            validate="true"
+
+            input="/pages/Input.jsp"/>
+
+
+
+    end samples -->
+	</action-mappings>
+	<!-- ===================================== Controller Configuration -->
+	<controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+	<!-- ================================ Message Resources Definitions -->
+	<message-resources parameter="resources.application"/>
+	<!-- ======================================= Plug Ins Configuration -->
+	<!-- ========== Tiles plugin ===================  -->
+	<!--												-->
+	<!--
+     This plugin initialize Tiles definition factory. This later can takes some
+	 parameters explained here after. The plugin first read parameters from web.xml, then
+	 overload them with parameters defined here. All parameters are optional.
+	 The plugin should be declared in each struts-config file.
+       - definitions-config: (optional) 
+            Specify configuration file names. There can be several comma 
+		    separated file names (default: ?? )
+       - moduleAware: (optional - struts1.1) 
+            Specify if the Tiles definition factory is module aware. If true (default), 
+			there will be one factory for each Struts module. 
+			If false, there will be one common factory for all module. In this later case, 
+			it is still needed to declare one plugin per module. The factory will be 
+			initialized with parameters found in the first initialized plugin (generally the
+			one associated with the default module).
+			  true : One factory per module. (default)
+			  false : one single shared factory for all modules
+	   - definitions-parser-validate: (optional)
+	        Specify if xml parser should validate the Tiles configuration file.
+			  true : validate. DTD should be specified in file header. (default)
+			  false : no validation
+			  
+	  Paths found in Tiles definitions are relative to the main context.
+  -->
+	<!-- comment following if struts1.0.x -->
+	<plug-in className="org.apache.struts.tiles.TilesPlugin">
+		<set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml"/>
+		<set-property property="moduleAware" value="true"/>
+		<set-property property="definitions-parser-validate" value="true"/>
+	</plug-in>
+	<!-- end comment if struts1.0.x -->
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+		<set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+	</plug-in>
+</struts-config>
