@@ -21,4 +21,4 @@ ML000731281:backend nickfeng$
 Btw, we can just import common/*.c and port/*.c, not to link lib/libpgcommon_srv.a, lib/libpgport_srv.a.
 
 Run postgres, will check the link library path first, "sudo mkdir /usr/local/pgsql/lib" will fix this issue.
-
+这个是在 src/port/pg_config_paths.h 里面配置的
