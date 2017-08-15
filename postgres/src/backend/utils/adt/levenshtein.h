@@ -25,11 +25,6 @@
  */
 #define MAX_LEVENSHTEIN_STRLEN		255
 
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include "utils/errcodes.h"
-#include "utils/elog.h"
 /*
  * Calculates Levenshtein distance metric between supplied strings, which are
  * not necessarily null-terminated.
