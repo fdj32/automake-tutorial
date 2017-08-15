@@ -32,7 +32,11 @@
  * SUCH DAMAGE.
  */
 /* can be used in either frontend or backend */
+#ifdef FRONTEND
 #include "postgres_fe.h"
+#else
+#include "postgres.h"
+#endif
 
 #include "mb/pg_wchar.h"
 
