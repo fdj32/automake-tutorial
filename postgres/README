@@ -1,0 +1,24 @@
+
+These *.h files are renamed from *.c, because they are just included in some other c files, not to be compiled to *.o. 
+
+ML000731281:backend nickfeng$ find . -name *.h
+./bootstrap/bootscanner.h
+./regex/regc_color.h
+./regex/regc_cvec.h
+./regex/regc_lex.h
+./regex/regc_locale.h
+./regex/regc_nfa.h
+./regex/regc_pg_locale.h
+./regex/rege_dfa.h
+./replication/repl_scanner.h
+./replication/syncrep_scanner.h
+./utils/adt/levenshtein.h
+./utils/adt/like_match.h
+./utils/misc/guc-file.h
+./utils/sort/qsort_tuple.h
+ML000731281:backend nickfeng$ 
+
+Btw, we can just import common/*.c and port/*.c, not to link lib/libpgcommon_srv.a, lib/libpgport_srv.a.
+
+Run postgres, will check the link library path first, "sudo mkdir /usr/local/pgsql/lib" will fix this issue.
+
