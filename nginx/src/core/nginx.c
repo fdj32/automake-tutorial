@@ -179,13 +179,13 @@ ngx_module_t  ngx_core_module = {
 };
 
 
-static ngx_uint_t   ngx_show_help;
-static ngx_uint_t   ngx_show_version;
-static ngx_uint_t   ngx_show_configure;
-static u_char      *ngx_prefix;
-static u_char      *ngx_conf_file;
-static u_char      *ngx_conf_params;
-static char        *ngx_signal;
+static ngx_uint_t   ngx_show_help; // ngx_show_version_info()
+static ngx_uint_t   ngx_show_version; // ngx_show_version_info() show version first, then show help or not, then show configure or not
+static ngx_uint_t   ngx_show_configure; // ngx_show_version_info()
+static u_char      *ngx_prefix; // typedef	unsigned char 	u_char; ngx_get_options() 'p'
+static u_char      *ngx_conf_file; // ngx_get_options() 'c'
+static u_char      *ngx_conf_params; // ngx_get_options() 'g'
+static char        *ngx_signal; // ngx_get_options() 's'
 
 
 static char **ngx_os_environ;
