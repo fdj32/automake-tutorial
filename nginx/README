@@ -2,3 +2,88 @@
 2017-12-19
 delete src/events/ngx_event_openssl.h
 delete src/mail/*
+--------------------------------------------------------------------------------
+宏处理的连接玩法，一个井号#+宏名，用来传递宏值的字符串，且能自动连接相邻字符串。
+"SIG" ngx_value(NGX_RECONFIGURE_SIGNAL)
+>> "SIG" ngx_value_helper(NGX_RECONFIGURE_SIGNAL)
+>> "SIG" #NGX_RECONFIGURE_SIGNAL
+>> found #define NGX_RECONFIGURE_SIGNAL   HUP
+>> "SIGHUP"
+
+而两个##的例子如下，可以用来连接宏名的
+ngx_signal_value(NGX_RECONFIGURE_SIGNAL)
+>> ngx_signal_helper(NGX_RECONFIGURE_SIGNAL)
+>> SIG##NGX_RECONFIGURE_SIGNAL
+>> SIGHUP
+
+ngx_string.h
+#define ngx_value_helper(n)   #n
+#define ngx_value(n)          ngx_value_helper(n)
+
+search "ngx_value("
+
+ngx_module.h
+#define NGX_MODULE_SIGNATURE_0                                                \
+    ngx_value(NGX_PTR_SIZE) ","                                               \
+    ngx_value(NGX_SIG_ATOMIC_T_SIZE) ","                                      \
+    ngx_value(NGX_TIME_T_SIZE) ","
+
+相当于
+#define NGX_MODULE_SIGNATURE_0 "8,4,8,"
+
+/usr/include/sys/signal.h
+ngx_process.c
+ngx_signal_t  signals[] = {
+    { ngx_signal_value(NGX_RECONFIGURE_SIGNAL),>>>>>>>>>signal int 值 SIGHUP = 1
+      "SIG" ngx_value(NGX_RECONFIGURE_SIGNAL),>>>>>>>>>>字符串 SIGHUP
+      "reload",
+      ngx_signal_handler },
+
+    { ngx_signal_value(NGX_REOPEN_SIGNAL),>>>>>>>>>>>>>>signal int 值 SIGUSR1 = 30
+      "SIG" ngx_value(NGX_REOPEN_SIGNAL),>>>>>>>>>>>>>>>字符串 SIGUSR1
+      "reopen",
+      ngx_signal_handler },
+
+    { ngx_signal_value(NGX_NOACCEPT_SIGNAL),>>>>>>>>>>>>signal int 值 SIGWINCH = 28
+      "SIG" ngx_value(NGX_NOACCEPT_SIGNAL),>>>>>>>>>>>>>字符串 SIGWINCH
+      "",
+      ngx_signal_handler },
+
+    { ngx_signal_value(NGX_TERMINATE_SIGNAL),>>>>>>>>>>>signal int 值 SIGTERM = 15
+      "SIG" ngx_value(NGX_TERMINATE_SIGNAL),>>>>>>>>>>>>字符串 SIGTERM
+      "stop",
+      ngx_signal_handler },
+
+    { ngx_signal_value(NGX_SHUTDOWN_SIGNAL),>>>>>>>>>>>>signal int 值 SIGTERM = 31
+      "SIG" ngx_value(NGX_SHUTDOWN_SIGNAL),>>>>>>>>>>>>>字符串 SIGQUIT
+      "quit",
+      ngx_signal_handler },
+
+    { ngx_signal_value(NGX_CHANGEBIN_SIGNAL),
+      "SIG" ngx_value(NGX_CHANGEBIN_SIGNAL),>>>>>>>>>>>>>字符串 SIGUSR2
+      "",
+      ngx_signal_handler },
+
+ngx_config.h
+#if !(NGX_WIN32)
+
+#define ngx_signal_helper(n)     SIG##n
+#define ngx_signal_value(n)      ngx_signal_helper(n)
+
+#define ngx_random               random
+
+/* TODO: #ifndef */
+#define NGX_SHUTDOWN_SIGNAL      QUIT
+#define NGX_TERMINATE_SIGNAL     TERM
+#define NGX_NOACCEPT_SIGNAL      WINCH
+#define NGX_RECONFIGURE_SIGNAL   HUP
+
+#if (NGX_LINUXTHREADS)
+#define NGX_REOPEN_SIGNAL        INFO
+#define NGX_CHANGEBIN_SIGNAL     XCPU
+#else
+#define NGX_REOPEN_SIGNAL        USR1
+#define NGX_CHANGEBIN_SIGNAL     USR2
+#endif
+
+--------------------------------------------------------------------------------
