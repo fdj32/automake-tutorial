@@ -57,7 +57,7 @@ void
 ngx_localtime(time_t s, ngx_tm_t *tm)
 {
 #if (NGX_HAVE_LOCALTIME_R)
-    (void) localtime_r(&s, tm);
+    (void) localtime_r(&s, tm); // http://blog.csdn.net/u010087712/article/details/50731222
 
 #else
     ngx_tm_t  *t;
@@ -67,8 +67,8 @@ ngx_localtime(time_t s, ngx_tm_t *tm)
 
 #endif
 
-    tm->ngx_tm_mon++;
-    tm->ngx_tm_year += 1900;
+    tm->ngx_tm_mon++; // month 从0开始计算，转换为从1开始计算
+    tm->ngx_tm_year += 1900; // year加上1900
 }
 
 

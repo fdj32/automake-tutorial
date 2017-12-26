@@ -18,18 +18,18 @@
  * to run more than NGX_TIME_SLOTS seconds.
  */
 
-#define NGX_TIME_SLOTS   64
+#define NGX_TIME_SLOTS   64 // 时间值和各种格式字符串的数组长度，滚动存储ngx_time_update，0->63
 
-static ngx_uint_t        slot;
-static ngx_atomic_t      ngx_time_lock;
+static ngx_uint_t        slot; // 当前下标
+static ngx_atomic_t      ngx_time_lock; // 更新时间需要的写锁
 // https://www.cnblogs.com/yc_sunniwell/archive/2010/06/24/1764231.html volatile 每次都需要真真切切地读内存地址，不能通过读寄存器来偷懒
 volatile ngx_msec_t      ngx_current_msec; // 当前毫秒数
-volatile ngx_time_t     *ngx_cached_time;
-volatile ngx_str_t       ngx_cached_err_log_time;
-volatile ngx_str_t       ngx_cached_http_time;
-volatile ngx_str_t       ngx_cached_http_log_time;
-volatile ngx_str_t       ngx_cached_http_log_iso8601;
-volatile ngx_str_t       ngx_cached_syslog_time;
+volatile ngx_time_t     *ngx_cached_time; // 当前时间
+volatile ngx_str_t       ngx_cached_err_log_time; //"yyyy/MM/dd HH:mm:ss"
+volatile ngx_str_t       ngx_cached_http_time; //"EEE, dd MMM yyyy HH:mm:ss zzz"
+volatile ngx_str_t       ngx_cached_http_log_time;//"dd/MMM/yyyy:HH:mm:ss Z"
+volatile ngx_str_t       ngx_cached_http_log_iso8601;//"yyyy-MM-ddTHH:mm:ssZ"需要添加冒号
+volatile ngx_str_t       ngx_cached_syslog_time;//"MMM dd HH:mm:ss"
 
 #if !(NGX_WIN32)
 
@@ -62,59 +62,59 @@ static char  *months[] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun",
 void
 ngx_time_init(void)
 {// birthday of Igor Sysoev ? https://www.csdn.net/article/2013-09-09/2816874-this-russian-software-is-taking-over-the-internet
-    ngx_cached_err_log_time.len = sizeof("1970/09/28 12:00:00") - 1;
+    ngx_cached_err_log_time.len = sizeof("1970/09/28 12:00:00") - 1; // 结果等于strlen，但是有区别 http://blog.csdn.net/21aspnet/article/details/1539951
     ngx_cached_http_time.len = sizeof("Mon, 28 Sep 1970 06:00:00 GMT") - 1;
     ngx_cached_http_log_time.len = sizeof("28/Sep/1970:12:00:00 +0600") - 1;
     ngx_cached_http_log_iso8601.len = sizeof("1970-09-28T12:00:00+06:00") - 1;
     ngx_cached_syslog_time.len = sizeof("Sep 28 12:00:00") - 1;
 // 在2002年，42岁的他开始启动这一项目，同年十月发布了第一段公共简码。年份能对上……
-    ngx_cached_time = &cached_time[0];
+    ngx_cached_time = &cached_time[0]; // 当前时间指向数组第一位
 
-    ngx_time_update();
+    ngx_time_update(); // 开始更新
 }
 
 
 void
 ngx_time_update(void)
 {
-    u_char          *p0, *p1, *p2, *p3, *p4;
+    u_char          *p0, *p1, *p2, *p3, *p4; // 指向各个格式化时间字符串的指针
     ngx_tm_t         tm, gmt;
-    time_t           sec;
-    ngx_uint_t       msec;
-    ngx_time_t      *tp;
-    struct timeval   tv;
+    time_t           sec; // 当前秒数
+    ngx_uint_t       msec; // 当前毫秒数
+    ngx_time_t      *tp; // 指向当前slot时间数组的指针
+    struct timeval   tv; // 存储gettimeofday结果
 
-    if (!ngx_trylock(&ngx_time_lock)) {
+    if (!ngx_trylock(&ngx_time_lock)) { // 原子操作，当成锁来使用
         return;
     }
 
-    ngx_gettimeofday(&tv);
+    ngx_gettimeofday(&tv); // gettimeofday(tp, NULL), 忽略时区
 
-    sec = tv.tv_sec;
-    msec = tv.tv_usec / 1000; // tv_usec is microseconds, so msec is milliseconds
+    sec = tv.tv_sec; // 距离Epoch时间的秒数1970-01-01 00:00:00 UTC
+    msec = tv.tv_usec / 1000; // 微秒数/1000=毫秒数 tv_usec is microseconds, so msec is milliseconds
 
     ngx_current_msec = (ngx_msec_t) sec * 1000 + msec;
 
-    tp = &cached_time[slot];
+    tp = &cached_time[slot]; // slot静态变量，默认从0开始
 
     if (tp->sec == sec) {
         tp->msec = msec;
-        ngx_unlock(&ngx_time_lock);
+        ngx_unlock(&ngx_time_lock); // 如果还是当前秒数没变化，只更新毫秒数，其他的字符串不用变化，直接解锁返回
         return;
     }
 
     if (slot == NGX_TIME_SLOTS - 1) {
-        slot = 0;
+        slot = 0; // 由63滚回0
     } else {
-        slot++;
+        slot++; // ++直到63
     }
 
-    tp = &cached_time[slot];
+    tp = &cached_time[slot]; // 指向下一个slot时间数组值，开始更新
 
     tp->sec = sec;
     tp->msec = msec;
 
-    ngx_gmtime(sec, &gmt);
+    ngx_gmtime(sec, &gmt); // 把秒数转换成公历年月日时分秒星期X，GMT时间
 
 
     p0 = &cached_http_time[slot][0];
@@ -131,9 +131,9 @@ ngx_time_update(void)
 
 #elif (NGX_HAVE_GMTOFF)
 
-    ngx_localtime(sec, &tm);
-    cached_gmtoff = (ngx_int_t) (tm.ngx_tm_gmtoff / 60);
-    tp->gmtoff = cached_gmtoff;
+    ngx_localtime(sec, &tm); // 本地时间
+    cached_gmtoff = (ngx_int_t) (tm.ngx_tm_gmtoff / 60); // 分钟偏移 long	tm_gmtoff;	/* offset from UTC in seconds */
+    tp->gmtoff = cached_gmtoff; // 分钟偏移用于计算时区
 
 #else
 
@@ -185,7 +185,7 @@ ngx_time_update(void)
     ngx_cached_http_log_iso8601.data = p3;
     ngx_cached_syslog_time.data = p4;
 
-    ngx_unlock(&ngx_time_lock);
+    ngx_unlock(&ngx_time_lock);//解锁
 }
 
 
@@ -193,7 +193,7 @@ ngx_time_update(void)
 
 void
 ngx_time_sigsafe_update(void)
-{
+{ // ngx_signal_handler()
     u_char          *p, *p2;
     ngx_tm_t         tm;
     time_t           sec;
