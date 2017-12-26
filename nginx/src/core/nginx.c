@@ -214,7 +214,7 @@ main(int argc, char *const *argv)
     if (ngx_show_version) {
         ngx_show_version_info();
 
-        if (!ngx_test_config) {
+        if (!ngx_test_config) { // 不测试就返回，测试就继续
             return 0;
         }
     }

@@ -22,8 +22,8 @@
 
 static ngx_uint_t        slot;
 static ngx_atomic_t      ngx_time_lock;
-
-volatile ngx_msec_t      ngx_current_msec;
+// https://www.cnblogs.com/yc_sunniwell/archive/2010/06/24/1764231.html volatile 每次都需要真真切切地读内存地址，不能通过读寄存器来偷懒
+volatile ngx_msec_t      ngx_current_msec; // 当前毫秒数
 volatile ngx_time_t     *ngx_cached_time;
 volatile ngx_str_t       ngx_cached_err_log_time;
 volatile ngx_str_t       ngx_cached_http_time;
@@ -61,13 +61,13 @@ static char  *months[] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun",
 
 void
 ngx_time_init(void)
-{
+{// birthday of Igor Sysoev ? https://www.csdn.net/article/2013-09-09/2816874-this-russian-software-is-taking-over-the-internet
     ngx_cached_err_log_time.len = sizeof("1970/09/28 12:00:00") - 1;
     ngx_cached_http_time.len = sizeof("Mon, 28 Sep 1970 06:00:00 GMT") - 1;
     ngx_cached_http_log_time.len = sizeof("28/Sep/1970:12:00:00 +0600") - 1;
     ngx_cached_http_log_iso8601.len = sizeof("1970-09-28T12:00:00+06:00") - 1;
     ngx_cached_syslog_time.len = sizeof("Sep 28 12:00:00") - 1;
-
+// 在2002年，42岁的他开始启动这一项目，同年十月发布了第一段公共简码。年份能对上……
     ngx_cached_time = &cached_time[0];
 
     ngx_time_update();
@@ -91,7 +91,7 @@ ngx_time_update(void)
     ngx_gettimeofday(&tv);
 
     sec = tv.tv_sec;
-    msec = tv.tv_usec / 1000;
+    msec = tv.tv_usec / 1000; // tv_usec is microseconds, so msec is milliseconds
 
     ngx_current_msec = (ngx_msec_t) sec * 1000 + msec;
 

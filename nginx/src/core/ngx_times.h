@@ -12,11 +12,11 @@
 #include <ngx_config.h>
 #include <ngx_core.h>
 
-
+// http://blog.csdn.net/luoweifu/article/details/20288549
 typedef struct {
-    time_t      sec;
-    ngx_uint_t  msec;
-    ngx_int_t   gmtoff;
+    time_t      sec; // time_t 这种类型就是用来存储从1970年到现在经过了多少秒
+    ngx_uint_t  msec; // 毫秒数
+    ngx_int_t   gmtoff; // (ngx_int_t) (tm.ngx_tm_gmtoff / 60) = 分钟 ngx_times.c，time.h >> struct tm >> long	tm_gmtoff;	/* offset from UTC in seconds */
 } ngx_time_t;
 
 
