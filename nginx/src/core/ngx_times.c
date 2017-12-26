@@ -55,7 +55,7 @@ static u_char            cached_syslog_time[NGX_TIME_SLOTS]
                                     [sizeof("Sep 28 12:00:00")];
 
 
-static char  *week[] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+static char  *week[] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" }; // 从周日开始算
 static char  *months[] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun",
                            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 
@@ -225,8 +225,8 @@ ngx_time_sigsafe_update(void)
 
     tp->sec = 0;
 
-    ngx_gmtime(sec + cached_gmtoff * 60, &tm);
-
+    ngx_gmtime(sec + cached_gmtoff * 60, &tm); // GMT转localtime
+// 只需要cached_err_log_time & cached_syslog_time？
     p = &cached_err_log_time[slot][0];
 
     (void) ngx_sprintf(p, "%4d/%02d/%02d %02d:%02d:%02d",
@@ -242,8 +242,8 @@ ngx_time_sigsafe_update(void)
 
     ngx_memory_barrier();
 
-    ngx_cached_err_log_time.data = p;
-    ngx_cached_syslog_time.data = p2;
+    ngx_cached_err_log_time.data = p; // ngx_log_error_core()
+    ngx_cached_syslog_time.data = p2; // ngx_syslog_add_header()
 
     ngx_unlock(&ngx_time_lock);
 }
@@ -310,9 +310,9 @@ ngx_gmtime(time_t t, ngx_tm_t *tp)
 
     /* January 1, 1970 was Thursday */
 
-    wday = (4 + days) % 7;
+    wday = (4 + days) % 7; // Wed,Thu,Fri,Sat
 
-    n %= 86400;
+    n %= 86400; // 距离当天00:00:00秒数
     hour = n / 3600;
     n %= 3600;
     min = n / 60;
@@ -322,17 +322,17 @@ ngx_gmtime(time_t t, ngx_tm_t *tp)
      * the algorithm based on Gauss' formula,
      * see src/http/ngx_http_parse_time.c
      */
-
+    // 719527 = 365*1970+1970/4-1970/100+1970/400=719050+492.5-19+4=719527.5, From March 1, 1 BC To March 1, 1971 BC, 再减掉1971 Jan + Feb (31+28)
     /* days since March 1, 1 BC */
     days = days - (31 + 28) + 719527;
-
+// 闰年需要把公元元年剔除，所以该算法就是将公元元年的Jan 和 Feb 剔除，从March 1, 1 BC开始算
     /*
      * The "days" should be adjusted to 1 only, however, some March 1st's go
      * to previous year, so we adjust them to 2.  This causes also shift of the
      * last February days to next year, but we catch the case when "yday"
      * becomes negative.
      */
-
+// 400年里，有100-4+1个闰年，总天数为(365 * 400 + 100 - 4 + 1)=146097，平均每年146097/400=365.2425天
     year = (days + 2) * 400 / (365 * 400 + 100 - 4 + 1);
 
     yday = days - (365 * year + year / 4 - year / 100 + year / 400);
