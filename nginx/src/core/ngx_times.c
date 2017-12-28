@@ -391,7 +391,7 @@ ngx_gmtime(time_t t, ngx_tm_t *tp)
 
 time_t
 ngx_next_time(time_t when)
-{
+{ // ngx_http_set_expires
     time_t     now, next;
     struct tm  tm;
 
@@ -404,17 +404,17 @@ ngx_next_time(time_t when)
     tm.tm_min = (int) (when / 60);
     tm.tm_sec = (int) (when % 60);
 
-    next = mktime(&tm);
+    next = mktime(&tm); // mktime 将 struct tm 转成 time_t
 
     if (next == -1) {
         return -1;
     }
 
-    if (next - now > 0) {
+    if (next - now > 0) {// 如果传入的参数 when(只取时分秒) 比当前缓存的时间大，则返回
         return next;
     }
 
-    tm.tm_mday++;
+    tm.tm_mday++; // when的时分秒小，则加一天
 
     /* mktime() should normalize a date (Jan 32, etc) */
 
