@@ -233,7 +233,7 @@ struct ngx_module_s {
 
     void                 *ctx;
     ngx_command_t        *commands;
-    ngx_uint_t            type;
+    ngx_uint_t            type; // CORE CONF EVENT HTTP
 
     ngx_int_t           (*init_master)(ngx_log_t *log);
 

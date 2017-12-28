@@ -36,7 +36,7 @@ typedef struct {
 } ngx_http_module_t;
 
 
-#define NGX_HTTP_MODULE           0x50545448   /* "HTTP" */
+#define NGX_HTTP_MODULE           0x50545448   /* "HTTP" 0xPTTH */
 
 #define NGX_HTTP_MAIN_CONF        0x02000000
 #define NGX_HTTP_SRV_CONF         0x04000000

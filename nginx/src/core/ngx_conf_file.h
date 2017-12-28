@@ -67,8 +67,8 @@
 #define NGX_CONF_BLOCK_DONE  2
 #define NGX_CONF_FILE_DONE   3
 
-#define NGX_CORE_MODULE      0x45524F43  /* "CORE" */
-#define NGX_CONF_MODULE      0x464E4F43  /* "CONF" */
+#define NGX_CORE_MODULE      0x45524F43  /* "CORE" 0xEROC */
+#define NGX_CONF_MODULE      0x464E4F43  /* "CONF" 0xFNOC */
 
 
 #define NGX_MAX_CONF_ERRSTR  1024
