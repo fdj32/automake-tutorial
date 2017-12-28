@@ -43,7 +43,7 @@ ngx_module_t  ngx_conf_module = {
     NULL,                                  /* exit master */
     NGX_MODULE_V1_PADDING
 };
-
+// type=NGX_CONF_MODULE 只有ngx_conf_module这一个
 
 /* The eight fixed arguments */
 

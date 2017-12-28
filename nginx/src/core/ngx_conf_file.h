@@ -114,7 +114,7 @@ typedef char *(*ngx_conf_handler_pt)(ngx_conf_t *cf,
 
 
 struct ngx_conf_s {
-    char                 *name;
+    char                 *name;// 没有用到？
     ngx_array_t          *args;
 
     ngx_cycle_t          *cycle;
@@ -124,9 +124,9 @@ struct ngx_conf_s {
     ngx_log_t            *log;
 
     void                 *ctx;
-    ngx_uint_t            module_type;
-    ngx_uint_t            cmd_type;
-
+    ngx_uint_t            module_type; // CORE CONF EVENT HTTP
+    ngx_uint_t            cmd_type; // NGX_CORE_MODULE=NGX_MAIN_CONF,NGX_EVENT_MODULE=NGX_EVENT_CONF, NGX_HTTP_*_CONF:ngx_http_config.h
+// MAIN,SRV,LOC,UPS,SIF,LIF,LMT
     ngx_conf_handler_pt   handler;
     char                 *handler_conf;
 };
