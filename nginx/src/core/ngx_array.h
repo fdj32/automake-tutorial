@@ -14,11 +14,11 @@
 
 
 typedef struct {
-    void        *elts;
+    void        *elts; // 在pool上申请好内存返回的内存起点
     ngx_uint_t   nelts;
-    size_t       size;
-    ngx_uint_t   nalloc;
-    ngx_pool_t  *pool;
+    size_t       size;// sizeof
+    ngx_uint_t   nalloc; // 分配的数组长度
+    ngx_pool_t  *pool;//缓存池
 } ngx_array_t;
 
 

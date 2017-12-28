@@ -124,7 +124,7 @@ ngx_palloc(ngx_pool_t *pool, size_t size)
 {
 #if !(NGX_DEBUG_PALLOC)
     if (size <= pool->max) {
-        return ngx_palloc_small(pool, size, 1);
+        return ngx_palloc_small(pool, size, 1); // 需要对齐
     }
 #endif
 
@@ -137,7 +137,7 @@ ngx_pnalloc(ngx_pool_t *pool, size_t size)
 {
 #if !(NGX_DEBUG_PALLOC)
     if (size <= pool->max) {
-        return ngx_palloc_small(pool, size, 0);
+        return ngx_palloc_small(pool, size, 0); // 不需要对齐
     }
 #endif
 
@@ -162,14 +162,14 @@ ngx_palloc_small(ngx_pool_t *pool, size_t size, ngx_uint_t align)
 
         if ((size_t) (p->d.end - m) >= size) {
             p->d.last = m + size;
-
+// 当前数据块内存够用，则分配last指针（对齐），last后移size
             return m;
         }
-
+// 当前数据块内存不足，则向下一个pool申请
         p = p->d.next;
 
     } while (p);
-
+// 直到遍历完了 pool 也找不到足够的内存（都是一些不完整的数据块），则重新申请一个全新的block
     return ngx_palloc_block(pool, size);
 }
 
@@ -181,14 +181,14 @@ ngx_palloc_block(ngx_pool_t *pool, size_t size)
     size_t       psize;
     ngx_pool_t  *p, *new;
 
-    psize = (size_t) (pool->d.end - (u_char *) pool);
+    psize = (size_t) (pool->d.end - (u_char *) pool); // 一个完整数据块总长度==max ？
 
     m = ngx_memalign(NGX_POOL_ALIGNMENT, psize, pool->log);
     if (m == NULL) {
         return NULL;
     }
 
-    new = (ngx_pool_t *) m;
+    new = (ngx_pool_t *) m; // ngx_pool_t 是以 ngx_pool_data_t 开头，指针地址直接转换，这样都可以，只有 ngx_pool_data_t 有意义
 
     new->d.end = m + psize;
     new->d.next = NULL;
@@ -200,11 +200,11 @@ ngx_palloc_block(ngx_pool_t *pool, size_t size)
 
     for (p = pool->current; p->d.next; p = p->d.next) {
         if (p->d.failed++ > 4) {
-            pool->current = p->d.next;
+            pool->current = p->d.next; // 连续申请4次都不行就将current 后移，实现删除内存 pool链表
         }
     }
 
-    p->d.next = new;
+    p->d.next = new; // 插入到链表结尾
 
     return m;
 }

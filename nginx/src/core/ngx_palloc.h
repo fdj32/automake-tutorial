@@ -47,17 +47,17 @@ struct ngx_pool_large_s {
 
 
 typedef struct {
-    u_char               *last;
-    u_char               *end;
-    ngx_pool_t           *next;
-    ngx_uint_t            failed;
+    u_char               *last; // 数据块内可用内存的开头
+    u_char               *end; // 该数据块结尾处的内存地址
+    ngx_pool_t           *next; // 下一个pool 指针
+    ngx_uint_t            failed; // 在此数据块上申请内存失败的次数
 } ngx_pool_data_t;
 
 
 struct ngx_pool_s {
-    ngx_pool_data_t       d;
-    size_t                max;
-    ngx_pool_t           *current;
+    ngx_pool_data_t       d; // pool 放数据的data块
+    size_t                max; // pool管理的内存最大长度
+    ngx_pool_t           *current; // pool当前的数据块指针
     ngx_chain_t          *chain;
     ngx_pool_large_t     *large;
     ngx_pool_cleanup_t   *cleanup;

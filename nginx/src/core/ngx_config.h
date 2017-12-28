@@ -94,13 +94,13 @@ typedef intptr_t        ngx_flag_t;
 
 
 #ifndef NGX_ALIGNMENT
-#define NGX_ALIGNMENT   sizeof(unsigned long)    /* platform word */
+#define NGX_ALIGNMENT   sizeof(unsigned long)    /* platform word 4 内存对齐的基准，4x+(1,2,3)->(4+1)x*/
 #endif
 
 #define ngx_align(d, a)     (((d) + (a - 1)) & ~(a - 1))
 #define ngx_align_ptr(p, a)                                                   \
     (u_char *) (((uintptr_t) (p) + ((uintptr_t) a - 1)) & ~((uintptr_t) a - 1))
-
+// http://blog.csdn.net/niitlcj/article/details/9311189
 
 #define ngx_abort       abort
 
