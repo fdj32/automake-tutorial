@@ -17,9 +17,9 @@
  * NGX_MAX_ALLOC_FROM_POOL should be (ngx_pagesize - 1), i.e. 4095 on x86.
  * On Windows NT it decreases a number of locked pages in a kernel.
  */
-#define NGX_MAX_ALLOC_FROM_POOL  (ngx_pagesize - 1)
+#define NGX_MAX_ALLOC_FROM_POOL  (ngx_pagesize - 1) // ngx_pagesize = getpagesize(); 在Intel x86上其返回值应为4096Bytes = 4KB。
 
-#define NGX_DEFAULT_POOL_SIZE    (16 * 1024)
+#define NGX_DEFAULT_POOL_SIZE    (16 * 1024) // 16K
 
 #define NGX_POOL_ALIGNMENT       16
 #define NGX_MIN_POOL_SIZE                                                     \
@@ -47,8 +47,8 @@ struct ngx_pool_large_s {
 
 
 typedef struct {
-    u_char               *last; // 数据块内可用内存的开头
-    u_char               *end; // 该数据块结尾处的内存地址
+    u_char               *last; // pool 的结尾 p->d.last = (u_char *) p + sizeof(ngx_pool_t);
+    u_char               *end; // 该数据块结尾处的内存地址 p->d.end = (u_char *) p + size;
     ngx_pool_t           *next; // 下一个pool 指针
     ngx_uint_t            failed; // 在此数据块上申请内存失败的次数
 } ngx_pool_data_t;
@@ -56,7 +56,7 @@ typedef struct {
 
 struct ngx_pool_s {
     ngx_pool_data_t       d; // pool 放数据的data块
-    size_t                max; // pool管理的内存最大长度
+    size_t                max; // pool一次分配的最大内存，超出则分配到large区
     ngx_pool_t           *current; // pool当前的数据块指针
     ngx_chain_t          *chain; // created by ngx_alloc_chain_link
     ngx_pool_large_t     *large; // created by ngx_palloc_large

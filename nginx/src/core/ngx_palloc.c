@@ -30,14 +30,14 @@ ngx_create_pool(size_t size, ngx_log_t *log)
     p->d.next = NULL;
     p->d.failed = 0;
 
-    size = size - sizeof(ngx_pool_t);
-    p->max = (size < NGX_MAX_ALLOC_FROM_POOL) ? size : NGX_MAX_ALLOC_FROM_POOL;
+    size = size - sizeof(ngx_pool_t); // 能存数据的需要扣除指针
+    p->max = (size < NGX_MAX_ALLOC_FROM_POOL) ? size : NGX_MAX_ALLOC_FROM_POOL; // 取 size 和 pagesize - 1 的最小值
 
-    p->current = p;
+    p->current = p; // head 指针
     p->chain = NULL;
     p->large = NULL;
     p->cleanup = NULL;
-    p->log = log;
+    p->log = log; // log = ngx_log_init(ngx_prefix);
 
     return p;
 }
