@@ -58,10 +58,10 @@ struct ngx_pool_s {
     ngx_pool_data_t       d; // pool 放数据的data块
     size_t                max; // pool管理的内存最大长度
     ngx_pool_t           *current; // pool当前的数据块指针
-    ngx_chain_t          *chain;
-    ngx_pool_large_t     *large;
-    ngx_pool_cleanup_t   *cleanup;
-    ngx_log_t            *log;
+    ngx_chain_t          *chain; // created by ngx_alloc_chain_link
+    ngx_pool_large_t     *large; // created by ngx_palloc_large
+    ngx_pool_cleanup_t   *cleanup; // created by ngx_pool_cleanup_add
+    ngx_log_t            *log; // come from "log = ngx_cycle->log;"
 };
 
 
