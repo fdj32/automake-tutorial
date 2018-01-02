@@ -66,8 +66,8 @@ struct ngx_pool_s {
 
 
 typedef struct {
-    ngx_fd_t              fd;
-    u_char               *name;
+    ngx_fd_t              fd; // file descriptor
+    u_char               *name; // file name
     ngx_log_t            *log;
 } ngx_pool_cleanup_file_t;
 

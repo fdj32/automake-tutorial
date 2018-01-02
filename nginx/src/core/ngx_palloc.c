@@ -230,7 +230,7 @@ ngx_palloc_large(ngx_pool_t *pool, size_t size)
             return p;
         }
 
-        if (n++ > 3) {
+        if (n++ > 3) { // large 只更新前4个链表指针，0123，超出则重新从small区分配 large node 指针
             break;
         }
     }
@@ -240,7 +240,7 @@ ngx_palloc_large(ngx_pool_t *pool, size_t size)
         ngx_free(p);
         return NULL;
     }
-
+// 插入large 链表头
     large->alloc = p;
     large->next = pool->large;
     pool->large = large;
@@ -251,7 +251,7 @@ ngx_palloc_large(ngx_pool_t *pool, size_t size)
 
 void *
 ngx_pmemalign(ngx_pool_t *pool, size_t size, size_t alignment)
-{
+{ // 从 pool 中分配 size 内存，并对齐 alignment
     void              *p;
     ngx_pool_large_t  *large;
 
@@ -265,7 +265,7 @@ ngx_pmemalign(ngx_pool_t *pool, size_t size, size_t alignment)
         ngx_free(p);
         return NULL;
     }
-
+    // 插入large 链表头
     large->alloc = p;
     large->next = pool->large;
     pool->large = large;
@@ -276,7 +276,7 @@ ngx_pmemalign(ngx_pool_t *pool, size_t size, size_t alignment)
 
 ngx_int_t
 ngx_pfree(ngx_pool_t *pool, void *p)
-{
+{ // 在指定 pool 中 free 指定的 large 指针数据
     ngx_pool_large_t  *l;
 
     for (l = pool->large; l; l = l->next) {
@@ -296,7 +296,7 @@ ngx_pfree(ngx_pool_t *pool, void *p)
 
 void *
 ngx_pcalloc(ngx_pool_t *pool, size_t size)
-{
+{ // 申请 size 内存，并置0
     void *p;
 
     p = ngx_palloc(pool, size);
@@ -324,13 +324,13 @@ ngx_pool_cleanup_add(ngx_pool_t *p, size_t size)
             return NULL;
         }
 
-    } else {
+    } else { // size = 0 不申请数据区
         c->data = NULL;
     }
 
-    c->handler = NULL;
+    c->handler = NULL; // 初始化未赋值
     c->next = p->cleanup;
-
+// 插入 cleanup 链表头
     p->cleanup = c;
 
     ngx_log_debug1(NGX_LOG_DEBUG_ALLOC, p->log, 0, "add cleanup: %p", c);
@@ -341,17 +341,17 @@ ngx_pool_cleanup_add(ngx_pool_t *p, size_t size)
 
 void
 ngx_pool_run_cleanup_file(ngx_pool_t *p, ngx_fd_t fd)
-{
+{ // ngx_http_upstream.c，作用就是关闭文件
     ngx_pool_cleanup_t       *c;
     ngx_pool_cleanup_file_t  *cf;
 
     for (c = p->cleanup; c; c = c->next) {
         if (c->handler == ngx_pool_cleanup_file) {
-
-            cf = c->data;
+// 比较 handler 指针
+            cf = c->data; // data 是 ngx_pool_cleanup_file_t 指针
 
             if (cf->fd == fd) {
-                c->handler(cf);
+                c->handler(cf); // ngx_pool_cleanup_file(ngx_pool_cleanup_file_t *)
                 c->handler = NULL;
                 return;
             }
@@ -367,7 +367,7 @@ ngx_pool_cleanup_file(void *data)
 
     ngx_log_debug1(NGX_LOG_DEBUG_ALLOC, c->log, 0, "file cleanup: fd:%d",
                    c->fd);
-
+// 关闭文件描述符，文件资源退出使用
     if (ngx_close_file(c->fd) == NGX_FILE_ERROR) {
         ngx_log_error(NGX_LOG_ALERT, c->log, ngx_errno,
                       ngx_close_file_n " \"%s\" failed", c->name);
@@ -377,7 +377,7 @@ ngx_pool_cleanup_file(void *data)
 
 void
 ngx_pool_delete_file(void *data)
-{
+{ // ngx_file.c ngx_create_temp_file
     ngx_pool_cleanup_file_t  *c = data;
 
     ngx_err_t  err;
@@ -393,7 +393,7 @@ ngx_pool_delete_file(void *data)
                           ngx_delete_file_n " \"%s\" failed", c->name);
         }
     }
-
+// 先删除文件，再关闭文件就没有问题吗？
     if (ngx_close_file(c->fd) == NGX_FILE_ERROR) {
         ngx_log_error(NGX_LOG_ALERT, c->log, ngx_errno,
                       ngx_close_file_n " \"%s\" failed", c->name);
