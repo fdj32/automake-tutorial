@@ -79,14 +79,14 @@ ngx_destroy_pool(ngx_pool_t *pool)
     }
 
 #endif
-
+// free 大内存区
     for (l = pool->large; l; l = l->next) {
         if (l->alloc) {
             ngx_free(l->alloc);
         }
     }
-
-    for (p = pool, n = pool->d.next; /* void */; p = n, n = n->d.next) {
+// free pool 链表
+    for (p = pool, n = pool->d.next; /* void */; p = n, n = n->d.next) { // 判断条件不能是 n，否则最后一个free 不掉
         ngx_free(p);
 
         if (n == NULL) {
@@ -101,21 +101,21 @@ ngx_reset_pool(ngx_pool_t *pool)
 {
     ngx_pool_t        *p;
     ngx_pool_large_t  *l;
-
+// free 大内存区
     for (l = pool->large; l; l = l->next) {
         if (l->alloc) {
             ngx_free(l->alloc);
         }
     }
-
+// 循环pool链表，回置指针，清空小内存区数据
     for (p = pool; p; p = p->d.next) {
         p->d.last = (u_char *) p + sizeof(ngx_pool_t);
         p->d.failed = 0;
     }
-
+// cleanup ?
     pool->current = pool;
     pool->chain = NULL;
-    pool->large = NULL;
+    pool->large = NULL; // free large 指针
 }
 
 

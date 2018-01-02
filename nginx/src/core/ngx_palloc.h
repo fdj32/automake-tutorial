@@ -32,7 +32,7 @@ typedef void (*ngx_pool_cleanup_pt)(void *data);
 typedef struct ngx_pool_cleanup_s  ngx_pool_cleanup_t;
 
 struct ngx_pool_cleanup_s {
-    ngx_pool_cleanup_pt   handler;
+    ngx_pool_cleanup_pt   handler; // c->handler(c->data); 清除 data 的 方法
     void                 *data;
     ngx_pool_cleanup_t   *next;
 };
