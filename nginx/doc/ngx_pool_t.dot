@@ -1,0 +1,52 @@
+digraph g {
+  node[shape=record,height=.1];
+
+  node_pool_size[label=
+  "<f0> pool_size"];
+
+  node_pool[label=
+  "<f0>
+  |<f1> ngx_pool_data_t d
+  |<f2> size_t max
+  |<f3> ngx_pool_t *current
+  |<f4> ngx_chain_t *chain
+  |<f5> ngx_pool_large_t *large
+  |<f6> ngx_pool_cleanup_t *cleanup
+  |<f7> ngx_log_t *log
+  |<f8>
+  |<f9> small memory block
+  |<f10>"];
+  
+  node_pool_data[label=
+  "<f0>
+  |<f1> u_char *last
+  |<f2> u_char *end
+  |<f3> ngx_pool_t *next
+  |<f4> ngx_uint_t failed"];
+
+
+  node_pool_next[label=
+  "<f0>
+  |<f1> ngx_pool_data_t d
+  |<f2> size_t max
+  |<f3> ngx_pool_t *current
+  |<f4> ngx_chain_t *chain
+  |<f5> ngx_pool_large_t *large
+  |<f6> ngx_pool_cleanup_t *cleanup
+  |<f7> ngx_log_t *log
+  |<f8>
+  |<f9> small memory block
+  |<f10>"];
+
+  "node_pool_size":f0 -> node_pool:f0;
+  "node_pool_size":f0 -> node_pool:f10;
+
+  "node_pool":f1 -> "node_pool_data":f0;
+
+  "node_pool":f3 -> "node_pool":f0;
+
+  "node_pool_data":f1 -> "node_pool":f8;
+  "node_pool_data":f2 -> "node_pool":f10;
+  "node_pool_data":f3 -> "node_pool_next":f0;
+
+}

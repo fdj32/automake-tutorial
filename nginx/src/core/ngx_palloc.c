@@ -25,8 +25,8 @@ ngx_create_pool(size_t size, ngx_log_t *log)
         return NULL;
     }
 
-    p->d.last = (u_char *) p + sizeof(ngx_pool_t);
-    p->d.end = (u_char *) p + size;
+    p->d.last = (u_char *) p + sizeof(ngx_pool_t); // 指向ngx_pool_t的结尾，也就是数据的开头
+    p->d.end = (u_char *) p + size; // end 包含了ngx_pool_t结构体和数据
     p->d.next = NULL;
     p->d.failed = 0;
 

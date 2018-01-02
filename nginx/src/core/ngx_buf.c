@@ -51,11 +51,11 @@ ngx_alloc_chain_link(ngx_pool_t *pool)
 
     cl = pool->chain;
 
-    if (cl) {
+    if (cl) { // pop pool的chain链表头
         pool->chain = cl->next;
         return cl;
     }
-
+// 从 pool 中分配 一个 chain
     cl = ngx_palloc(pool, sizeof(ngx_chain_t));
     if (cl == NULL) {
         return NULL;
@@ -67,7 +67,7 @@ ngx_alloc_chain_link(ngx_pool_t *pool)
 
 ngx_chain_t *
 ngx_create_chain_of_bufs(ngx_pool_t *pool, ngx_bufs_t *bufs)
-{
+{ // 功能未完成，没有被调用
     u_char       *p;
     ngx_int_t     i;
     ngx_buf_t    *b;
@@ -113,7 +113,7 @@ ngx_create_chain_of_bufs(ngx_pool_t *pool, ngx_bufs_t *bufs)
         }
 
         cl->buf = b;
-        *ll = cl;
+        *ll = cl; // 此处看不懂
         ll = &cl->next;
     }
 

@@ -87,3 +87,8 @@ ngx_config.h
 #endif
 
 --------------------------------------------------------------------------------
+https://graphviz.gitlab.io/_pages/doc/info/
+
+dot -Tpng ngx_pool_t.dot -o ngx_pool_t.png
+
+
