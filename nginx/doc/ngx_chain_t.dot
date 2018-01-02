@@ -1,0 +1,47 @@
+digraph g {
+  node[shape=record,height=.1];
+
+  node_pool[label=
+  "{<f1> ngx_pool_data_t d
+  |<f2> size_t max
+  |<f3> ngx_pool_t *current
+  |<f4> ngx_chain_t *chain
+  |<f5> ngx_pool_large_t *large
+  |<f6> ngx_pool_cleanup_t *cleanup
+  |<f7> ngx_log_t *log
+  |small memory block}"];
+  
+  node_chain[label=
+  "{<f1> ngx_buf_t *buf
+  |<f2> ngx_chain_t *next}"];
+
+  node_chain_next[label=
+  "{<f1> ngx_buf_t *buf
+  |<f2> ngx_chain_t *next}"];
+
+  node_buf[label=
+  "{<f1> u_char *pos
+  |<f2> u_char *last
+  |<f3> off_t file_pos
+  |<f4> off_t file_last
+  |<f5> u_char *start
+  |<f6> u_char *end
+  |<f7> ngx_buf_tag_t tag
+  |<f8> ngx_buf_t *shadow
+  |unsigned temporary:1
+  |unsigned mmap:1
+  |unsigned recycled:1
+  |unsigned in_file:1
+  |unsigned flush:1
+  |unsigned sync:1
+  |unsigned last_buf:1
+  |unsigned last_in_chain:1
+  |unsigned last_shadow:1
+  |unsigned temp_file:1}"];
+
+  "node_pool":f4 -> "node_chain":f1;
+
+  "node_chain":f2 -> "node_chain_next":f1;
+
+  "node_chain_next":f1 -> "node_buf":f1;
+}
