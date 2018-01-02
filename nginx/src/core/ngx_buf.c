@@ -14,17 +14,17 @@ ngx_create_temp_buf(ngx_pool_t *pool, size_t size)
 {
     ngx_buf_t *b;
 
-    b = ngx_calloc_buf(pool);
+    b = ngx_calloc_buf(pool); // 从 pool 分配一个 buf 结构体
     if (b == NULL) {
         return NULL;
     }
 
-    b->start = ngx_palloc(pool, size);
+    b->start = ngx_palloc(pool, size); // 从pool 分配一块 size 大小的内存
     if (b->start == NULL) {
         return NULL;
     }
 
-    /*
+    /* ngx_memzero(p, size);
      * set by ngx_calloc_buf():
      *
      *     b->file_pos = 0;
@@ -35,10 +35,10 @@ ngx_create_temp_buf(ngx_pool_t *pool, size_t size)
      *     and flags
      */
 
-    b->pos = b->start;
-    b->last = b->start;
-    b->end = b->last + size;
-    b->temporary = 1;
+    b->pos = b->start; // 内存块起始位置
+    b->last = b->start; // 内存块起始位置
+    b->end = b->last + size; // 内存块终止位置
+    b->temporary = 1; // 临时性的
 
     return b;
 }

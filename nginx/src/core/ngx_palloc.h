@@ -47,7 +47,7 @@ struct ngx_pool_large_s {
 
 
 typedef struct {
-    u_char               *last; // pool 的结尾 p->d.last = (u_char *) p + sizeof(ngx_pool_t);
+    u_char               *last; // pool 的结尾 p->d.last = (u_char *) p + sizeof(ngx_pool_t); 栈区
     u_char               *end; // 该数据块结尾处的内存地址 p->d.end = (u_char *) p + size;
     ngx_pool_t           *next; // 下一个pool 指针
     ngx_uint_t            failed; // 在此数据块上申请内存失败的次数
@@ -59,7 +59,7 @@ struct ngx_pool_s {
     size_t                max; // pool一次分配的最大内存，超出则分配到large区
     ngx_pool_t           *current; // pool当前的数据块指针
     ngx_chain_t          *chain; // created by ngx_alloc_chain_link
-    ngx_pool_large_t     *large; // created by ngx_palloc_large
+    ngx_pool_large_t     *large; // created by ngx_palloc_large 堆区
     ngx_pool_cleanup_t   *cleanup; // created by ngx_pool_cleanup_add
     ngx_log_t            *log; // come from "log = ngx_cycle->log;"
 };
