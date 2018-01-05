@@ -169,16 +169,16 @@ ngx_vslprintf(u_char *buf, u_char *last, const char *fmt, va_list args)
             i64 = 0;
             ui64 = 0;
 
-            zero = (u_char) ((*++fmt == '0') ? '0' : ' ');
+            zero = (u_char) ((*++fmt == '0') ? '0' : ' '); // 左补0还是空格？
             width = 0;
-            sign = 1;
+            sign = 1; // 初始化为signed，u = unsigned
             hex = 0;
-            max_width = 0;
-            frac_width = 0;
-            slen = (size_t) -1;
+            max_width = 0; // 不限制width max value
+            frac_width = 0; // fraction width,小数长度
+            slen = (size_t) -1; // 初始化为-1，长度由参数传入
 
             while (*fmt >= '0' && *fmt <= '9') {
-                width = width * 10 + *fmt++ - '0';
+                width = width * 10 + *fmt++ - '0'; // 长度10进制计算
             }
 
 
@@ -186,28 +186,28 @@ ngx_vslprintf(u_char *buf, u_char *last, const char *fmt, va_list args)
                 switch (*fmt) {
 
                 case 'u':
-                    sign = 0;
+                    sign = 0; // unsigned
                     fmt++;
                     continue;
 
                 case 'm':
-                    max_width = 1;
+                    max_width = 1; // 限制 width max value
                     fmt++;
                     continue;
 
                 case 'X':
-                    hex = 2;
-                    sign = 0;
+                    hex = 2; // HEX uppercase
+                    sign = 0; // unsigned
                     fmt++;
                     continue;
 
                 case 'x':
-                    hex = 1;
-                    sign = 0;
+                    hex = 1; // hex lowercase
+                    sign = 0; // unsiged
                     fmt++;
                     continue;
 
-                case '.':
+                case '.': // fraction
                     fmt++;
 
                     while (*fmt >= '0' && *fmt <= '9') {
@@ -217,7 +217,7 @@ ngx_vslprintf(u_char *buf, u_char *last, const char *fmt, va_list args)
                     break;
 
                 case '*':
-                    slen = va_arg(args, size_t);
+                    slen = va_arg(args, size_t); // string length 由参数决定，读一个类型为 size_t 到 slen
                     fmt++;
                     continue;
 
@@ -229,10 +229,10 @@ ngx_vslprintf(u_char *buf, u_char *last, const char *fmt, va_list args)
             }
 
 
-            switch (*fmt) {
+            switch (*fmt) { // 参数类型
 
             case 'V':
-                v = va_arg(args, ngx_str_t *);
+                v = va_arg(args, ngx_str_t *); // 读一个字符串ngx_str_t指针到v
 
                 len = ngx_min(((size_t) (last - buf)), v->len);
                 buf = ngx_cpymem(buf, v->data, len);
@@ -241,7 +241,7 @@ ngx_vslprintf(u_char *buf, u_char *last, const char *fmt, va_list args)
                 continue;
 
             case 'v':
-                vv = va_arg(args, ngx_variable_value_t *);
+                vv = va_arg(args, ngx_variable_value_t *); // 也是一个字符串指针
 
                 len = ngx_min(((size_t) (last - buf)), vv->len);
                 buf = ngx_cpymem(buf, vv->data, len);
@@ -250,15 +250,15 @@ ngx_vslprintf(u_char *buf, u_char *last, const char *fmt, va_list args)
                 continue;
 
             case 's':
-                p = va_arg(args, u_char *);
+                p = va_arg(args, u_char *); // 常见的字符串指针
 
-                if (slen == (size_t) -1) {
+                if (slen == (size_t) -1) { // 未传入长度限制%*
                     while (*p && buf < last) {
                         *buf++ = *p++;
                     }
-
+// 将整个字符串s写入
                 } else {
-                    len = ngx_min(((size_t) (last - buf)), slen);
+                    len = ngx_min(((size_t) (last - buf)), slen);// slen 来自于%*参数
                     buf = ngx_cpymem(buf, p, len);
                 }
 
@@ -267,22 +267,22 @@ ngx_vslprintf(u_char *buf, u_char *last, const char *fmt, va_list args)
                 continue;
 
             case 'O':
-                i64 = (int64_t) va_arg(args, off_t);
-                sign = 1;
-                break;
+                i64 = (int64_t) va_arg(args, off_t); // O的类型为off_t
+                sign = 1; // signed
+                break; // 输出数字 goto line 454
 
             case 'P':
-                i64 = (int64_t) va_arg(args, ngx_pid_t);
-                sign = 1;
-                break;
+                i64 = (int64_t) va_arg(args, ngx_pid_t); // P的类型为ngx_pid_t
+                sign = 1; // signed
+                break; // 输出数字 goto line 454
 
             case 'T':
-                i64 = (int64_t) va_arg(args, time_t);
-                sign = 1;
-                break;
+                i64 = (int64_t) va_arg(args, time_t); // T的类型为time_t
+                sign = 1; // signed
+                break; // 输出数字 goto line 454
 
             case 'M':
-                ms = (ngx_msec_t) va_arg(args, ngx_msec_t);
+                ms = (ngx_msec_t) va_arg(args, ngx_msec_t); // M的类型为ngx_msec_t
                 if ((ngx_msec_int_t) ms == -1) {
                     sign = 1;
                     i64 = -1;
@@ -290,9 +290,9 @@ ngx_vslprintf(u_char *buf, u_char *last, const char *fmt, va_list args)
                     sign = 0;
                     ui64 = (uint64_t) ms;
                 }
-                break;
+                break; // 输出数字 goto line 454
 
-            case 'z':
+            case 'z': // z的类型为ssize_t
                 if (sign) {
                     i64 = (int64_t) va_arg(args, ssize_t);
                 } else {
@@ -300,7 +300,7 @@ ngx_vslprintf(u_char *buf, u_char *last, const char *fmt, va_list args)
                 }
                 break;
 
-            case 'i':
+            case 'i': // i的类型为ngx_int_t
                 if (sign) {
                     i64 = (int64_t) va_arg(args, ngx_int_t);
                 } else {
@@ -308,12 +308,12 @@ ngx_vslprintf(u_char *buf, u_char *last, const char *fmt, va_list args)
                 }
 
                 if (max_width) {
-                    width = NGX_INT_T_LEN;
+                    width = NGX_INT_T_LEN; // 2^64的10进制字符串长度
                 }
 
                 break;
 
-            case 'd':
+            case 'd': // d的类型为 int 或者 u_int/unsigned int
                 if (sign) {
                     i64 = (int64_t) va_arg(args, int);
                 } else {
@@ -321,7 +321,7 @@ ngx_vslprintf(u_char *buf, u_char *last, const char *fmt, va_list args)
                 }
                 break;
 
-            case 'l':
+            case 'l': // l的类型为 long 或者 u_long/unsiged long
                 if (sign) {
                     i64 = (int64_t) va_arg(args, long);
                 } else {
@@ -329,7 +329,7 @@ ngx_vslprintf(u_char *buf, u_char *last, const char *fmt, va_list args)
                 }
                 break;
 
-            case 'D':
+            case 'D': // D的类型为 int32_t/int 或者 uint32_t/unsigned int
                 if (sign) {
                     i64 = (int64_t) va_arg(args, int32_t);
                 } else {
@@ -337,7 +337,7 @@ ngx_vslprintf(u_char *buf, u_char *last, const char *fmt, va_list args)
                 }
                 break;
 
-            case 'L':
+            case 'L': // L的类型为 int64_t/long long 或者 uint64_t/unsigned long long
                 if (sign) {
                     i64 = va_arg(args, int64_t);
                 } else {
@@ -345,7 +345,7 @@ ngx_vslprintf(u_char *buf, u_char *last, const char *fmt, va_list args)
                 }
                 break;
 
-            case 'A':
+            case 'A': // A的类型为 ngx_atomic_int_t 或者 ngx_atomic_uint_t
                 if (sign) {
                     i64 = (int64_t) va_arg(args, ngx_atomic_int_t);
                 } else {
@@ -353,12 +353,12 @@ ngx_vslprintf(u_char *buf, u_char *last, const char *fmt, va_list args)
                 }
 
                 if (max_width) {
-                    width = NGX_ATOMIC_T_LEN;
+                    width = NGX_ATOMIC_T_LEN; // 2^64的10进制字符串长度
                 }
 
                 break;
 
-            case 'f':
+            case 'f': // f的类型为double
                 f = va_arg(args, double);
 
                 if (f < 0) {
@@ -366,27 +366,27 @@ ngx_vslprintf(u_char *buf, u_char *last, const char *fmt, va_list args)
                     f = -f;
                 }
 
-                ui64 = (int64_t) f;
-                frac = 0;
+                ui64 = (int64_t) f; // 整数部分
+                frac = 0; // 小数部分
 
-                if (frac_width) {
+                if (frac_width) { // 需要控制小数长度
 
                     scale = 1;
                     for (n = frac_width; n; n--) {
                         scale *= 10;
                     }
 
-                    frac = (uint64_t) ((f - (double) ui64) * scale + 0.5);
+                    frac = (uint64_t) ((f - (double) ui64) * scale + 0.5); // 四舍五入
 
-                    if (frac == scale) {
-                        ui64++;
-                        frac = 0;
+                    if (frac == scale) { // frac_width=1, scale=10, f=3.95 -> 0.95 -> 9.5 + 0.5 -> 10 == scale
+                        ui64++; // 整数部分 3++
+                        frac = 0; // 小数部分为 0,则输出 frac_width 个 '0'
                     }
                 }
 
                 buf = ngx_sprintf_num(buf, last, ui64, zero, 0, width);
 
-                if (frac_width) {
+                if (frac_width) { // 输出小数
                     if (buf < last) {
                         *buf++ = '.';
                     }
@@ -399,13 +399,13 @@ ngx_vslprintf(u_char *buf, u_char *last, const char *fmt, va_list args)
                 continue;
 
 #if !(NGX_WIN32)
-            case 'r':
+            case 'r': // typedef unsigned long long	__uint64_t; typedef __uint64_t	rlim_t;
                 i64 = (int64_t) va_arg(args, rlim_t);
                 sign = 1;
                 break;
 #endif
 
-            case 'p':
+            case 'p': // p的类型为指针，输出指针地址的16进制UPPERCASE
                 ui64 = (uintptr_t) va_arg(args, void *);
                 hex = 2;
                 sign = 0;
@@ -413,7 +413,7 @@ ngx_vslprintf(u_char *buf, u_char *last, const char *fmt, va_list args)
                 width = 2 * sizeof(void *);
                 break;
 
-            case 'c':
+            case 'c': // c为字符，int转字符
                 d = va_arg(args, int);
                 *buf++ = (u_char) (d & 0xff);
                 fmt++;
@@ -440,7 +440,7 @@ ngx_vslprintf(u_char *buf, u_char *last, const char *fmt, va_list args)
                 continue;
 
             case '%':
-                *buf++ = '%';
+                *buf++ = '%'; // %%输出%，转义
                 fmt++;
 
                 continue;
@@ -466,7 +466,7 @@ ngx_vslprintf(u_char *buf, u_char *last, const char *fmt, va_list args)
             fmt++;
 
         } else {
-            *buf++ = *fmt++;
+            *buf++ = *fmt++; // 非模式字符直接输出
         }
     }
 

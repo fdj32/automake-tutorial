@@ -51,15 +51,15 @@ struct ngx_log_s {
     ngx_uint_t           log_level;
     ngx_open_file_t     *file;
 
-    ngx_atomic_uint_t    connection;
+    ngx_atomic_uint_t    connection; // c->log->connection = c->number;
 
-    time_t               disk_full_time;
+    time_t               disk_full_time; // ngx_time()
 
-    ngx_log_handler_pt   handler;
-    void                *data;
+    ngx_log_handler_pt   handler; // ngx_resolver_log_error(),ngx_http_log_error(),ngx_accept_log_error()
+    void                *data; // ngx_http_log_ctx_s
 
-    ngx_log_writer_pt    writer;
-    void                *wdata;
+    ngx_log_writer_pt    writer; // ngx_syslog_writer()
+    void                *wdata; // ngx_syslog_peer_t
 
     /*
      * we declare "action" as "char *" because the actions are usually
@@ -262,7 +262,7 @@ ngx_write_stdout(char *text)
 
 
 extern ngx_module_t  ngx_errlog_module;
-extern ngx_uint_t    ngx_use_stderr;
+extern ngx_uint_t    ngx_use_stderr; // = 0
 
 
 #endif /* _NGX_LOG_H_INCLUDED_ */

@@ -74,24 +74,24 @@
 #define NGX_MAX_CONF_ERRSTR  1024
 
 
-struct ngx_command_s {
+struct ngx_command_s { // ngx_errlog_commands
     ngx_str_t             name;
-    ngx_uint_t            type;
-    char               *(*set)(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
-    ngx_uint_t            conf;
-    ngx_uint_t            offset;
-    void                 *post;
+    ngx_uint_t            type; // NGX_CONF_* 组合
+    char               *(*set)(ngx_conf_t *cf, ngx_command_t *cmd, void *conf); // ngx_error_log
+    ngx_uint_t            conf; // 初始化 0，没有修改过
+    ngx_uint_t            offset; // 初始化 0，没有修改过
+    void                 *post; // 初始化 0，没有修改过， 钩子方法
 };
 
 #define ngx_null_command  { ngx_null_string, 0, NULL, 0, 0, NULL }
 
 
 struct ngx_open_file_s {
-    ngx_fd_t              fd;
-    ngx_str_t             name;
+    ngx_fd_t              fd; // file descriptor
+    ngx_str_t             name; // file name
 
-    void                (*flush)(ngx_open_file_t *file, ngx_log_t *log);
-    void                 *data;
+    void                (*flush)(ngx_open_file_t *file, ngx_log_t *log); // flush method pointer, log->file->flush = ngx_http_log_flush;
+    void                 *data; // log->file->data = buffer;
 };
 
 

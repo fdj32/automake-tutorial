@@ -259,8 +259,8 @@ struct ngx_module_s {
 
 typedef struct {
     ngx_str_t             name;
-    void               *(*create_conf)(ngx_cycle_t *cycle);
-    char               *(*init_conf)(ngx_cycle_t *cycle, void *conf);
+    void               *(*create_conf)(ngx_cycle_t *cycle); // ngx_core_module_create_conf()
+    char               *(*init_conf)(ngx_cycle_t *cycle, void *conf); // ngx_core_module_init_conf(), ngx_event_init_conf()
 } ngx_core_module_t;
 
 

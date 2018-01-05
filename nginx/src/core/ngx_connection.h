@@ -158,7 +158,7 @@ struct ngx_connection_s {
 
     ngx_queue_t         queue;
 
-    ngx_atomic_uint_t   number;
+    ngx_atomic_uint_t   number; // ngx_atomic_fetch_add(), c->log->connection = c->number;
 
     ngx_uint_t          requests;
 

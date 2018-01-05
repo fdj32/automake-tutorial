@@ -34,11 +34,11 @@ typedef struct {
 static ngx_command_t  ngx_errlog_commands[] = {
 
     { ngx_string("error_log"),
-      NGX_MAIN_CONF|NGX_CONF_1MORE,
-      ngx_error_log,
-      0,
-      0,
-      NULL },
+      NGX_MAIN_CONF|NGX_CONF_1MORE, // type=0x01000800
+      ngx_error_log, // 唯一的set
+      0, // conf
+      0, // offset
+      NULL }, // post
 
       ngx_null_command
 };
@@ -46,8 +46,8 @@ static ngx_command_t  ngx_errlog_commands[] = {
 
 static ngx_core_module_t  ngx_errlog_module_ctx = {
     ngx_string("errlog"),
-    NULL,
-    NULL
+    NULL, // create_conf方法
+    NULL // init_conf方法
 };
 
 
@@ -69,19 +69,19 @@ ngx_module_t  ngx_errlog_module = {
 
 static ngx_log_t        ngx_log;
 static ngx_open_file_t  ngx_log_file;
-ngx_uint_t              ngx_use_stderr = 1;
+ngx_uint_t              ngx_use_stderr = 1; // changed to 0 in main() after ngx_init_cycle(), then the error log will be write to file, not stderr
 
 
 static ngx_str_t err_levels[] = {
     ngx_null_string,
-    ngx_string("emerg"),
-    ngx_string("alert"),
-    ngx_string("crit"),
-    ngx_string("error"),
-    ngx_string("warn"),
-    ngx_string("notice"),
-    ngx_string("info"),
-    ngx_string("debug")
+    ngx_string("emerg"), // NGX_LOG_EMERG
+    ngx_string("alert"), // NGX_LOG_ALERT
+    ngx_string("crit"), // NGX_LOG_CRIT
+    ngx_string("error"), // NGX_LOG_ERR
+    ngx_string("warn"), // NGX_LOG_WARN
+    ngx_string("notice"), // NGX_LOG_NOTICE
+    ngx_string("info"), // NGX_LOG_INFO
+    ngx_string("debug") // NGX_LOG_DEBUG
 };
 
 static const char *debug_levels[] = {
@@ -108,15 +108,15 @@ ngx_log_error_core(ngx_uint_t level, ngx_log_t *log, ngx_err_t err,
     va_list      args;
 #endif
     u_char      *p, *last, *msg;
-    ssize_t      n;
-    ngx_uint_t   wrote_stderr, debug_connection;
+    ssize_t      n; // long
+    ngx_uint_t   wrote_stderr, debug_connection; // boolean
     u_char       errstr[NGX_MAX_ERROR_STR];
 
-    last = errstr + NGX_MAX_ERROR_STR;
+    last = errstr + NGX_MAX_ERROR_STR; // errstr内存边界END，相当于string结尾的'\0'
 
-    p = ngx_cpymem(errstr, ngx_cached_err_log_time.data,
-                   ngx_cached_err_log_time.len);
-
+    p = ngx_cpymem(errstr, ngx_cached_err_log_time.data, // p points start
+                   ngx_cached_err_log_time.len); // 时间戳 yyyy/MM/dd HH:mm:ss
+// p 指向未写入部分的开头
     p = ngx_slprintf(p, last, " [%V] ", &err_levels[level]);
 
     /* pid#tid */
