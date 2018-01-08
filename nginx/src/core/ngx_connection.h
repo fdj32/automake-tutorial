@@ -16,11 +16,11 @@
 typedef struct ngx_listening_s  ngx_listening_t;
 
 struct ngx_listening_s {
-    ngx_socket_t        fd;
+    ngx_socket_t        fd; // file descriptor
 
-    struct sockaddr    *sockaddr;
+    struct sockaddr    *sockaddr; // ngx_create_listening ngx_set_inherited_sockets
     socklen_t           socklen;    /* size of sockaddr */
-    size_t              addr_text_max_len;
+    size_t              addr_text_max_len; // NGX_*_ADDRSTRLEN,INET6,UNIX,INET,SOCKADDR
     ngx_str_t           addr_text;
 
     int                 type;
