@@ -107,7 +107,7 @@ ngx_test_full_name(ngx_str_t *name)
 
 ssize_t
 ngx_write_chain_to_temp_file(ngx_temp_file_t *tf, ngx_chain_t *chain)
-{
+{ // ngx_event_pipe_write_chain_to_temp_file ngx_http_write_request_body
     ngx_int_t  rc;
 
     if (tf->file.fd == NGX_INVALID_FILE) {

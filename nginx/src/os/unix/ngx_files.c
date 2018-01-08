@@ -203,7 +203,7 @@ ngx_write_file(ngx_file_t *file, u_char *buf, size_t size, off_t offset)
 #if (NGX_HAVE_PWRITE)
 
     for ( ;; ) {
-        n = pwrite(file->fd, buf + written, size, offset);
+        n = pwrite(file->fd, buf + written, size, offset); // 执行后，文件偏移指针不变
 
         if (n == -1) {
             err = ngx_errno;
@@ -219,7 +219,7 @@ ngx_write_file(ngx_file_t *file, u_char *buf, size_t size, off_t offset)
             return NGX_ERROR;
         }
 
-        file->offset += n;
+        file->offset += n; // 注意此处没有 file->sys_offset += n;
         written += n;
 
         if ((size_t) n == size) {
@@ -292,7 +292,7 @@ ngx_open_tempfile(u_char *name, ngx_uint_t persistent, ngx_uint_t access)
 ssize_t
 ngx_write_chain_to_file(ngx_file_t *file, ngx_chain_t *cl, off_t offset,
     ngx_pool_t *pool)
-{
+{ // ngx_write_chain_to_temp_file
     ssize_t        total, n;
     ngx_iovec_t    vec;
     struct iovec   iovs[NGX_IOVS_PREALLOCATE];
@@ -390,7 +390,7 @@ ngx_chain_to_iovec(ngx_iovec_t *vec, ngx_chain_t *cl)
 
 static ssize_t
 ngx_writev_file(ngx_file_t *file, ngx_iovec_t *vec, off_t offset)
-{
+{ // ngx_write_chain_to_file
     ssize_t    n;
     ngx_err_t  err;
 
@@ -446,7 +446,7 @@ eintr:
         if (err == NGX_EINTR) {
             ngx_log_debug0(NGX_LOG_DEBUG_CORE, file->log, err,
                            "writev() was interrupted");
-            goto eintr;
+            goto eintr; // 必须执行 writev
         }
 
         ngx_log_error(NGX_LOG_CRIT, file->log, err,

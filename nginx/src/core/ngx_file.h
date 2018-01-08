@@ -14,14 +14,14 @@
 
 
 struct ngx_file_s {
-    ngx_fd_t                   fd;
-    ngx_str_t                  name;
-    ngx_file_info_t            info;
+    ngx_fd_t                   fd; // file descriptor
+    ngx_str_t                  name; // file name
+    ngx_file_info_t            info; // struct stat
 
-    off_t                      offset;
-    off_t                      sys_offset;
+    off_t                      offset; // 偏移量，不可修改
+    off_t                      sys_offset; // 偏移量可以通过 lseek 修改，ngx_writev_file
 
-    ngx_log_t                 *log;
+    ngx_log_t                 *log; // ngx_create_pidfile(&ccf->pid, cycle->log); file.log = cf->log; c->file.log = r->connection->log;
 
 #if (NGX_THREADS || NGX_COMPAT)
     ngx_int_t                (*thread_handler)(ngx_thread_task_t *task,
@@ -34,8 +34,8 @@ struct ngx_file_s {
     ngx_event_aio_t           *aio;
 #endif
 
-    unsigned                   valid_info:1;
-    unsigned                   directio:1;
+    unsigned                   valid_info:1; // not used
+    unsigned                   directio:1; // b->file->directio = of.is_directio; ngx_http_static_handler
 };
 
 
