@@ -424,14 +424,13 @@ extern ngx_uint_t            ngx_use_epoll_rdhup;
 
 extern ngx_os_io_t  ngx_io;
 
-#define ngx_recv             ngx_io.recv
-#define ngx_recv_chain       ngx_io.recv_chain
-#define ngx_udp_recv         ngx_io.udp_recv
-#define ngx_send             ngx_io.send
-#define ngx_send_chain       ngx_io.send_chain
-#define ngx_udp_send         ngx_io.udp_send
-#define ngx_udp_send_chain   ngx_io.udp_send_chain
-
+#define ngx_recv             ngx_io.recv // ngx_os_io.ngx_unix_recv
+#define ngx_recv_chain       ngx_io.recv_chain // ngx_os_io.ngx_readv_chain
+#define ngx_udp_recv         ngx_io.udp_recv // ngx_os_io.ngx_udp_unix_recv
+#define ngx_send             ngx_io.send // ngx_os_io.ngx_unix_send
+#define ngx_udp_send         ngx_io.udp_send // ngx_os_io.ngx_udp_unix_send
+#define ngx_udp_send_chain   ngx_io.udp_send_chain // ngx_os_io.ngx_udp_unix_sendmsg_chain
+#define ngx_send_chain       ngx_io.send_chain // ngx_os_io.ngx_writev_chain
 
 #define NGX_EVENT_MODULE      0x544E5645  /* "EVNT" 0xTNVE */
 #define NGX_EVENT_CONF        0x02000000

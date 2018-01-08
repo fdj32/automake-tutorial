@@ -125,10 +125,10 @@ struct ngx_connection_s {
 
     ngx_socket_t        fd;
 
-    ngx_recv_pt         recv;
-    ngx_send_pt         send;
-    ngx_recv_chain_pt   recv_chain;
-    ngx_send_chain_pt   send_chain;
+    ngx_recv_pt         recv; // ngx_recv ngx_udp_recv
+    ngx_send_pt         send; // ngx_send ngx_udp_recv
+    ngx_recv_chain_pt   recv_chain; // ngx_os_io ngx_readv_chain()
+    ngx_send_chain_pt   send_chain; //
 
     ngx_listening_t    *listening;
 

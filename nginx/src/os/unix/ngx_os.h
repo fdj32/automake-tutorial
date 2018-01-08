@@ -25,7 +25,7 @@ typedef ngx_chain_t *(*ngx_send_chain_pt)(ngx_connection_t *c, ngx_chain_t *in,
 
 typedef struct {
     ngx_recv_pt        recv;
-    ngx_recv_chain_pt  recv_chain;
+    ngx_recv_chain_pt  recv_chain; // ngx_recv_chain
     ngx_recv_pt        udp_recv;
     ngx_send_pt        send;
     ngx_send_pt        udp_send;
