@@ -53,7 +53,7 @@ struct ngx_log_s {
 
     ngx_atomic_uint_t    connection; // c->log->connection = c->number;
 
-    time_t               disk_full_time; // ngx_time()
+    time_t               disk_full_time; // ngx_time() ngx_log_error_core
 
     ngx_log_handler_pt   handler; // ngx_resolver_log_error(),ngx_http_log_error(),ngx_accept_log_error()
     void                *data; // ngx_http_log_ctx_s
@@ -67,7 +67,7 @@ struct ngx_log_s {
      * their types all the time
      */
 
-    char                *action;
+    char                *action; // hardcode字符串
 
     ngx_log_t           *next;
 };

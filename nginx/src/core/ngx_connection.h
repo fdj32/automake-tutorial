@@ -136,51 +136,51 @@ struct ngx_connection_s {
 
     ngx_log_t          *log;
 
-    ngx_pool_t         *pool;
+    ngx_pool_t         *pool; // ngx_create_pool
 
-    int                 type;
+    int                 type; // SOCK_STREAM SOCK_DGRAM
 
-    struct sockaddr    *sockaddr;
-    socklen_t           socklen;
+    struct sockaddr    *sockaddr; // ngx_event_accept ngx_event_recvmsg
+    socklen_t           socklen; // unsigned int
     ngx_str_t           addr_text;
 
-    ngx_str_t           proxy_protocol_addr;
+    ngx_str_t           proxy_protocol_addr; // ngx_proxy_protocol_read
     in_port_t           proxy_protocol_port;
 
 #if (NGX_SSL || NGX_COMPAT)
     ngx_ssl_connection_t  *ssl;
 #endif
-
+    // ngx_connection_local_sock_addr ngx_proxy_protocol_write ngx_event_accept ngx_event_recvmsg
     struct sockaddr    *local_sockaddr;
     socklen_t           local_socklen;
 
-    ngx_buf_t          *buffer;
+    ngx_buf_t          *buffer; // ngx_create_temp_buf
 
-    ngx_queue_t         queue;
+    ngx_queue_t         queue; // prev and next pointers, 双向链表(Doubly Linked List)
 
     ngx_atomic_uint_t   number; // ngx_atomic_fetch_add(), c->log->connection = c->number;
 
-    ngx_uint_t          requests;
-
+    ngx_uint_t          requests; // ngx_http_create_request c->requests++; 计数器
+// NGX_HTTP_*_BUFFERED : LOWLEVEL=0xf0,WRITE=0x10,GZIP=0x20,SSI=0x01,SUB=0x02,COPY=0x04
     unsigned            buffered:8;
 
-    unsigned            log_error:3;     /* ngx_connection_log_error_e */
+    unsigned            log_error:3;     /* ngx_connection_log_error_e NGX_ERROR_IGNORE_ECONNRESET*/
 
-    unsigned            timedout:1;
-    unsigned            error:1;
-    unsigned            destroyed:1;
+    unsigned            timedout:1; // all = 1
+    unsigned            error:1; // all = 1
+    unsigned            destroyed:1; // changed in ngx_http_set_keepalive ngx_http_keepalive_handler
 
-    unsigned            idle:1;
-    unsigned            reusable:1;
-    unsigned            close:1;
-    unsigned            shared:1;
+    unsigned            idle:1; // changed in ngx_http_upstream_get_keepalive_peer ngx_http_keepalive_handler
+    unsigned            reusable:1; // set in ngx_reusable_connection
+    unsigned            close:1; // all = 1
+    unsigned            shared:1; // all = 1
 
-    unsigned            sendfile:1;
-    unsigned            sndlowat:1;
-    unsigned            tcp_nodelay:2;   /* ngx_connection_tcp_nodelay_e */
-    unsigned            tcp_nopush:2;    /* ngx_connection_tcp_nopush_e */
+    unsigned            sendfile:1; // ngx_http_update_location_config ngx_http_upstream_send_response
+    unsigned            sndlowat:1; // all = 1
+    unsigned            tcp_nodelay:2;   /* ngx_connection_tcp_nodelay_e NGX_TCP_NODELAY_DISABLED */
+    unsigned            tcp_nopush:2;    /* ngx_connection_tcp_nopush_e NGX_TCP_NOPUSH_DISABLED */
 
-    unsigned            need_last_buf:1;
+    unsigned            need_last_buf:1; // not set, all = 1
 
 #if (NGX_HAVE_AIO_SENDFILE || NGX_COMPAT)
     unsigned            busy_count:2;
@@ -191,7 +191,7 @@ struct ngx_connection_s {
 #endif
 };
 
-
+// NGX_LOG_DEBUG_CONNECTION=0x80000000
 #define ngx_set_connection_log(c, l)                                         \
                                                                              \
     c->log->file = l->file;                                                  \
