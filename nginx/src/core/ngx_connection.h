@@ -23,10 +23,10 @@ struct ngx_listening_s {
     size_t              addr_text_max_len; // NGX_*_ADDRSTRLEN,INET6,UNIX,INET,SOCKADDR
     ngx_str_t           addr_text;
 
-    int                 type;
+    int                 type; // SOCK_STREAM, SOCK_DGRAM
 
-    int                 backlog;
-    int                 rcvbuf;
+    int                 backlog; // NGX_LISTEN_BACKLOG,-1,511
+    int                 rcvbuf; // ngx_http_add_listening
     int                 sndbuf;
 #if (NGX_HAVE_KEEPALIVE_TUNABLE)
     int                 keepidle;
@@ -35,11 +35,11 @@ struct ngx_listening_s {
 #endif
 
     /* handler of accepted connection */
-    ngx_connection_handler_pt   handler;
+    ngx_connection_handler_pt   handler; // ngx_http_init_connection
 
-    void               *servers;  /* array of ngx_http_in_addr_t, for example */
+    void               *servers;  /* array of ngx_http_in_addr_t, for example ngx_http_init_listening */
 
-    ngx_log_t           log;
+    ngx_log_t           log; // ngx_configure_listening_sockets ngx_http_add_listening
     ngx_log_t          *logp;
 
     size_t              pool_size;
