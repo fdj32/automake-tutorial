@@ -63,7 +63,7 @@ struct ngx_peer_connection_s {
     unsigned                         cached:1;
     unsigned                         transparent:1;
 
-                                     /* ngx_connection_log_error_e */
+                                     /* ngx_connection_log_error_e NGX_ERROR_INFO */
     unsigned                         log_error:2;
 
     NGX_COMPAT_BEGIN(2)

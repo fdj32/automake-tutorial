@@ -9,7 +9,6 @@
 #include <ngx_core.h>
 #include <ngx_http.h>
 
-
 #if (NGX_HTTP_CACHE)
 static ngx_int_t ngx_http_upstream_cache(ngx_http_request_t *r,
     ngx_http_upstream_t *u);
@@ -483,7 +482,7 @@ ngx_http_upstream_create(ngx_http_request_t *r)
     r->upstream = u;
 
     u->peer.log = r->connection->log;
-    u->peer.log_error = NGX_ERROR_ERR;
+    u->peer.log_error = NGX_ERROR_ERR; /* ngx_connection_log_error_e */
 
 #if (NGX_HTTP_CACHE)
     r->cache = NULL;

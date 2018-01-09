@@ -42,40 +42,39 @@ struct ngx_listening_s {
     ngx_log_t           log; // ngx_configure_listening_sockets ngx_http_add_listening
     ngx_log_t          *logp;
 
-    size_t              pool_size;
+    size_t              pool_size; // set in ngx_http_add_listening, used in ngx_create_pool
     /* should be here because of the AcceptEx() preread */
-    size_t              post_accept_buffer_size;
+    size_t              post_accept_buffer_size; // NGX_WIN32
     /* should be here because of the deferred accept */
-    ngx_msec_t          post_accept_timeout;
+    ngx_msec_t          post_accept_timeout; // set in ngx_http_add_listening, used in ngx_add_timer
 
-    ngx_listening_t    *previous;
-    ngx_connection_t   *connection;
+    ngx_listening_t    *previous; // set in ngx_init_cycle, used in ngx_event_process_init
+    ngx_connection_t   *connection; // set in ngx_event_process_init, used in ngx_close_listening_sockets, ngx_enable_accept_events, ngx_disable_accept_events, ngx_event_process_init
+    ngx_uint_t          worker; // set in ngx_clone_listening, used in ngx_event_process_init
 
-    ngx_uint_t          worker;
+    unsigned            open:1; // all = 1
+    unsigned            remain:1; // ?
+    unsigned            ignore:1; // all = 1
 
-    unsigned            open:1;
-    unsigned            remain:1;
-    unsigned            ignore:1;
-
-    unsigned            bound:1;       /* already bound */
-    unsigned            inherited:1;   /* inherited from previous process */
-    unsigned            nonblocking_accept:1;
-    unsigned            listen:1;
-    unsigned            nonblocking:1;
-    unsigned            shared:1;    /* shared between threads or processes */
-    unsigned            addr_ntop:1;
-    unsigned            wildcard:1;
+    unsigned            bound:1;       /* already bound, not used */
+    unsigned            inherited:1;   /* inherited from previous process, not changed */
+    unsigned            nonblocking_accept:1; // not used
+    unsigned            listen:1; // all = 1
+    unsigned            nonblocking:1; /* TODO: nonblocking is not used yet */
+    unsigned            shared:1;    /* shared between threads or processes, not used */
+    unsigned            addr_ntop:1; // all = 1, set in ngx_http_add_listening, used in ngx_event_accept, ngx_event_recvmsg
+    unsigned            wildcard:1; // all = 1, not changed, used in ngx_configure_listening_sockets, ngx_event_recvmsg
 
 #if (NGX_HAVE_INET6)
-    unsigned            ipv6only:1;
+    unsigned            ipv6only:1; // IPV6_V6ONLY, all = 1, not changed, used in ngx_open_listening_sockets
 #endif
-    unsigned            reuseport:1;
-    unsigned            add_reuseport:1;
-    unsigned            keepalive:2;
+    unsigned            reuseport:1; // SO_REUSEPORT, set in ngx_set_inherited_sockets, ngx_http_add_listening
+    unsigned            add_reuseport:1; // SO_REUSEPORT, set in ngx_init_cycle, used in ngx_open_listening_sockets
+    unsigned            keepalive:2; // SO_KEEPALIVE, set in ngx_http_add_listening, used in ngx_configure_listening_sockets
 
-    unsigned            deferred_accept:1;
-    unsigned            delete_deferred:1;
-    unsigned            add_deferred:1;
+    unsigned            deferred_accept:1; // not used, NGX_HAVE_DEFERRED_ACCEPT
+    unsigned            delete_deferred:1; // not used, NGX_HAVE_DEFERRED_ACCEPT
+    unsigned            add_deferred:1; // not used, NGX_HAVE_DEFERRED_ACCEPT
 #if (NGX_HAVE_DEFERRED_ACCEPT && defined SO_ACCEPTFILTER)
     char               *accept_filter;
 #endif
@@ -84,7 +83,7 @@ struct ngx_listening_s {
 #endif
 
 #if (NGX_HAVE_TCP_FASTOPEN)
-    int                 fastopen;
+    int                 fastopen; // ngx_create_listening set -1, TCP_FASTOPEN
 #endif
 
 };
