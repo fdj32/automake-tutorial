@@ -598,7 +598,7 @@ ngx_debug_point(void)
     ccf = (ngx_core_conf_t *) ngx_get_conf(ngx_cycle->conf_ctx,
                                            ngx_core_module);
 
-    switch (ccf->debug_points) {
+    switch (ccf->debug_points) { // 0
 
     case NGX_DEBUG_POINTS_STOP:
         raise(SIGSTOP);

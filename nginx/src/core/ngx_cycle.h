@@ -87,33 +87,33 @@ typedef struct {
     ngx_flag_t                daemon; // long, ngx_core_module_create_conf(),NGX_CONF_UNSET=-1, ngx_core_module_init_conf(), ngx_conf_init_value(), -1->1, ngx_daemon()
     ngx_flag_t                master; // long, ngx_core_module_create_conf(),NGX_CONF_UNSET=-1, ngx_core_module_init_conf(), ngx_conf_init_value(), -1->1, ngx_process = NGX_PROCESS_MASTER;
 
-    ngx_msec_t                timer_resolution;
-    ngx_msec_t                shutdown_timeout;
+    ngx_msec_t                timer_resolution; // unsigned long, ngx_core_module_create_conf(),NGX_CONF_UNSET=-1, ngx_core_module_init_conf(), ngx_conf_init_msec_value(ccf->timer_resolution, 0); ngx_event_module_init(); ngx_timer_resolution
+    ngx_msec_t                shutdown_timeout; // ngx_add_timer(&ngx_shutdown_event, ccf->shutdown_timeout);
 
-    ngx_int_t                 worker_processes;
-    ngx_int_t                 debug_points;
+    ngx_int_t                 worker_processes; // ngx_set_worker_processes(), auto = sysctl hw.ncpu
+    ngx_int_t                 debug_points; // 0, 1=raise(SIGSTOP); 2=ngx_abort();
 
-    ngx_int_t                 rlimit_nofile;
-    off_t                     rlimit_core;
+    ngx_int_t                 rlimit_nofile; // #define	RLIMIT_NOFILE	8		/* number of open files */
+    off_t                     rlimit_core; // #define	RLIMIT_CORE	4		/* core file size */
 
-    int                       priority;
-
-    ngx_uint_t                cpu_affinity_auto;
+    int                       priority; // ngx_set_priority(), ngx_core_commands
+// http://blog.csdn.net/lgq421033770/article/details/51787273
+    ngx_uint_t                cpu_affinity_auto; // NGX_HAVE_CPU_AFFINITY, worker_cpu_affinity, ngx_set_cpu_affinity()
     ngx_uint_t                cpu_affinity_n;
     ngx_cpuset_t             *cpu_affinity;
 
-    char                     *username;
-    ngx_uid_t                 user;
-    ngx_gid_t                 group;
+    char                     *username; // NGX_USER->ngx_set_user()
+    ngx_uid_t                 user; // passwd.pw_uid
+    ngx_gid_t                 group; // passwd.pw_gid
 
-    ngx_str_t                 working_directory;
-    ngx_str_t                 lock_file;
+    ngx_str_t                 working_directory; // chdir
+    ngx_str_t                 lock_file; // ngx_test_lockfile, NGX_LOCK_PATH, logs/nginx.lock
 
-    ngx_str_t                 pid;
-    ngx_str_t                 oldpid;
+    ngx_str_t                 pid; // NGX_PID_PATH logs/nginx.pid
+    ngx_str_t                 oldpid; // logs/nginx.pid.oldbin
 
-    ngx_array_t               env;
-    char                    **environment;
+    ngx_array_t               env; // ngx_set_env()
+    char                    **environment; // ngx_set_environment()
 } ngx_core_conf_t; // ngx_get_conf() ngx_core_module_create_conf()
 
 

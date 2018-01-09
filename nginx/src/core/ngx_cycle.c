@@ -1340,7 +1340,7 @@ ngx_set_shutdown_timer(ngx_cycle_t *cycle)
 
     ccf = (ngx_core_conf_t *) ngx_get_conf(cycle->conf_ctx, ngx_core_module);
 
-    if (ccf->shutdown_timeout) {
+    if (ccf->shutdown_timeout) { // 0
         ngx_shutdown_event.handler = ngx_shutdown_timer_handler;
         ngx_shutdown_event.data = cycle;
         ngx_shutdown_event.log = cycle->log;
