@@ -14,11 +14,11 @@
 
 
 typedef struct {
-    u_char      *addr;
+    u_char      *addr; // ngx_shm_alloc mmap
     size_t       size;
-    ngx_str_t    name;
-    ngx_log_t   *log;
-    ngx_uint_t   exists;   /* unsigned  exists:1;  */
+    ngx_str_t    name; // ngx_event_module_init ngx_str_set(&shm.name, "nginx_shared_zone");
+    ngx_log_t   *log; // ngx_init_cycle(), shm_zone[i].shm.log = cycle->log;
+    ngx_uint_t   exists;   /* unsigned  exists:1;  ngx_shared_memory_add(), shm_zone->shm.exists = 0;*/
 } ngx_shm_t;
 
 
