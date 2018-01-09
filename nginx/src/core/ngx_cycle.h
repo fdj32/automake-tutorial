@@ -36,7 +36,7 @@ struct ngx_shm_zone_s {
 
 
 struct ngx_cycle_s {
-    void                  ****conf_ctx; // cycle->conf_ctx = ngx_pcalloc(pool, ngx_max_module * sizeof(void *));
+    void                  ****conf_ctx; // cycle->conf_ctx = ngx_pcalloc(pool, ngx_max_module * sizeof(void *)); ngx_is_init_cycle判断条件
     ngx_pool_t               *pool;
 
     ngx_log_t                *log;
