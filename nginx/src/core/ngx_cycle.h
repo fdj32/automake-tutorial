@@ -134,11 +134,11 @@ void ngx_set_shutdown_timer(ngx_cycle_t *cycle);
 
 
 extern volatile ngx_cycle_t  *ngx_cycle;
-extern ngx_array_t            ngx_old_cycles;
-extern ngx_module_t           ngx_core_module;
-extern ngx_uint_t             ngx_test_config;
-extern ngx_uint_t             ngx_dump_config;
-extern ngx_uint_t             ngx_quiet_mode;
+extern ngx_array_t            ngx_old_cycles; // count=10, created in ngx_init_cycle(), destroyed in ngx_clean_old_cycles()
+extern ngx_module_t           ngx_core_module; // ngx_modules[]
+extern ngx_uint_t             ngx_test_config; // ngx_get_options() 't' 'T'
+extern ngx_uint_t             ngx_dump_config; // ngx_get_options() 'T'
+extern ngx_uint_t             ngx_quiet_mode; // ngx_get_options() 'q', whether output configuration test result to stderr, ngx_log_stderr()
 
 
 #endif /* _NGX_CYCLE_H_INCLUDED_ */
