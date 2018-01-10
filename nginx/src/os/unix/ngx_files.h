@@ -102,8 +102,8 @@ typedef struct {
 
 #endif /* NGX_HAVE_OPENAT */
 
-#define NGX_FILE_DEFAULT_ACCESS  0644
-#define NGX_FILE_OWNER_ACCESS    0600
+#define NGX_FILE_DEFAULT_ACCESS  0644 // -rw-r--r--
+#define NGX_FILE_OWNER_ACCESS    0600 // -rw-------
 
 
 #define ngx_close_file           close

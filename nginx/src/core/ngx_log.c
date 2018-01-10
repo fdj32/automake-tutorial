@@ -333,7 +333,7 @@ ngx_log_init(u_char *prefix)
     nlen = ngx_strlen(name);
 
     if (nlen == 0) {
-        ngx_log_file.fd = ngx_stderr;
+        ngx_log_file.fd = ngx_stderr; // 2
         return &ngx_log;
     }
 
@@ -342,7 +342,7 @@ ngx_log_init(u_char *prefix)
 #if (NGX_WIN32)
     if (name[1] != ':') {
 #else
-    if (name[0] != '/') {
+    if (name[0] != '/') { // not absolute path
 #endif
 
         if (prefix) {
@@ -365,21 +365,21 @@ ngx_log_init(u_char *prefix)
 
             p = ngx_cpymem(name, prefix, plen);
 
-            if (!ngx_path_separator(*(p - 1))) {
+            if (!ngx_path_separator(*(p - 1))) { // prefix does not end with '/'
                 *p++ = '/';
             }
-
+// p points to the byte after '/'
             ngx_cpystrn(p, (u_char *) NGX_ERROR_LOG_PATH, nlen + 1);
-
-            p = name;
+// copied the last '\0' of NGX_ERROR_LOG_PATH
+            p = name; // p points to $prefix/$NGX_ERROR_LOG_PATH
         }
     }
 
-    ngx_log_file.fd = ngx_open_file(name, NGX_FILE_APPEND,
-                                    NGX_FILE_CREATE_OR_OPEN,
-                                    NGX_FILE_DEFAULT_ACCESS);
+    ngx_log_file.fd = ngx_open_file(name, NGX_FILE_APPEND, // (O_WRONLY|O_APPEND)
+                                    NGX_FILE_CREATE_OR_OPEN, // O_CREAT
+                                    NGX_FILE_DEFAULT_ACCESS); // 0644 -rw-r--r--
 
-    if (ngx_log_file.fd == NGX_INVALID_FILE) {
+    if (ngx_log_file.fd == NGX_INVALID_FILE) { // open failed
         ngx_log_stderr(ngx_errno,
                        "[alert] could not open error log file: "
                        ngx_open_file_n " \"%s\" failed", name);
@@ -389,7 +389,7 @@ ngx_log_init(u_char *prefix)
                        ngx_open_file_n " \"%s\" failed", name);
 #endif
 
-        ngx_log_file.fd = ngx_stderr;
+        ngx_log_file.fd = ngx_stderr; // out put to stderr
     }
 
     if (p) {
