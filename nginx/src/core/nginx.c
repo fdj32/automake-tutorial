@@ -183,8 +183,8 @@ static ngx_uint_t   ngx_show_help; // ngx_show_version_info()
 static ngx_uint_t   ngx_show_version; // ngx_show_version_info() show version first, then show help or not, then show configure or not
 static ngx_uint_t   ngx_show_configure; // ngx_show_version_info()
 static u_char      *ngx_prefix; // typedef	unsigned char 	u_char; ngx_get_options() 'p'
-static u_char      *ngx_conf_file; // ngx_get_options() 'c'
-static u_char      *ngx_conf_params; // ngx_get_options() 'g'
+static u_char      *ngx_conf_file; // ngx_get_options() 'c', ngx_conf_parse(&conf, &cycle->conf_file)
+static u_char      *ngx_conf_params; // ngx_get_options() 'g', ngx_conf_param()
 static char        *ngx_signal; // ngx_get_options() 's'
 
 
@@ -211,7 +211,7 @@ main(int argc, char *const *argv)
         return 1;
     }
 
-    if (ngx_show_version) {
+    if (ngx_show_version) { // '?','h','v','V'
         ngx_show_version_info();
 
         if (!ngx_test_config) { // 不测试就返回，测试就继续
@@ -219,7 +219,7 @@ main(int argc, char *const *argv)
         }
     }
 
-    /* TODO */ ngx_max_sockets = -1;
+    /* TODO */ ngx_max_sockets = -1; /* current (soft) limit */
 
     ngx_time_init();
 
@@ -229,7 +229,7 @@ main(int argc, char *const *argv)
 
     ngx_pid = ngx_getpid();
 
-    log = ngx_log_init(ngx_prefix);
+    log = ngx_log_init(ngx_prefix); // log 初始化
     if (log == NULL) {
         return 1;
     }
@@ -381,9 +381,9 @@ main(int argc, char *const *argv)
 
 static void
 ngx_show_version_info(void)
-{
+{ // show version info
     ngx_write_stderr("nginx version: " NGINX_VER_BUILD NGX_LINEFEED);
-
+// show help guides
     if (ngx_show_help) {
         ngx_write_stderr(
             "Usage: nginx [-?hvVtTq] [-s signal] [-c filename] "
@@ -733,15 +733,15 @@ ngx_exec_new_binary(ngx_cycle_t *cycle, char *const *argv)
 
 static ngx_int_t
 ngx_get_options(int argc, char *const *argv)
-{
+{ // argv 为 字符串数组指针
     u_char     *p;
     ngx_int_t   i;
 
-    for (i = 1; i < argc; i++) {
+    for (i = 1; i < argc; i++) { // 参数从下标1开始，0为程序名称 nginx
 
-        p = (u_char *) argv[i];
+        p = (u_char *) argv[i]; // p为指向参数字符串的指针
 
-        if (*p++ != '-') {
+        if (*p++ != '-') { // 参数都是以'-'开头
             ngx_log_stderr(0, "invalid option: \"%s\"", argv[i]);
             return NGX_ERROR;
         }
@@ -751,40 +751,40 @@ ngx_get_options(int argc, char *const *argv)
             switch (*p++) {
 
             case '?':
-            case 'h':
+            case 'h': // 显示版本和帮助信息
                 ngx_show_version = 1;
                 ngx_show_help = 1;
                 break;
 
-            case 'v':
+            case 'v': // 显示版本信息
                 ngx_show_version = 1;
                 break;
 
-            case 'V':
+            case 'V': // 显示版本和配置信息
                 ngx_show_version = 1;
                 ngx_show_configure = 1;
                 break;
 
-            case 't':
+            case 't': // 测试设置
                 ngx_test_config = 1;
                 break;
 
-            case 'T':
+            case 'T': // 测试设置并打印输出到控制台
                 ngx_test_config = 1;
                 ngx_dump_config = 1;
                 break;
 
-            case 'q':
+            case 'q': // 安静模式，不打印设置执行结果
                 ngx_quiet_mode = 1;
                 break;
 
-            case 'p':
-                if (*p) {
+            case 'p': // prefix, ngx_cycle_s.conf_prefix prefix
+                if (*p) { // 直接连接
                     ngx_prefix = p;
                     goto next;
                 }
 
-                if (argv[++i]) {
+                if (argv[++i]) { // 空格分开
                     ngx_prefix = (u_char *) argv[i];
                     goto next;
                 }
@@ -792,13 +792,13 @@ ngx_get_options(int argc, char *const *argv)
                 ngx_log_stderr(0, "option \"-p\" requires directory name");
                 return NGX_ERROR;
 
-            case 'c':
-                if (*p) {
+            case 'c': // ngx_conf_parse(&conf, &cycle->conf_file)
+                if (*p) { // 直接连接
                     ngx_conf_file = p;
                     goto next;
                 }
 
-                if (argv[++i]) {
+                if (argv[++i]) { // 空格分开
                     ngx_conf_file = (u_char *) argv[i];
                     goto next;
                 }
@@ -807,12 +807,12 @@ ngx_get_options(int argc, char *const *argv)
                 return NGX_ERROR;
 
             case 'g':
-                if (*p) {
+                if (*p) { // 直接连接
                     ngx_conf_params = p;
                     goto next;
                 }
 
-                if (argv[++i]) {
+                if (argv[++i]) { // 空格分开
                     ngx_conf_params = (u_char *) argv[i];
                     goto next;
                 }
@@ -821,10 +821,10 @@ ngx_get_options(int argc, char *const *argv)
                 return NGX_ERROR;
 
             case 's':
-                if (*p) {
+                if (*p) { // 直接连接
                     ngx_signal = (char *) p;
 
-                } else if (argv[++i]) {
+                } else if (argv[++i]) { // 空格分开
                     ngx_signal = argv[i];
 
                 } else {
@@ -847,13 +847,13 @@ ngx_get_options(int argc, char *const *argv)
             default:
                 ngx_log_stderr(0, "invalid option: \"%c\"", *(p - 1));
                 return NGX_ERROR;
-            }
-        }
+            } // switch END
+        } // while END
 
     next:
 
-        continue;
-    }
+        continue; // for loop next
+    } // for END
 
     return NGX_OK;
 }
