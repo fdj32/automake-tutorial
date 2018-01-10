@@ -246,7 +246,7 @@ main(int argc, char *const *argv)
 
     ngx_memzero(&init_cycle, sizeof(ngx_cycle_t));
     init_cycle.log = log;
-    ngx_cycle = &init_cycle;
+    ngx_cycle = &init_cycle; // ngx_cycle为全局变量，init_cycle为局部变量，ngx_cycle指向init_cycle
 
     init_cycle.pool = ngx_create_pool(1024, log);
     if (init_cycle.pool == NULL) {
@@ -872,16 +872,16 @@ ngx_save_argv(ngx_cycle_t *cycle, int argc, char *const *argv)
     size_t     len;
     ngx_int_t  i;
 
-    ngx_os_argv = (char **) argv;
-    ngx_argc = argc;
+    ngx_os_argv = (char **) argv; // used in ngx_init_setproctitle(), ngx_setproctitle()
+    ngx_argc = argc; // used in ngx_master_process_cycle()
 
-    ngx_argv = ngx_alloc((argc + 1) * sizeof(char *), cycle->log);
+    ngx_argv = ngx_alloc((argc + 1) * sizeof(char *), cycle->log); // 最后一个存NULL作为分界
     if (ngx_argv == NULL) {
         return NGX_ERROR;
     }
 
     for (i = 0; i < argc; i++) {
-        len = ngx_strlen(argv[i]) + 1;
+        len = ngx_strlen(argv[i]) + 1; // ngx_cpystrn(), *dst = '\0';
 
         ngx_argv[i] = ngx_alloc(len, cycle->log);
         if (ngx_argv[i] == NULL) {
@@ -891,11 +891,11 @@ ngx_save_argv(ngx_cycle_t *cycle, int argc, char *const *argv)
         (void) ngx_cpystrn((u_char *) ngx_argv[i], (u_char *) argv[i], len);
     }
 
-    ngx_argv[i] = NULL;
+    ngx_argv[i] = NULL; // used in ngx_master_process_cycle(), ngx_reap_children(), ngx_argv[0], "nginx"
 
 #endif
 
-    ngx_os_environ = environ;
+    ngx_os_environ = environ; // ngx_set_environment(), 为毛搞两个变量？
 
     return NGX_OK;
 }
