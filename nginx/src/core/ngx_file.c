@@ -27,7 +27,7 @@ ngx_get_full_name(ngx_pool_t *pool, ngx_str_t *prefix, ngx_str_t *name)
     rc = ngx_test_full_name(name);
 
     if (rc == NGX_OK) {
-        return rc;
+        return rc; // name is an absolute file path
     }
 
     len = prefix->len;
@@ -46,10 +46,10 @@ ngx_get_full_name(ngx_pool_t *pool, ngx_str_t *prefix, ngx_str_t *name)
     }
 
     p = ngx_cpymem(n, prefix->data, len);
-    ngx_cpystrn(p, name->data, name->len + 1);
+    ngx_cpystrn(p, name->data, name->len + 1); // 包括 '\0'
 
     name->len += len;
-    name->data = n;
+    name->data = n; // n 是从 pool 分配的内存，自行管理，不是由操作系统管理的
 
     return NGX_OK;
 }
@@ -57,7 +57,7 @@ ngx_get_full_name(ngx_pool_t *pool, ngx_str_t *prefix, ngx_str_t *name)
 
 static ngx_int_t
 ngx_test_full_name(ngx_str_t *name)
-{
+{ // is name an absolute file path?
 #if (NGX_WIN32)
     u_char  c0, c1;
 

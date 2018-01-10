@@ -912,7 +912,7 @@ ngx_process_options(ngx_cycle_t *cycle)
         p = ngx_prefix;
 
         if (len && !ngx_path_separator(p[len - 1])) {
-            p = ngx_pnalloc(cycle->pool, len + 1);
+            p = ngx_pnalloc(cycle->pool, len + 1); // 从 ngx_cycle->pool 里面 分配内存存储 ngx_prefix
             if (p == NULL) {
                 return NGX_ERROR;
             }
@@ -922,7 +922,7 @@ ngx_process_options(ngx_cycle_t *cycle)
         }
 
         cycle->conf_prefix.len = len;
-        cycle->conf_prefix.data = p;
+        cycle->conf_prefix.data = p; // ngx_cycle->pool 内部分配到内存，不使用 ngx_prefix 全局变量
         cycle->prefix.len = len;
         cycle->prefix.data = p;
 
@@ -966,11 +966,11 @@ ngx_process_options(ngx_cycle_t *cycle)
         cycle->conf_file.data = ngx_conf_file;
 
     } else {
-        ngx_str_set(&cycle->conf_file, NGX_CONF_PATH);
+        ngx_str_set(&cycle->conf_file, NGX_CONF_PATH); // default configuration file
     }
 
     if (ngx_conf_full_name(cycle, &cycle->conf_file, 0) != NGX_OK) {
-        return NGX_ERROR;
+        return NGX_ERROR; // prefix + ngx_conf_file
     }
 
     for (p = cycle->conf_file.data + cycle->conf_file.len - 1;
@@ -983,14 +983,14 @@ ngx_process_options(ngx_cycle_t *cycle)
             break;
         }
     }
-
+// 计算出 conf_prefix.data = "/Users/nickfeng/nginx/conf", conf_prefix.len=26
     if (ngx_conf_params) {
         cycle->conf_param.len = ngx_strlen(ngx_conf_params);
         cycle->conf_param.data = ngx_conf_params;
     }
 
     if (ngx_test_config) {
-        cycle->log->log_level = NGX_LOG_INFO;
+        cycle->log->log_level = NGX_LOG_INFO; // changed from NGX_LOG_NOTICE
     }
 
     return NGX_OK;
