@@ -25,8 +25,8 @@
  */
 
 
-static ngx_str_t  *ngx_sys_errlist;
-static ngx_str_t   ngx_unknown_error = ngx_string("Unknown error");
+static ngx_str_t  *ngx_sys_errlist; // 存储strerror(errno), 0~106的msg, NGX_SYS_NERR
+static ngx_str_t   ngx_unknown_error = ngx_string("Unknown error"); // errno >= NGX_SYS_NERR
 
 
 u_char *
@@ -36,15 +36,15 @@ ngx_strerror(ngx_err_t err, u_char *errstr, size_t size)
 
     msg = ((ngx_uint_t) err < NGX_SYS_NERR) ? &ngx_sys_errlist[err]:
                                               &ngx_unknown_error;
-    size = ngx_min(size, msg->len);
+    size = ngx_min(size, msg->len); // size 用来限制字符串长度
 
-    return ngx_cpymem(errstr, msg->data, size);
+    return ngx_cpymem(errstr, msg->data, size); // error msg copy to errstr
 }
 
 
 ngx_int_t
 ngx_strerror_init(void)
-{
+{ // 其实就是初始化 ngx_sys_errlist 字符串数组，把errno<NGX_SYS_NERR的字符串保存到内存，避免在需要保证 Async-Signal-Safe 条件下使用 strerror(errno)
     char       *msg;
     u_char     *p;
     size_t      len;

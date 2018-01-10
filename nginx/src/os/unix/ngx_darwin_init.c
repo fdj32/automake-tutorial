@@ -81,7 +81,7 @@ ngx_debug_init(void)
 #else
 
     if (getenv("MallocScribble")) {
-        ngx_debug_malloc = 1;
+        ngx_debug_malloc = 1; // define ngx_slab_junk(p, size) if (ngx_debug_malloc) ngx_memset(p, 0xA5, size)
     }
 
 #endif
