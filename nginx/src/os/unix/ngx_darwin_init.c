@@ -9,11 +9,11 @@
 #include <ngx_core.h>
 
 
-char    ngx_darwin_kern_ostype[16];
-char    ngx_darwin_kern_osrelease[128];
-int     ngx_darwin_hw_ncpu;
-int     ngx_darwin_kern_ipc_somaxconn;
-u_long  ngx_darwin_net_inet_tcp_sendspace;
+char    ngx_darwin_kern_ostype[16]; // sysctl kern.ostype, kern.ostype: Darwin
+char    ngx_darwin_kern_osrelease[128]; // sysctl kern.osrelease, kern.osrelease: 17.3.0
+int     ngx_darwin_hw_ncpu; // sysctl hw.ncpu, hw.ncpu: 8
+int     ngx_darwin_kern_ipc_somaxconn; // sysctl kern.ipc.somaxconn, kern.ipc.somaxconn: 128
+u_long  ngx_darwin_net_inet_tcp_sendspace; // sysctl net.inet.tcp.sendspace, net.inet.tcp.sendspace: 131072
 
 ngx_uint_t  ngx_debug_malloc;
 
@@ -87,7 +87,7 @@ ngx_debug_init(void)
 #endif
 }
 
-
+/** read system parameters to global variables */
 ngx_int_t
 ngx_os_specific_init(ngx_log_t *log)
 {
@@ -98,7 +98,7 @@ ngx_os_specific_init(ngx_log_t *log)
     size = sizeof(ngx_darwin_kern_ostype);
     if (sysctlbyname("kern.ostype", ngx_darwin_kern_ostype, &size, NULL, 0)
         == -1)
-    {
+    { // sysctl kern.ostype, kern.ostype: Darwin
         err = ngx_errno;
 
         if (err != NGX_ENOENT) {
@@ -118,7 +118,7 @@ ngx_os_specific_init(ngx_log_t *log)
     if (sysctlbyname("kern.osrelease", ngx_darwin_kern_osrelease, &size,
                      NULL, 0)
         == -1)
-    {
+    { // sysctl kern.osrelease, kern.osrelease: 17.3.0
         err = ngx_errno;
 
         if (err != NGX_ENOENT) {
@@ -163,9 +163,9 @@ ngx_os_specific_init(ngx_log_t *log)
         return NGX_ERROR;
     }
 
-    ngx_tcp_nodelay_and_tcp_nopush = 1;
+    ngx_tcp_nodelay_and_tcp_nopush = 1; // ngx_http_set_keepalive()
 
-    ngx_os_io = ngx_darwin_io;
+    ngx_os_io = ngx_darwin_io; // nex_syslog_send(), ngx_kqueue_init()
 
     return NGX_OK;
 }
