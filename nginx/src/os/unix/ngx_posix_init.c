@@ -63,7 +63,7 @@ ngx_os_init(ngx_log_t *log)
     }
 
     ngx_cpuinfo();
-
+ngx_log_stderr(0, "ngx_os_init():ngx_cacheline_size:%d\n", ngx_cacheline_size);
     if (getrlimit(RLIMIT_NOFILE, &rlmt) == -1) { // #define	RLIMIT_NOFILE	8		/* number of open files */
         ngx_log_error(NGX_LOG_ALERT, log, errno,
                       "getrlimit(RLIMIT_NOFILE) failed");
