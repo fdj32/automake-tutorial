@@ -193,10 +193,10 @@ static char **ngx_os_environ;
 
 int ngx_cdecl
 main(int argc, char *const *argv)
-{ // where was environ set?
+{ // for (int j = 0; environ[j]; j++) {ngx_log_stderr(0, "environ[%d]:%s\n", j, environ[j]);} // where was environ set? https://www.cnblogs.com/algorithmic/archive/2012/09/23/2698604.html
     ngx_buf_t        *b;
     ngx_log_t        *log;
-    ngx_uint_t        i; // for (i = 0; environ[i]; i++) {ngx_log_stderr(0, "environ:%s\n", environ[i]);}
+    ngx_uint_t        i;
     ngx_cycle_t      *cycle, init_cycle;
     ngx_conf_dump_t  *cd;
     ngx_core_conf_t  *ccf;
@@ -368,12 +368,12 @@ main(int argc, char *const *argv)
 
     ngx_use_stderr = 0;
 
-    if (ngx_process == NGX_PROCESS_SINGLE) {
-        ngx_single_process_cycle(cycle);
-
-    } else {
-        ngx_master_process_cycle(cycle);
-    }
+//    if (ngx_process == NGX_PROCESS_SINGLE) {
+//        ngx_single_process_cycle(cycle);
+//
+//    } else {
+//        ngx_master_process_cycle(cycle);
+//    }
 
     return 0;
 }
