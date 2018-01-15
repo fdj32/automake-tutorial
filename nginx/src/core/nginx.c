@@ -368,12 +368,12 @@ main(int argc, char *const *argv)
 
     ngx_use_stderr = 0;
 
-//    if (ngx_process == NGX_PROCESS_SINGLE) {
-//        ngx_single_process_cycle(cycle);
-//
-//    } else {
-//        ngx_master_process_cycle(cycle);
-//    }
+    if (ngx_process == NGX_PROCESS_SINGLE) {
+        ngx_single_process_cycle(cycle);
+
+    } else {
+        ngx_master_process_cycle(cycle);
+    }
 
     return 0;
 }

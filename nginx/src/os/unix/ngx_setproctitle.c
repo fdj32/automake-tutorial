@@ -27,7 +27,7 @@
  * parenthesis.
  */
 
-extern char **environ; // set in ngx_set_environment()
+extern char **environ; // https://www.cnblogs.com/algorithmic/archive/2012/09/23/2698604.html
 
 static char *ngx_os_argv_last;
 
@@ -40,8 +40,8 @@ ngx_init_setproctitle(ngx_log_t *log)
 
     size = 0;
 
-    for (i = 0; environ[i]; i++) { // environ not set yet?
-        size += ngx_strlen(environ[i]) + 1; // ngx_log_stderr(0, "environ:%s\n", environ[i]);
+    for (i = 0; environ[i]; i++) {
+        size += ngx_strlen(environ[i]) + 1; // ngx_log_stderr(0, "environ[%d]:%s\n", i, environ[i]);
     }
 
     p = ngx_alloc(size, log);
@@ -70,7 +70,7 @@ ngx_init_setproctitle(ngx_log_t *log)
     }
 
     ngx_os_argv_last--;
-
+//  ngx_log_stderr(0, "ngx_init_setproctitle():p:%s, ngx_os_argv_last:%s\n", p, ngx_os_argv_last);
     return NGX_OK;
 }
 
