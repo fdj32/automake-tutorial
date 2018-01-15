@@ -443,7 +443,7 @@ ngx_show_version_info(void)
 
 static ngx_int_t
 ngx_add_inherited_sockets(ngx_cycle_t *cycle)
-{
+{ // 看不太懂
     u_char           *p, *v, *inherited;
     ngx_int_t         s;
     ngx_listening_t  *ls;
