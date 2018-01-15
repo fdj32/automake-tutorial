@@ -48,7 +48,7 @@ ngx_cpuid(uint32_t i, uint32_t *buf)
 
 static ngx_inline void
 ngx_cpuid(uint32_t i, uint32_t *buf)
-{
+{ // https://www.cnblogs.com/zyl910/archive/2012/08/06/getcpuid_gcc.html
     uint32_t  eax, ebx, ecx, edx;
 
     __asm__ (
@@ -71,7 +71,7 @@ ngx_cpuid(uint32_t i, uint32_t *buf)
 
 void
 ngx_cpuinfo(void)
-{
+{ // https://www.cnblogs.com/cenalulu/p/4340891.html
     u_char    *vendor;
     uint32_t   vbuf[5], cpu[4], model;
 

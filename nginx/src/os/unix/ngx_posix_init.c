@@ -54,7 +54,7 @@ ngx_os_init(ngx_log_t *log)
 
 #if (NGX_HAVE_SC_NPROCESSORS_ONLN)
     if (ngx_ncpu == 0) {
-        ngx_ncpu = sysconf(_SC_NPROCESSORS_ONLN);
+        ngx_ncpu = sysconf(_SC_NPROCESSORS_ONLN); // http://blog.csdn.net/ydyang1126/article/details/52794130
     }
 #endif
 
@@ -64,7 +64,7 @@ ngx_os_init(ngx_log_t *log)
 
     ngx_cpuinfo();
 
-    if (getrlimit(RLIMIT_NOFILE, &rlmt) == -1) {
+    if (getrlimit(RLIMIT_NOFILE, &rlmt) == -1) { // #define	RLIMIT_NOFILE	8		/* number of open files */
         ngx_log_error(NGX_LOG_ALERT, log, errno,
                       "getrlimit(RLIMIT_NOFILE) failed");
         return NGX_ERROR;
@@ -79,7 +79,7 @@ ngx_os_init(ngx_log_t *log)
 #endif
 
     tp = ngx_timeofday();
-    srandom(((unsigned) ngx_pid << 16) ^ tp->sec ^ tp->msec);
+    srandom(((unsigned) ngx_pid << 16) ^ tp->sec ^ tp->msec); // http://blog.csdn.net/m_changgong/article/details/7797451
 
     return NGX_OK;
 }
