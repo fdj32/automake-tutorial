@@ -42,7 +42,7 @@ ngx_init_cycle(ngx_cycle_t *old_cycle)
     char               **senv;
     ngx_uint_t           i, n;
     ngx_log_t           *log;
-    ngx_time_t          *tp;
+//    ngx_time_t          *tp;
     ngx_conf_t           conf;
     ngx_pool_t          *pool;
     ngx_cycle_t         *cycle, **old;
@@ -54,12 +54,12 @@ ngx_init_cycle(ngx_cycle_t *old_cycle)
     ngx_core_module_t   *module;
     char                 hostname[NGX_MAXHOSTNAMELEN];
 
-    ngx_timezone_update();
+    ngx_timezone_update(); // BSD LINUX
 
     /* force localtime update with a new timezone */
-
-    tp = ngx_timeofday();
-    tp->sec = 0;
+// tp 并没有在下面用到
+//    tp = ngx_timeofday();
+//    tp->sec = 0;
 
     ngx_time_update();
 
@@ -72,7 +72,7 @@ ngx_init_cycle(ngx_cycle_t *old_cycle)
     }
     pool->log = log;
 
-    cycle = ngx_pcalloc(pool, sizeof(ngx_cycle_t));
+    cycle = ngx_pcalloc(pool, sizeof(ngx_cycle_t)); // 先创建 pool,再在 pool 上创建 cycle, 这样由操作系统管理内存的old_cycle 就变成了由 nginx 自己管理内存的 cycle
     if (cycle == NULL) {
         ngx_destroy_pool(pool);
         return NULL;
@@ -1335,7 +1335,7 @@ ngx_clean_old_cycles(ngx_event_t *ev)
 
 void
 ngx_set_shutdown_timer(ngx_cycle_t *cycle)
-{
+{ // ngx_worker_process_cycle()
     ngx_core_conf_t  *ccf;
 
     ccf = (ngx_core_conf_t *) ngx_get_conf(cycle->conf_ctx, ngx_core_module);

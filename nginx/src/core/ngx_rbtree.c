@@ -7,8 +7,8 @@
 
 #include <ngx_config.h>
 #include <ngx_core.h>
-
-
+// https://github.com/julycoding/The-Art-Of-Programming-By-July
+// https://www.cnblogs.com/skywang12345/p/3245399.html
 /*
  * The red-black tree code is based on the algorithm described in
  * the "Introduction to Algorithms" by Cormen, Leiserson and Rivest.
@@ -31,7 +31,7 @@ ngx_rbtree_insert(ngx_rbtree_t *tree, ngx_rbtree_node_t *node)
     root = &tree->root;
     sentinel = tree->sentinel;
 
-    if (*root == sentinel) {
+    if (*root == sentinel) { // 空tree,刚刚才ngx_rbtree_init()
         node->parent = NULL;
         node->left = sentinel;
         node->right = sentinel;
@@ -110,11 +110,11 @@ ngx_rbtree_insert_value(ngx_rbtree_node_t *temp, ngx_rbtree_node_t *node,
         temp = *p;
     }
 
-    *p = node;
-    node->parent = temp;
-    node->left = sentinel;
+    *p = node; // p是temp 的 left 或者 right 指针, 插入 node
+    node->parent = temp; // node 为 parent 的 left/right son
+    node->left = sentinel; // 新插入的node左右儿子都指向哨兵
     node->right = sentinel;
-    ngx_rbt_red(node);
+    ngx_rbt_red(node); // 新插入的node颜色为red
 }
 
 
