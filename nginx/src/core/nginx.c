@@ -189,8 +189,8 @@ static char        *ngx_signal; // ngx_get_options() 's'
 
 
 static char **ngx_os_environ;
-
-
+// http://www.cnblogs.com/zengkefu/p/5814780.html
+// http://blog.csdn.net/initphp/article/details/51832114
 int ngx_cdecl
 main(int argc, char *const *argv)
 { // for (int j = 0; environ[j]; j++) {ngx_log_stderr(0, "environ[%d]:%s\n", j, environ[j]);} // where was environ set? https://www.cnblogs.com/algorithmic/archive/2012/09/23/2698604.html

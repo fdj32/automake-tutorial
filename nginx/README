@@ -92,3 +92,9 @@ https://graphviz.gitlab.io/_pages/doc/info/
 dot -Tpng ngx_pool_t.dot -o ngx_pool_t.png
 dot -Tpng ngx_chain_t.dot -o ngx_chain_t.png
 
+--------------------------------------------------------------------------------
+
+https://github.com/y123456yz/reading-code-of-nginx-1.9.2.git
+
+--------------------------------------------------------------------------------
+
