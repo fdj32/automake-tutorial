@@ -44,40 +44,40 @@ ngx_rbtree_insert(ngx_rbtree_t *tree, ngx_rbtree_node_t *node)
     tree->insert(*root, node, sentinel);
 
     /* re-balance tree */
+// 新插入的node为红
+    while (node != *root && ngx_rbt_is_red(node->parent)) { // node 不是根节点 且 node父亲是红的
+// 情形1:新节点N位于树的根上，没有父节点。 node == root，不进入循环，情形2:新节点的父节点P是黑色，也不进入循环
+        if (node->parent == node->parent->parent->left) { // node父亲是祖父的左子，红色
+            temp = node->parent->parent->right; // node的uncle，祖父的右子
 
-    while (node != *root && ngx_rbt_is_red(node->parent)) {
-
-        if (node->parent == node->parent->parent->left) {
-            temp = node->parent->parent->right;
-
-            if (ngx_rbt_is_red(temp)) {
+            if (ngx_rbt_is_red(temp)) { // 红叔叔，父亲也是红的，祖父就是黑的,父叔红变黑，祖父黑变红，迭代祖父 情形3如果父节点P和叔父节点U二者都是红色
                 ngx_rbt_black(node->parent);
                 ngx_rbt_black(temp);
                 ngx_rbt_red(node->parent->parent);
                 node = node->parent->parent;
 
-            } else {
-                if (node == node->parent->right) {
+            } else { // 黑叔叔，情形4:父节点P是红色而叔父节点U是黑色或缺少，并且新节点N是其父节点P的右子节点而父节点P又是其父节点的左子节点。
+                if (node == node->parent->right) { // node是右子
                     node = node->parent;
                     ngx_rbtree_left_rotate(root, sentinel, node);
                 }
-
+// 情形5：父节点P是红色而叔父节点U是黑色或缺少，新节点N是其父节点的左子节点，而父节点P又是其父节点G的左子节点。
                 ngx_rbt_black(node->parent);
                 ngx_rbt_red(node->parent->parent);
                 ngx_rbtree_right_rotate(root, sentinel, node->parent->parent);
             }
 
-        } else {
-            temp = node->parent->parent->left;
+        } else { // node父亲是祖父的右子，红色
+            temp = node->parent->parent->left; // node的uncle，祖父的左子
 
-            if (ngx_rbt_is_red(temp)) {
+            if (ngx_rbt_is_red(temp)) { // 红叔叔
                 ngx_rbt_black(node->parent);
                 ngx_rbt_black(temp);
                 ngx_rbt_red(node->parent->parent);
                 node = node->parent->parent;
 
-            } else {
-                if (node == node->parent->left) {
+            } else { // 黑叔叔
+                if (node == node->parent->left) { // node是左子
                     node = node->parent;
                     ngx_rbtree_right_rotate(root, sentinel, node);
                 }
