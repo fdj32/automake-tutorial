@@ -323,7 +323,7 @@ ngx_rbtree_delete(ngx_rbtree_t *tree, ngx_rbtree_node_t *node)
 static ngx_inline void
 ngx_rbtree_left_rotate(ngx_rbtree_node_t **root, ngx_rbtree_node_t *sentinel,
     ngx_rbtree_node_t *node)
-{
+{ // 此处的 temp 相当于 https://zh.wikipedia.org/wiki/%E7%BA%A2%E9%BB%91%E6%A0%91 的 n->rightTree, node 相当于n->parent
     ngx_rbtree_node_t  *temp;
 
     temp = node->right;
@@ -353,7 +353,7 @@ ngx_rbtree_left_rotate(ngx_rbtree_node_t **root, ngx_rbtree_node_t *sentinel,
 static ngx_inline void
 ngx_rbtree_right_rotate(ngx_rbtree_node_t **root, ngx_rbtree_node_t *sentinel,
     ngx_rbtree_node_t *node)
-{
+{ // 此处的 temp 相当于 https://zh.wikipedia.org/wiki/%E7%BA%A2%E9%BB%91%E6%A0%91 的 n->leftTree, node 相当于n->parent
     ngx_rbtree_node_t  *temp;
 
     temp = node->left;
