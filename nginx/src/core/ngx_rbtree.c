@@ -379,31 +379,31 @@ ngx_rbtree_right_rotate(ngx_rbtree_node_t **root, ngx_rbtree_node_t *sentinel,
     node->parent = temp;
 }
 
-
+// 在一个树里面找出 node 的升序下一个node
 ngx_rbtree_node_t *
 ngx_rbtree_next(ngx_rbtree_t *tree, ngx_rbtree_node_t *node)
 {
     ngx_rbtree_node_t  *root, *sentinel, *parent;
 
     sentinel = tree->sentinel;
-
+// 如果node 有右子树，则取右子树的最小值
     if (node->right != sentinel) {
         return ngx_rbtree_min(node->right, sentinel);
     }
 
     root = tree->root;
-
+// node 没有右子树，则往上递归查找
     for ( ;; ) {
         parent = node->parent;
-
+// node 为树根，且没有右子树，则node 为最后一个node
         if (node == root) {
             return NULL;
         }
-
+// 如果node 为父亲的左子节点，则下一个node 就是其父亲
         if (node == parent->left) {
             return parent;
         }
-
+// node为父亲的右子节点，node 指向其父亲，往上递归查找
         node = parent;
     }
 }
