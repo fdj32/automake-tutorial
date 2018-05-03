@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import javax.sql.DataSource;
 
@@ -49,8 +48,8 @@ public class Mysql {
 	}
 
 	public void save(int fid, String link, String title, String data) {
-		String sql = "insert into htmdata(fid, link, title, data) values (?, ?, ?, ?)";
-		jdbcTemplate1.update(sql, new Object[] { fid, link, title, data });
+		String sql = "insert into htmdata(fid, link, title, data, data_length) values (?, ?, ?, ?, ?)";
+		jdbcTemplate1.update(sql, new Object[] { fid, link, title, data, data.length() });
 	}
 
 	public long queryByLink(String link) {

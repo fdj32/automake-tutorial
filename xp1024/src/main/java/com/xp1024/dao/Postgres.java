@@ -46,8 +46,8 @@ public class Postgres {
 	}
 	
 	public void save(int fid, String link, String title, String data) {
-		String sql = "insert into htmdata(fid, link, title, data) values (?, ?, ?, ?)";
-		jdbcTemplate2.update(sql, new Object[] { fid, link, title, data });
+		String sql = "insert into htmdata(fid, link, title, data, data_length) values (?, ?, ?, ?, ?)";
+		jdbcTemplate2.update(sql, new Object[] { fid, link, title, data, data.length() });
 	}
 
 	public long queryByLink(String link) {
@@ -64,7 +64,7 @@ public class Postgres {
 		}
 		int size = list.size();
 		log.info("batchInsert start at {}, size={}", start, size);
-		String sql = "insert into htmdata(fid, link, title, data) values (?, ?, ?, ?)";
+		String sql = "insert into htmdata(fid, link, title, data, data_length) values (?, ?, ?, ?, ?)";
 		Connection conn = jdbcTemplate2.getDataSource().getConnection();
 //		while(null != conn)
 //			conn = jdbcTemplate2.getDataSource().getConnection();
@@ -75,6 +75,7 @@ public class Postgres {
 			ps.setString(2, (String) list.get(i).get("link"));
 			ps.setString(3, (String) list.get(i).get("title"));
 			ps.setString(4, (String) list.get(i).get("data"));
+			ps.setInt(5, ((String) list.get(i).get("data")).length());
 			ps.addBatch();
 		}
 		ps.executeBatch();

@@ -6,7 +6,8 @@ CREATE TABLE IF NOT EXISTS htmdata (
 	fid INT NOT NULL,
 	link VARCHAR(50) UNIQUE KEY NOT NULL,
 	title VARCHAR(200) NOT NULL,
-	data TEXT NOT NULL
+	data TEXT NOT NULL,
+	data_length INT NOT NULL
 );
 
 --ALTER TABLE htmdata ADD INDEX idx_htmdata_link(link);
@@ -28,7 +29,8 @@ CREATE TABLE IF NOT EXISTS htmdata (
 	fid INT NOT NULL,
 	link VARCHAR(50) UNIQUE NOT NULL,
 	title VARCHAR(200) NOT NULL,
-	data TEXT NOT NULL
+	data TEXT NOT NULL,
+	data_length INT NOT NULL
 );
 
 --CREATE INDEX idx_htmdata_link ON htmdata(link);
@@ -53,4 +55,8 @@ DELETE htmdata a WHERE a.id NOT IN ( SELECT MAX(b.id) FROM htmdata b group by b.
 
 ALTER TABLE htmdata ALTER COLUMN link TYPE VARCHAR(50);  
 
-ALTER TABLE htmdata ALTER COLUMN title TYPE VARCHAR(200);  
+ALTER TABLE htmdata ALTER COLUMN title TYPE VARCHAR(200);
+
+ALTER TABLE htmdata ADD COLUMN data_length INT;
+
+UPDATE htmdata SET data_length=length(data);

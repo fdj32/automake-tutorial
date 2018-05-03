@@ -24,7 +24,7 @@ order by max(id)
 
 select min(id) from htmdata
 
-select count(1) from htmdata
+select * from htmdata
 where title like '%波多野结衣%'
 
 select count(1) from htmdata
@@ -45,3 +45,7 @@ select max(length(title)) from htmdata
 select max(length(data)) from htmdata
 
 select * from htmdata limit 100;
+
+select * from htmdata
+where data_length > 209999
+
