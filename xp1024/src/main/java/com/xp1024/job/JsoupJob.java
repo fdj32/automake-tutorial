@@ -90,7 +90,8 @@ public class JsoupJob {
 		LOG.info("mysql.count()={}", mysql.count());
 		LOG.info("pg.count()={}", pg.count());
 		//mysql2pg();
-		pg2mysql();
+		//pg2mysql();
+		pg2mysqlStream();
 		LOG.info("jsoup() finished in {} ms", (System.currentTimeMillis() - start));
 	}
 
@@ -122,6 +123,25 @@ public class JsoupJob {
 				list = pg.query(i * BATCH_SIZE, (i + 1) * BATCH_SIZE);
 				mysql.batchInsert(list);
 			} catch (SQLException e) {
+				LOG.error("batchInsert failed in id {} -> {}", i * BATCH_SIZE, (i+1) * BATCH_SIZE);
+				LOG.error("", e);
+			}
+			i++;
+			System.gc();
+		}
+	}
+	
+	private void pg2mysqlStream() {
+		long size = pg.count();
+		LOG.info("Total : {}", size);
+		int i = 0;
+		List<Map<String, Object>> list = null;
+		while (i * BATCH_SIZE < size) {
+			try {
+				list = pg.query(i * BATCH_SIZE, (i + 1) * BATCH_SIZE);
+				list.parallelStream().forEach(m->mysql.save((int)m.get("fid"), (String)m.get("link"), (String)m.get("title"), (String)m.get("data")));
+				//mysql.batchInsert(list);
+			} catch (Exception e) {
 				LOG.error("batchInsert failed in id {} -> {}", i * BATCH_SIZE, (i+1) * BATCH_SIZE);
 				LOG.error("", e);
 			}

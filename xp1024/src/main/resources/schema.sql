@@ -18,12 +18,13 @@ CREATE TABLE IF NOT EXISTS htmdata (
 	data_length INT NOT NULL
 );
 
+ALTER TABLE htmdata ADD INDEX idx_htmdata_title(title);
+
 desc htmdata;
 
 
 --ALTER TABLE htmdata ADD INDEX idx_htmdata_link(link);
 
-ALTER TABLE htmdata ADD INDEX idx_htmdata_title(title);
 
 --------------------------------------------------------------------------------
 
