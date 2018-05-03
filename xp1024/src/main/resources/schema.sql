@@ -1,4 +1,12 @@
 
+mysqld -I -h E:\mysql-8.0.11-winx64\data
+
+ALTER USER "root"@"localhost" IDENTIFIED BY "root";    >>>>>>>>>>>>>>>>>>>>>>>>>>只有这个才行
+
+create database xp1024;
+
+use xp1024;
+
 DROP TABLE htmdata;
 
 CREATE TABLE IF NOT EXISTS htmdata (
@@ -10,15 +18,90 @@ CREATE TABLE IF NOT EXISTS htmdata (
 	data_length INT NOT NULL
 );
 
+desc htmdata;
+
+
 --ALTER TABLE htmdata ADD INDEX idx_htmdata_link(link);
 
 ALTER TABLE htmdata ADD INDEX idx_htmdata_title(title);
 
 --------------------------------------------------------------------------------
 
+pg_ctl.exe init -pgdata=E:\tools\pgsql\data
+
+pg_ctl -D E:/tools/pgsql/data start
+
+
+Success. You can now start the database server using:
+
+    E:/tools/pgsql/bin/pg_ctl -D E:/tools/pgsql/data -l logfile start
+
+
+E:\tools\pgsql\bin>
+
+
+taskkill /f /im postgres.exe
+
+E:/tools/pgsql/bin/pg_ctl -D E:/tools/pgsql/data -l logfile stop
+
+pg_ctl -D E:/tools/pgsql/data start
+
+pg_ctl stop
+
+psql -dpostgres
+
+
+create user root superuser password 'root';
+
+
+psql -dpostgres -Uroot -W
+
+\c xp1024
+\d
+
+psql -dxp1024 -Uroot -W
+
+
+postgres=# \c xp1024;
+用户 root 的口令：
+您现在已经连接到数据库 "xp1024",用户 "root".
+xp1024=#
+
+
+xp1024=# \dt
+               关联列表
+ 架构模式 |  名称   |  类型  | 拥有者
+----------+---------+--------+--------
+ public   | htmdata | 数据表 | root
+(1 行记录)
+
+
+xp1024=# \d htmdata;
+                                 数据表 "public.htmdata"
+ 栏位  |          类型           | Collation | Nullable |            Default
+
+-------+-------------------------+-----------+----------+-----------------------
+---------
+ id    | integer                 |           | not null | nextval('seq_xp024'::r
+egclass)
+ fid   | integer                 |           | not null |
+ link  | character varying(100)  |           | not null |
+ title | character varying(1000) |           | not null |
+ data  | text                    |           |          |
+索引：
+    "htmdata_pkey" PRIMARY KEY, btree (id)
+    "htmdata_link_key" UNIQUE CONSTRAINT, btree (link)
+
+
+xp1024=#
+
+ALTER USER postgres WITH PASSWORD 'postgres';
+
+
+
 create database xp1024;
 
-
+use xp1024;
 
 CREATE SEQUENCE seq_xp024 START WITH 1 INCREMENT BY 1;
 
