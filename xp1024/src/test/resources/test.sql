@@ -49,3 +49,6 @@ select * from htmdata limit 100;
 select * from htmdata
 where data_length > 209999
 
+select count(distinct(data_length)) from htmdata
+
+select max(id), min(id) from htmdata

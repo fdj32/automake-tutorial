@@ -55,6 +55,11 @@ public class Postgres {
 		Map<String, Object> map = jdbcTemplate2.queryForMap(sql, link);
 		return (long) map.get("total");
 	}
+	
+	public List<Map<String, Object>> query(int begin, int end) {
+		String sql = "select fid, link, title, data from htmdata where id >= ? and id < ?";
+		return jdbcTemplate2.queryForList(sql, begin, end);
+	}
 
 	public void batchInsert(List<Map<String, Object>> list) throws SQLException {
 		long start = System.currentTimeMillis();
