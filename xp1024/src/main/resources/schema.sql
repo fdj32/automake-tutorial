@@ -117,9 +117,14 @@ CREATE TABLE IF NOT EXISTS htmdata (
 	data_length INT NOT NULL
 );
 
+CREATE INDEX idx_htmdata_title ON htmdata(title);
+
+\d
+
+\dhtmdata
+
 --CREATE INDEX idx_htmdata_link ON htmdata(link);
 
-CREATE INDEX idx_htmdata_title ON htmdata(title);
 
 http://www.jb51.net/article/116677.htm
 
