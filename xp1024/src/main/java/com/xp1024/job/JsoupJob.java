@@ -86,12 +86,12 @@ public class JsoupJob {
 		// 39, 5, 75, 79, 80, 83)
 		// IntStream.of(17,37,39)
 		// .parallel().forEach(i -> fid(i));
-		//getfids();
+		getfids();
 		LOG.info("mysql.count()={}", mysql.count());
 		LOG.info("pg.count()={}", pg.count());
 		//mysql2pg();
 		//pg2mysql();
-		pg2mysqlStream();
+		//pg2mysqlStream();
 		LOG.info("jsoup() finished in {} ms", (System.currentTimeMillis() - start));
 	}
 
