@@ -56,6 +56,12 @@ public class Postgres {
 		return (long) map.get("total");
 	}
 	
+	public long queryByTitle(String title) {
+		String sql = "select count(1) as total from htmdata where title=?";
+		Map<String, Object> map = jdbcTemplate2.queryForMap(sql, title);
+		return (long) map.get("total");
+	}
+	
 	public List<Map<String, Object>> query(int begin, int end) {
 		String sql = "select fid, link, title, data from htmdata where id >= ? and id < ?";
 		return jdbcTemplate2.queryForList(sql, begin, end);

@@ -102,7 +102,7 @@ ALTER USER postgres WITH PASSWORD 'postgres';
 
 create database xp1024;
 
-use xp1024;
+\c xp1024;
 
 CREATE SEQUENCE seq_xp024 START WITH 1 INCREMENT BY 1;
 
@@ -112,12 +112,17 @@ CREATE TABLE IF NOT EXISTS htmdata (
 	id INT PRIMARY KEY DEFAULT nextval('seq_xp024'),
 	fid INT NOT NULL,
 	link VARCHAR(50) UNIQUE NOT NULL,
-	title VARCHAR(200) NOT NULL,
+	title VARCHAR(200) UNIQUE NOT NULL,
 	data TEXT NOT NULL,
 	data_length INT NOT NULL
 );
 
-CREATE INDEX idx_htmdata_title ON htmdata(title);
+\d
+\d htmdata
+
+--CREATE INDEX idx_htmdata_title ON htmdata(title);
+
+--alter table htmdata add constraint uk_htmdata_unique_title unique (title);
 
 \d
 
@@ -141,6 +146,8 @@ order by id
 LIMIT 100
 
 DELETE htmdata a WHERE a.id NOT IN ( SELECT MAX(b.id) FROM htmdata b group by b.link )
+
+DELETE FROM htmdata a WHERE a.id NOT IN ( SELECT MAX(b.id) FROM htmdata b group by b.title )
 
 ALTER TABLE htmdata ALTER COLUMN link TYPE VARCHAR(50);  
 
