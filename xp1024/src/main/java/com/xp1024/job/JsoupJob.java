@@ -239,7 +239,7 @@ public class JsoupJob {
 				LOG.error("Failed processLine({}, {})", ss[0], fid);
 			}
 		} else {
-			LOG.info("Found link={}, or title={}", ss[0], ss[1]);
+			LOG.info("Found link={} and title={}", ss[0], ss[1]);
 		}
 		// try {
 		// String fileName = FOLDER + String.format("fid%d/%s.html", fid, ss[1]);
