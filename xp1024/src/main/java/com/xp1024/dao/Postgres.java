@@ -61,6 +61,12 @@ public class Postgres {
 		Map<String, Object> map = jdbcTemplate2.queryForMap(sql, title);
 		return (long) map.get("total");
 	}
+
+	public long queryByLinkAndTitle(String link, String title) {
+		String sql = "select count(1) as total from htmdata where link=? and title=?";
+		Map<String, Object> map = jdbcTemplate2.queryForMap(sql, link, title);
+		return (long) map.get("total");
+	}
 	
 	public List<Map<String, Object>> query(int begin, int end) {
 		String sql = "select fid, link, title, data from htmdata where id >= ? and id < ?";

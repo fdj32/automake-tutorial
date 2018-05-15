@@ -156,3 +156,45 @@ ALTER TABLE htmdata ALTER COLUMN title TYPE VARCHAR(200);
 ALTER TABLE htmdata ADD COLUMN data_length INT;
 
 UPDATE htmdata SET data_length=length(data);
+
+
+--------------------------------------------------------------------------------
+
+http://www.w3school.com.cn/sql/sql_unique.asp
+
+pg_ctl init
+
+pg_ctl start
+
+pg_ctl -dpostgres
+
+create user root superuser password 'root';
+
+psql -dpostgres -Uroot -W
+
+create database xp1024;
+
+\c xp1024;
+
+CREATE SEQUENCE seq_xp024 START WITH 1 INCREMENT BY 1;
+
+DROP TABLE htmdata;
+
+CREATE TABLE IF NOT EXISTS htmdata (
+	id INT PRIMARY KEY DEFAULT nextval('seq_xp024'),
+	fid INT NOT NULL,
+	link VARCHAR(50) NOT NULL,
+	title VARCHAR(200) NOT NULL,
+	data TEXT NOT NULL,
+	data_length INT NOT NULL,
+	CONSTRAINT uk_htmdata_link_title UNIQUE (link,title)
+);
+
+CREATE INDEX idx_htmdata_link ON htmdata(link);
+
+CREATE INDEX idx_htmdata_title ON htmdata(title);
+
+\d
+\d htmdata
+
+

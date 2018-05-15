@@ -223,7 +223,7 @@ public class JsoupJob {
 		}
 		String pageUrl = BASE + ss[0];
 		
-		if (pg.queryByLink(ss[0]) == 0 && pg.queryByTitle(ss[1]) == 0) {
+		if (pg.queryByLinkAndTitle(ss[0], ss[1]) == 0) {
 			Document doc = connect(pageUrl);
 			if (null == doc)
 				return;
