@@ -166,11 +166,15 @@ pg_ctl init
 
 pg_ctl start
 
-pg_ctl -dpostgres
+psql -dpostgres
 
 create user root superuser password 'root';
 
 psql -dpostgres -Uroot -W
+
+psql -dxp1024 -Uroot -W
+
+root
 
 create database xp1024;
 
