@@ -211,3 +211,7 @@ CREATE TABLE IF NOT EXISTS thread (
 
 
 
+select 'http://w3.afulyu.pw/pw/'||link from htmdata
+where title like '%竹内纱里奈%'
+and fid <> 75
+
