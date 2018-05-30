@@ -16,7 +16,7 @@ public class Postgres {
 		Map<String, Object> map = jdbcTemplate.queryForMap("select count(1) as total from htmdata");
 		return (long) map.get("total");
 	}
-	
+
 	public void save(int fid, String link, String title, String data) {
 		String sql = "insert into htmdata(fid, link, title, data, data_length) values (?, ?, ?, ?, ?)";
 		jdbcTemplate.update(sql, new Object[] { fid, link, title, data, data.length() });
@@ -26,6 +26,18 @@ public class Postgres {
 		String sql = "select count(1) as total from htmdata where link=? and title=?";
 		Map<String, Object> map = jdbcTemplate.queryForMap(sql, link, title);
 		return (long) map.get("total");
+	}
+
+	public boolean threadExist(int fid) {
+		String sql = "select count(1) as total from thread where fid=?";
+		return (long) jdbcTemplate.queryForMap(sql, fid).get("total") > 0;
+	}
+
+	public void saveThread(int fid, String title, int parentFid) {
+		if (threadExist(fid))
+			return;
+		String sql = "insert into thread(fid, title, parent_fid) values (?, ?, ?)";
+		jdbcTemplate.update(sql, new Object[] { fid, title, parentFid == -1 ? null : parentFid });
 	}
 
 }

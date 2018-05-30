@@ -201,4 +201,13 @@ CREATE INDEX idx_htmdata_title ON htmdata(title);
 \d
 \d htmdata
 
+CREATE TABLE IF NOT EXISTS thread (
+	fid INT PRIMARY KEY NOT NULL,
+	title VARCHAR(16) UNIQUE NOT NULL,
+	parent_fid INT
+);
+
+\d thread
+
+
 

@@ -63,12 +63,12 @@ public class JsoupJob {
 		ss[1] = ss[1].replace("/", "");
 		ss[1] = ss[1].replace("?", "");
 		ss[1] = ss[1].replace(":", "");
-		
-		if(ss[0].startsWith("read.php?tid=")) {
+
+		if (ss[0].startsWith("read.php?tid=")) {
 			ss[0] = ss[0].split("&")[0]; // delete &fpage=*
 		}
 		String pageUrl = BASE + ss[0];
-		
+
 		if (pg.queryByLinkAndTitle(ss[0], ss[1]) == 0) {
 			Document doc = connect(pageUrl);
 			if (null == doc)
@@ -109,16 +109,32 @@ public class JsoupJob {
 
 	private void getfids() {
 		Document doc = connect(BASE);
-		Elements elements = doc.select("#cate_1 tr th b span a");
-		elements.stream().parallel().forEach(this::threadPHP);
+		Elements elements = doc.select("#cate_1 tr");
+		elements.parallelStream().forEach(this::tr);
 	}
 
-	private void threadPHP(Element e) {
+	private void tr(Element e) {
+		if (null == e)
+			return;
+		Element p = e.selectFirst("th a");
+		if (null == p)
+			return;
+		LOG.info(p.text());
+		int pFid = Integer.parseInt(p.attr("href").split("=")[1]);
+		String pTitle = p.text();
+		pg.saveThread(pFid, pTitle, -1);
+		Elements elements = e.selectFirst("th b span").getElementsByTag("a");
+		elements.parallelStream().forEach(i -> threadPHP(i, pFid));
+	}
+
+	private void threadPHP(Element e, int pFid) {
 		String href = e.attr("href");
 		int fid = Integer.parseInt(href.split("=")[1]);
+		String title = e.text();
+		pg.saveThread(fid, title, pFid);
 		fid2db(fid);
 	}
-	
+
 	private void fid2db(int fid) {
 		int last;
 		try {
@@ -128,7 +144,7 @@ public class JsoupJob {
 			LOG.error("Failed in fid2db({})", fid);
 		}
 	}
-	
+
 	private void fidPage2db(int fid, int page) {
 		Document doc = null;
 		try {
@@ -136,13 +152,13 @@ public class JsoupJob {
 			if (null == doc)
 				return;
 			Elements elements = doc.select("#ajaxtable tr td h3 a");
-			elements.stream().forEach(i -> fidPageLinks(fid, page, i));
+			elements.parallelStream().forEach(i -> fidPageLinks(fid, page, i));
 		} catch (Exception e) {
 			LOG.error("Failed in fidPage({}, {})", fid, page);
 			return;
 		}
 	}
-	
+
 	private void fidPageLinks(int fid, int page, Element i) {
 		String line = i.attr("href") + "," + i.text();
 		processLine(line, fid);
