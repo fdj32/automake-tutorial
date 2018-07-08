@@ -28,13 +28,13 @@ public class Postgres {
 		return (long) map.get("total");
 	}
 
-	public boolean threadExist(int fid) {
-		String sql = "select count(1) as total from thread where fid=?";
-		return (long) jdbcTemplate.queryForMap(sql, fid).get("total") > 0;
+	public boolean threadExist(int fid, String title) {
+		String sql = "select count(1) as total from thread where fid=? or title=?";
+		return (long) jdbcTemplate.queryForMap(sql, fid, title).get("total") > 0;
 	}
 
 	public void saveThread(int fid, String title, int parentFid) {
-		if (threadExist(fid))
+		if (threadExist(fid, title))
 			return;
 		String sql = "insert into thread(fid, title, parent_fid) values (?, ?, ?)";
 		jdbcTemplate.update(sql, new Object[] { fid, title, parentFid == -1 ? null : parentFid });

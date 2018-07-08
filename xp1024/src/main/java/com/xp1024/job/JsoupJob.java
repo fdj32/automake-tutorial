@@ -21,7 +21,7 @@ public class JsoupJob {
 
 	private static final int RETRY_TIMES = 2;
 
-	private static final String BASE = "http://w3.afulyu.pw/pw/";
+	private static final String BASE = "http://s3.97xzl.xyz/";
 
 	private static final Logger LOG = LoggerFactory.getLogger(JsoupJob.class);
 
@@ -29,20 +29,15 @@ public class JsoupJob {
 	private Postgres pg;
 
 	private Document get(int fid, int page) throws IOException {
-		return connect(BASE + String.format("thread.php?fid=%d&page=%d", fid, page));
+		return connect(BASE + String.format("forum.php?mod=forumdisplay&fid=%d&page=%d", fid, page));
 	}
 
 	private int last(int fid) throws IOException {
 		Document doc = get(fid, 1);
-		Elements elements = doc.select("#main .pages");
-		String pages = elements.get(0).text();
-		int last = 0;
-		String[] ss = pages.split(" ");
-		for (String s : ss) {
-			if (s.startsWith("1/")) {
-				last = Integer.parseInt(s.substring(2));
-			}
-		}
+		Element e = doc.selectFirst("a .last");
+		if(null == e)
+			return 0;
+		int last = Integer.parseInt(e.text().split(" ")[1]);
 		LOG.info("fid={}, pages={}", fid, last);
 		return last;
 	}
@@ -109,36 +104,48 @@ public class JsoupJob {
 
 	private void getfids() {
 		Document doc = connect(BASE);
-		Elements elements = doc.select("#cate_1 tr");
+		Elements elements = doc.select("#category_1 tr");
 		elements.parallelStream().forEach(this::tr);
 	}
 
 	private void tr(Element e) {
 		if (null == e)
 			return;
-		Element p = e.selectFirst("th a");
-		if (null == p)
+		Element td = e.selectFirst(".bk_a3");
+		if (null == td)
 			return;
-		LOG.info(p.text());
-		int pFid = Integer.parseInt(p.attr("href").split("=")[1]);
-		String pTitle = p.text();
+		Element php = td.selectFirst(".l");
+		if(null == php)
+			return;
+		int pFid = Integer.parseInt(php.attr("href").split("=")[1]);
+		String pTitle = php.text();
 		pg.saveThread(pFid, pTitle, -1);
-		Elements elements = e.selectFirst("th b span").getElementsByTag("a");
-		elements.parallelStream().forEach(i -> threadPHP(i, pFid));
+		Elements elements = td.select("a");
+		elements.parallelStream().forEach(i -> forumPhp(i, pFid));
 	}
-
-	private void threadPHP(Element e, int pFid) {
+	
+	private void forumPhp(Element e, int pFid) {
+		if(null == e)
+			return;
+		if(e.hasClass("l"))
+			return;
 		String href = e.attr("href");
-		int fid = Integer.parseInt(href.split("=")[1]);
 		String title = e.text();
-		pg.saveThread(fid, title, pFid);
-		fid2db(fid);
+		try {
+			int fid = Integer.parseInt(href.split("-")[1]);
+			pg.saveThread(fid, title, pFid);
+			fid2db(fid);
+		} catch (NumberFormatException e1) {
+			LOG.error("forumPhp({}, {})", href, pFid);
+		}
 	}
 
 	private void fid2db(int fid) {
 		int last;
 		try {
 			last = last(fid);
+			if(0 == last)
+				return;
 			IntStream.range(1, last + 1).parallel().forEach(i -> fidPage2db(fid, i));
 		} catch (IOException e) {
 			LOG.error("Failed in fid2db({})", fid);
@@ -151,7 +158,7 @@ public class JsoupJob {
 			doc = get(fid, page);
 			if (null == doc)
 				return;
-			Elements elements = doc.select("#ajaxtable tr td h3 a");
+			Elements elements = doc.select("#threadlisttableid tbody tr td .max-td table tbody tr td .new");
 			elements.parallelStream().forEach(i -> fidPageLinks(fid, page, i));
 		} catch (Exception e) {
 			LOG.error("Failed in fidPage({}, {})", fid, page);
