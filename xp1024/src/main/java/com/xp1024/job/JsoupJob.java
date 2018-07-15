@@ -106,7 +106,7 @@ public class JsoupJob {
 			doc = get(fid, page);
 			if (null == doc)
 				return;
-			Elements elements = doc.select("#threadlisttableid tbody tr td .max-td table tbody tr td .new");
+			Elements elements = doc.select("#threadlisttableid a[target=_blank]");
 			elements.parallelStream().forEach(i -> fidPageLinks(fid, page, i));
 		} catch (Exception e) {
 			LOG.error("Failed in fidPage({}, {})", fid, page);
