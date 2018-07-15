@@ -107,47 +107,36 @@ public class JsoupJob {
 			if (null == doc)
 				return;
 			Elements elements = doc.select("#threadlisttableid a[target=_blank]");
-			elements.parallelStream().forEach(i -> fidPageLinks(fid, page, i));
+			elements.parallelStream().forEach(i -> threadHtml(fid, page, i));
 		} catch (Exception e) {
 			LOG.error("Failed in fidPage({}, {})", fid, page);
 			return;
 		}
 	}
 
-	private void fidPageLinks(int fid, int page, Element i) {
-		String line = i.attr("href") + "," + i.text();
-		processLine(line, fid);
-	}
-
-	private void processLine(String s, int fid) {
-		String[] ss = s.split(",");
-		ss[1] = ss[1].replace("/", "");
-		ss[1] = ss[1].replace("?", "");
-		ss[1] = ss[1].replace(":", "");
-
-		if (ss[0].startsWith("read.php?tid=")) {
-			ss[0] = ss[0].split("&")[0]; // delete &fpage=*
-		}
-		String pageUrl = BASE + ss[0];
-
-		if (pg.queryByLinkAndTitle(ss[0], ss[1]) == 0) {
-			Document doc = connect(pageUrl);
+	private void threadHtml(int fid, int page, Element i) {
+		String href = i.attr("href");
+		String title = i.text();
+		if(pg.queryByLinkAndTitle(href, title) == 0) {
+			Document doc = connect(BASE + href);
 			if (null == doc)
 				return;
-			Elements elements = doc.select("#read_tpc");
+			Elements elements = doc.select(".t_f");
 			if (null == elements || 0 == elements.size())
 				return;
 			String data = elements.get(0).toString();
 			if (StringUtils.isEmpty(data))
 				return;
 			try {
-				pg.save(fid, ss[0], ss[1], data);
+				pg.save(fid, href, title, data);
 			} catch (Exception e) {
-				LOG.error("Failed processLine({}, {})", ss[0], fid);
+				LOG.error("Failed save({}, {}, {}, {})", fid, href, title, data);
 			}
 		} else {
-			LOG.info("Found link={} and title={}", ss[0], ss[1]);
+			LOG.info("Found link={} and title={}", href, title);
 		}
+		
+		
 	}
 
 	private Document get(int fid, int page) throws IOException {
