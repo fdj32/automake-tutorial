@@ -92,7 +92,7 @@ public class JsoupJob {
 
 	private int last(int fid) throws IOException {
 		Document doc = get(fid, 1);
-		Element e = doc.selectFirst("a .last");
+		Element e = doc.selectFirst(".last");
 		if (null == e)
 			return 0;
 		int last = Integer.parseInt(e.text().split(" ")[1]);
