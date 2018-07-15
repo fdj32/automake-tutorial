@@ -29,7 +29,7 @@ public class JsoupJob {
 	@Autowired
 	private Postgres pg;
 
-	@Scheduled(fixedRate = 600000)
+	@Scheduled(fixedRate = 3000)
 	public void jsoup() throws IOException {
 		LOG.info("jsoup() started");
 		long start = System.currentTimeMillis();
@@ -117,7 +117,7 @@ public class JsoupJob {
 	private void threadHtml(int fid, int page, Element i) {
 		String href = i.attr("href");
 		String title = i.text();
-		if(pg.queryByLinkAndTitle(href, title) == 0) {
+		if (pg.queryByLinkAndTitle(href, title) == 0) {
 			Document doc = connect(BASE + href);
 			if (null == doc)
 				return;
@@ -135,8 +135,7 @@ public class JsoupJob {
 		} else {
 			LOG.info("Found link={} and title={}", href, title);
 		}
-		
-		
+
 	}
 
 	private Document get(int fid, int page) throws IOException {
@@ -149,16 +148,19 @@ public class JsoupJob {
 		while (times <= RETRY_TIMES) {
 			try {
 				Connection conn = HttpConnection.connect(url);
-				conn.header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+				conn.header("Accept",
+						"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
 				conn.header("Accept-Encoding", "gzip, deflate");
 				conn.header("Accept-Language", "zh-CN,zh;q=0.9,ja;q=0.8");
 				conn.header("Cache-Control", "max-age=0");
 				conn.header("Connection", "keep-alive");
-				conn.header("Cookie", "visid_incap_1729161=vLXyOD5mQo+fcYH/3t34vtq8SlsAAAAAQUIPAAAAAACqxN9WUhqVORrSMvdvYKwh; incap_ses_798_1729161=NoZkCHVVeDqSQ5G+MBETC9q8SlsAAAAAWUoHO2dTqIOsE5shO9nNeA==; nlbi_1729161=9IKJQ7Nq8HoG35t9kRXV5AAAAACDo2AC54Qsb3PW1Q6Ent4Q; UM_distinctid=1649bf1b82c2d2-04591256761493-5b193413-1fa400-1649bf1b82e307; CNZZDATA1261158850=1579915528-1531623579-%7C1531623579; 19fg_2132_saltkey=JJPq77z7; 19fg_2132_lastvisit=1531621213; 19fg_2132_sid=giJQq9; 19fg_2132_lastact=1531625513%09forum.php%09ajax");
+				conn.header("Cookie",
+						"visid_incap_1729161=vLXyOD5mQo+fcYH/3t34vtq8SlsAAAAAQUIPAAAAAACqxN9WUhqVORrSMvdvYKwh; incap_ses_798_1729161=NoZkCHVVeDqSQ5G+MBETC9q8SlsAAAAAWUoHO2dTqIOsE5shO9nNeA==; nlbi_1729161=9IKJQ7Nq8HoG35t9kRXV5AAAAACDo2AC54Qsb3PW1Q6Ent4Q; UM_distinctid=1649bf1b82c2d2-04591256761493-5b193413-1fa400-1649bf1b82e307; CNZZDATA1261158850=1579915528-1531623579-%7C1531623579; 19fg_2132_saltkey=JJPq77z7; 19fg_2132_lastvisit=1531621213; 19fg_2132_sid=giJQq9; 19fg_2132_lastact=1531625513%09forum.php%09ajax");
 				conn.header("Host", "s3.99hiya.biz");
 				conn.header("If-None-Match", "\"9f180aff\"");
 				conn.header("Upgrade-Insecure-Requests", "1");
-				conn.userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36");
+				conn.userAgent(
+						"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36");
 				doc = conn.get();
 			} catch (IOException e) {
 				LOG.error("Failed in Jsoup.connect({}), times={}", url, times);
