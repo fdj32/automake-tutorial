@@ -1,6 +1,8 @@
 package ru.mastercvv.job;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.StringUtils;
@@ -23,13 +25,19 @@ public class BinLookup {
 
 	private static final String MASTERCVV_RU = "http://mastercvv.ru/bin/lookup/creditcard/page_%d.html?d=2";
 
+	private static List<Integer> pageNumList = null;
+
+	static {
+		pageNumList = IntStream.range(1, 11382).boxed().collect(Collectors.toList());
+	}
+	
 	@Autowired
 	private Pgsql pg;
 
 	@Scheduled(fixedRate = 3000)
 	public void lookup() throws IOException {
 		LOG.info("lookup() started");
-		IntStream.range(1, 11382).parallel().forEach(i -> lookupPage(i));
+		pageNumList.parallelStream().forEach(i -> lookupPage(i));
 		LOG.info("lookup() ended");
 	}
 
@@ -45,6 +53,7 @@ public class BinLookup {
 			return;
 		Elements elements = doc.select("tbody tr");
 		elements.parallelStream().forEach(j -> tr(j));
+		pageNumList.remove(i);
 	}
 
 	public void tr(Element j) {
