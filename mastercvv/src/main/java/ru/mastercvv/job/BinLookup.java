@@ -1,10 +1,13 @@
 package ru.mastercvv.job;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -27,14 +30,43 @@ public class BinLookup {
 
 	private static List<Integer> pageNumList = null;
 
+	private static final String UTF8 = "UTF-8";
+	
+	private static StringBuffer JSON = null;
+
+	private static File FILE = null;
+
 	static {
 		pageNumList = IntStream.range(1, 11382).boxed().collect(Collectors.toList());
+		FILE = new File("bin.js");
+		JSON = new StringBuffer();
 	}
-	
+
 	@Autowired
 	private Pgsql pg;
 
-	@Scheduled(fixedRate = 3000)
+	@Scheduled(fixedRate = 300000)
+	public void output() throws IOException {
+		LOG.info("output() started");
+		FileUtils.write(FILE, "var bin = {\"db\":[\n", UTF8, true);
+		pg.selectAllBin().stream().forEach(i -> print(i));
+		String s = JSON.toString();
+		FileUtils.write(FILE, s.substring(0, s.length() - 2), UTF8, true);
+		FileUtils.write(FILE, "\n]};\n", UTF8, true);
+		LOG.info("output() ended");
+	}
+
+	public void print(Map<String, Object> map) {
+		JSON.append("{\"a\":\"").append(map.get("bin"));
+		JSON.append("\",\"b\":\"").append(null == map.get("bank_name") ? "" : map.get("bank_name"));
+		JSON.append("\",\"c\":\"").append(null == map.get("issuing_network") ? "" : map.get("issuing_network"));
+		JSON.append("\",\"d\":\"").append(null == map.get("country") ? "" : map.get("country"));
+		JSON.append("\",\"e\":\"").append(null == map.get("card_type") ? "" : map.get("card_type"));
+		JSON.append("\",\"f\":\"").append(null == map.get("card_level") ? "" : map.get("card_level"));
+		JSON.append("\"},\n");
+	}
+
+	// @Scheduled(fixedRate = 3000)
 	public void lookup() throws IOException {
 		LOG.info("lookup() started");
 		pageNumList.parallelStream().forEach(i -> lookupPage(i));

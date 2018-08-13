@@ -23,4 +23,9 @@ public class Pgsql {
 		List<Map<String, Object>> list = jdbcTemplate.queryForList(sql, bin);
 		return list != null && list.size() > 0;
 	}
+
+	public List<Map<String, Object>> selectAllBin() {
+		String sql = "select bin, bank_name, issuing_network, country, card_type, card_level from bin order by bin";
+		return jdbcTemplate.queryForList(sql);
+	}
 }
