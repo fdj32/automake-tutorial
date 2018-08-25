@@ -28,4 +28,10 @@ public class Pgsql {
 		String sql = "select bin, bank_name, issuing_network, country, card_type, card_level from bin order by bin";
 		return jdbcTemplate.queryForList(sql);
 	}
+	
+	public void insertid20m(Object[] args) {
+		String sql = "insert into id20m(Name,CardNo,Descriot,CtfTp,CtfId,Gender,Birthday,Address,Zip,Dirty,District1,District2,District3,District4,District5,District6,FirstNm,LastNm,Duty,Mobile,Tel,Fax,EMail,Nation,Taste,Education,Company,CTel,CAddress,CZip,Family,Version,id)\r\n" + 
+				"values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		jdbcTemplate.update(sql, args);
+	}
 }
