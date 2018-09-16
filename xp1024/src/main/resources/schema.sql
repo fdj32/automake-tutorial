@@ -187,11 +187,10 @@ DROP TABLE htmdata;
 CREATE TABLE IF NOT EXISTS htmdata (
 	id INT PRIMARY KEY DEFAULT nextval('seq_xp024'),
 	fid INT NOT NULL,
-	link VARCHAR(50) NOT NULL,
-	title VARCHAR(200) NOT NULL,
+	link VARCHAR(50) UNIQUE NOT NULL,
+	title VARCHAR(200) UNIQUE NOT NULL,
 	data TEXT NOT NULL,
-	data_length INT NOT NULL,
-	CONSTRAINT uk_htmdata_link_title UNIQUE (link,title)
+	data_length INT NOT NULL
 );
 
 CREATE INDEX idx_htmdata_link ON htmdata(link);

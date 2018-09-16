@@ -23,7 +23,7 @@ public class Postgres {
 	}
 
 	public long queryByLinkAndTitle(String link, String title) {
-		String sql = "select count(1) as total from htmdata where link=? and title=?";
+		String sql = "select count(1) as total from htmdata where link=? or title=?";
 		Map<String, Object> map = jdbcTemplate.queryForMap(sql, link, title);
 		return (long) map.get("total");
 	}
