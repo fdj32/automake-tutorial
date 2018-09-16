@@ -115,7 +115,7 @@ public class JsoupJob {
 				LOG.error("Failed save({}, {}, {}, {})", fid, href, title, data);
 			}
 		} else {
-			LOG.info("Found link={} and title={}", href, title);
+			LOG.info("Found link={} or title={}", href, title);
 		}
 
 	}
