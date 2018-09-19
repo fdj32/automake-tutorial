@@ -31,7 +31,7 @@ public class JsoupJob {
 	@Autowired
 	private Postgres pg;
 
-	@Scheduled(fixedRate = 3000)
+	//@Scheduled(fixedRate = 3000)
 	public void img() throws IOException {
 		LOG.info("img() started");
 		long start = System.currentTimeMillis();
@@ -56,7 +56,7 @@ public class JsoupJob {
 		LOG.info("save {} img", elements.size());
 	}
 
-	//@Scheduled(fixedRate = 3000)
+	@Scheduled(fixedRate = 3000)
 	public void jsoup() throws IOException {
 		LOG.info("jsoup() started");
 		long start = System.currentTimeMillis();

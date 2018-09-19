@@ -208,7 +208,11 @@ CREATE TABLE IF NOT EXISTS thread (
 
 \d thread
 
+DROP SEQUENCE seq_img;
+
 CREATE SEQUENCE seq_img START WITH 1 INCREMENT BY 1;
+
+DROP TABLE seq_img;
 
 CREATE TABLE IF NOT EXISTS img (
 	id INT PRIMARY KEY DEFAULT nextval('seq_img'),
