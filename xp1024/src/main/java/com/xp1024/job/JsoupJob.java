@@ -1,6 +1,8 @@
 package com.xp1024.job;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 import org.jsoup.Connection;
@@ -30,6 +32,31 @@ public class JsoupJob {
 	private Postgres pg;
 
 	@Scheduled(fixedRate = 3000)
+	public void img() throws IOException {
+		LOG.info("img() started");
+		long start = System.currentTimeMillis();
+		Map<String, Object> idMap = pg.htmdataIdRange();
+		int minId = (int) idMap.get("minId");
+		int maxId = (int) idMap.get("maxId");
+		List<Map<String, Object>> dataList = null;
+		while (minId < maxId) {
+			dataList = pg.loadHtmdata(minId, minId + 1000);
+			minId += 1000;
+			dataList.stream().forEach(i -> saveImg(i));
+		}
+		LOG.info("img() ended");
+		LOG.info("img() finished in {} seconds", (System.currentTimeMillis() - start) / 1000);
+	}
+
+	public void saveImg(Map<String, Object> map) {
+		Element e = new Element("body");
+		e.html((String) map.get("data"));
+		Elements elements = e.select("img");
+		elements.stream().forEach(i -> pg.saveImg(i.attr("src")));
+		LOG.info("save {} img", elements.size());
+	}
+
+	//@Scheduled(fixedRate = 3000)
 	public void jsoup() throws IOException {
 		LOG.info("jsoup() started");
 		long start = System.currentTimeMillis();
@@ -45,7 +72,7 @@ public class JsoupJob {
 		Elements elements = doc.select("tbody tr th span a");
 		elements.parallelStream().forEach(this::forumPhp);
 	}
-	
+
 	private void forumPhp(Element e) {
 		if (null == e)
 			return;

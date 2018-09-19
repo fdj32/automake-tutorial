@@ -193,9 +193,9 @@ CREATE TABLE IF NOT EXISTS htmdata (
 	data_length INT NOT NULL
 );
 
-CREATE INDEX idx_htmdata_link ON htmdata(link);
+--CREATE INDEX idx_htmdata_link ON htmdata(link);
 
-CREATE INDEX idx_htmdata_title ON htmdata(title);
+--CREATE INDEX idx_htmdata_title ON htmdata(title);
 
 \d
 \d htmdata
@@ -208,7 +208,16 @@ CREATE TABLE IF NOT EXISTS thread (
 
 \d thread
 
+CREATE SEQUENCE seq_img START WITH 1 INCREMENT BY 1;
 
+CREATE TABLE IF NOT EXISTS img (
+	id INT PRIMARY KEY DEFAULT nextval('seq_img'),
+	src VARCHAR(255) UNIQUE NOT NULL
+);
+
+\d
+\d seq_img
+\d img
 
 select 'http://w3.afulyu.pw/pw/'||link from htmdata
 where title like '%竹内纱里奈%'

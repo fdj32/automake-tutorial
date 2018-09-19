@@ -1,5 +1,6 @@
 package com.xp1024.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,28 @@ public class Postgres {
 			return;
 		String sql = "insert into thread(fid, title, parent_fid) values (?, ?, ?)";
 		jdbcTemplate.update(sql, new Object[] { fid, title, parentFid == -1 ? null : parentFid });
+	}
+
+	public boolean imgExist(String src) {
+		String sql = "select count(1) as total from img where src=?";
+		return (long) jdbcTemplate.queryForMap(sql, src).get("total") > 0;
+	}
+
+	public void saveImg(String src) {
+		if (imgExist(src))
+			return;
+		String sql = "insert into img(src) values (?)";
+		jdbcTemplate.update(sql, src);
+	}
+
+	public List<Map<String, Object>> loadHtmdata(int minId, int maxId) {
+		String sql = "select data from htmdata where id >= ? and id < ?";
+		return jdbcTemplate.queryForList(sql, minId, maxId);
+	}
+
+	public Map<String, Object> htmdataIdRange() {
+		String sql = "select min(id) as minId, max(id) as maxId from htmdata";
+		return jdbcTemplate.queryForMap(sql);
 	}
 
 }
