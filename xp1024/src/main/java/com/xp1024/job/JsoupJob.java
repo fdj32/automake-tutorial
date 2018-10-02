@@ -115,7 +115,7 @@ public class JsoupJob {
 			doc = get(fid, page);
 			if (null == doc)
 				return;
-			Elements elements = doc.select("tr td h3 a[target=_blank]");
+			Elements elements = doc.select("tr td h3 a");
 			elements.parallelStream().forEach(i -> threadHtml(fid, page, i));
 		} catch (Exception e) {
 			LOG.error("Failed in fidPage({}, {})", fid, page);
