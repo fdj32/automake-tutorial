@@ -79,7 +79,7 @@ public class JsoupJob {
 		String href = e.attr("href");
 		String title = e.text();
 		try {
-			int fid = Integer.parseInt(href.split("=")[1]);
+			int fid = Integer.parseInt((href.split("-")[3]).split("\\.")[0]);
 			pg.saveThread(fid, title, -1);
 			fid2db(fid);
 		} catch (NumberFormatException e1) {
@@ -148,7 +148,7 @@ public class JsoupJob {
 	}
 
 	private Document get(int fid, int page) throws IOException {
-		return connect(BASE + String.format("thread.php?fid=%d&page=%d", fid, page));
+		return connect(BASE + String.format("thread-htm-fid-%d-page-%d.html", fid, page));
 	}
 
 	private Document connect(String url) {
