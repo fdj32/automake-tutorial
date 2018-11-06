@@ -61,12 +61,6 @@ class ProductTable extends React.Component {
             key={category} />
         );
       products.forEach((product) => {
-        if (product.name.indexOf(filterText) === -1) {
-          return;
-        }
-        if (inStockOnly && !product.stocked) {
-          return;
-        }
         // console.log(category);
         // console.log(category == product.category);
         if (category == product.category) {
