@@ -35,7 +35,8 @@ class ProductTable extends React.Component {
     const inStockOnly = this.props.inStockOnly;
 
     const rows = [];
-    let lastCategory = null;
+    let products = [];
+    let categories = [];
 
     this.props.products.forEach((product) => {
       if (product.name.indexOf(filterText) === -1) {
@@ -44,20 +45,39 @@ class ProductTable extends React.Component {
       if (inStockOnly && !product.stocked) {
         return;
       }
-      if (product.category !== lastCategory) {
-        rows.push(
-          <ProductCategoryRow
-            category={product.category}
-            key={product.category} />
-        );
+      products.push(product);
+    });
+    
+    products.forEach((product) => {
+      if (!categories.includes(product.category)) {
+        categories.push(product.category);
       }
+    });
+    
+    categories.forEach((category) => {
       rows.push(
-        <ProductRow
-          product={product}
-          key={product.name}
-        />
-      );
-      lastCategory = product.category;
+          <ProductCategoryRow
+            category={category}
+            key={category} />
+        );
+      products.forEach((product) => {
+        if (product.name.indexOf(filterText) === -1) {
+          return;
+        }
+        if (inStockOnly && !product.stocked) {
+          return;
+        }
+        // console.log(category);
+        // console.log(category == product.category);
+        if (category == product.category) {
+           rows.push(
+            <ProductRow
+              product={product}
+              key={product.name}
+            />
+          );
+        }
+      });
     });
 
     return (
@@ -169,4 +189,3 @@ ReactDOM.render(
   <FilterableProductTable products={PRODUCTS} />,
   document.getElementById('container')
 );
-
