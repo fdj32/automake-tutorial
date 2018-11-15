@@ -2,12 +2,12 @@ package com.heartlandportico.hps.fdf;
 
 import org.apache.commons.lang.StringUtils;
 
-public class MerchantFundedTransactionLevelFees35 {
+public class MerchantFundedTransactionLevelFees35 extends FdfLine {
 
 	/**
 	 * 1-2, '35'
 	 */
-	private String recordType;
+//	private String recordType;
 
 	/**
 	 * 3-8, Sequential number of the record within file. Incremented by 1 for each
@@ -43,13 +43,13 @@ public class MerchantFundedTransactionLevelFees35 {
 
 	/* Filler, 339-550, AN 212, Space Filled. */
 
-	public String getRecordType() {
-		return recordType;
-	}
-
-	public void setRecordType(String recordType) {
-		this.recordType = recordType;
-	}
+//	public String getRecordType() {
+//		return recordType;
+//	}
+//
+//	public void setRecordType(String recordType) {
+//		this.recordType = recordType;
+//	}
 
 	public String getRecordSequenceNumber() {
 		return recordSequenceNumber;
@@ -102,7 +102,7 @@ public class MerchantFundedTransactionLevelFees35 {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(recordType);
+		sb.append(getRecordType());
 		sb.append(recordSequenceNumber);
 		sb.append(uniqueBatchId);
 		sb.append(uniqueTransactionId);
@@ -115,7 +115,8 @@ public class MerchantFundedTransactionLevelFees35 {
 		return sb.toString();
 	}
 
-	public static MerchantFundedTransactionLevelFees35 fromString(String s) {
+	@Override
+	public FdfLine fromString(String s) {
 		if (StringUtils.isEmpty(s) || s.length() != 550) {
 			return null;
 		}

@@ -2,12 +2,12 @@ package com.heartlandportico.hps.fdf;
 
 import org.apache.commons.lang.StringUtils;
 
-public class MerchantFundedAdjustments53 {
+public class MerchantFundedAdjustments53 extends FdfLine {
 
 	/**
 	 * 1-2, '53'
 	 */
-	private String recordType;
+//	private String recordType;
 
 	/**
 	 * 3-8, Sequential number of the record within file. Incremented by 1 for each
@@ -42,13 +42,13 @@ public class MerchantFundedAdjustments53 {
 
 	/* Filler, 49-550, AN 502, Space Filled. */
 
-	public String getRecordType() {
-		return recordType;
-	}
-
-	public void setRecordType(String recordType) {
-		this.recordType = recordType;
-	}
+//	public String getRecordType() {
+//		return recordType;
+//	}
+//
+//	public void setRecordType(String recordType) {
+//		this.recordType = recordType;
+//	}
 
 	public String getRecordSequenceNumber() {
 		return recordSequenceNumber;
@@ -101,7 +101,7 @@ public class MerchantFundedAdjustments53 {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(recordType);
+		sb.append(getRecordType());
 		sb.append(recordSequenceNumber);
 		sb.append(fundingDate);
 		sb.append(debitAdjustmentCount);
@@ -112,7 +112,8 @@ public class MerchantFundedAdjustments53 {
 		return sb.toString();
 	}
 
-	public static MerchantFundedAdjustments53 fromString(String s) {
+	@Override
+	public FdfLine fromString(String s) {
 		if (StringUtils.isEmpty(s) || s.length() != 550) {
 			return null;
 		}

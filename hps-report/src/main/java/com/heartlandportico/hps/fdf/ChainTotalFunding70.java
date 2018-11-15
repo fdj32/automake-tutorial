@@ -2,12 +2,12 @@ package com.heartlandportico.hps.fdf;
 
 import org.apache.commons.lang.StringUtils;
 
-public class ChainTotalFunding70 {
+public class ChainTotalFunding70 extends FdfLine {
 
 	/**
 	 * 1-2, '70'
 	 */
-	private String recordType;
+//	private String recordType;
 
 	/**
 	 * 3-8, Sequential number of the record within file. Incremented by 1 for each
@@ -82,13 +82,13 @@ public class ChainTotalFunding70 {
 
 	/* Filler, 87-550, AN 464, Space Filled. */
 
-	public String getRecordType() {
-		return recordType;
-	}
-
-	public void setRecordType(String recordType) {
-		this.recordType = recordType;
-	}
+//	public String getRecordType() {
+//		return recordType;
+//	}
+//
+//	public void setRecordType(String recordType) {
+//		this.recordType = recordType;
+//	}
 
 	public String getRecordSequenceNumber() {
 		return recordSequenceNumber;
@@ -205,7 +205,7 @@ public class ChainTotalFunding70 {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(recordType);
+		sb.append(getRecordType());
 		sb.append(recordSequenceNumber);
 		sb.append(fundingDate);
 		sb.append(salesAmount);
@@ -224,7 +224,8 @@ public class ChainTotalFunding70 {
 		return sb.toString();
 	}
 
-	public static ChainTotalFunding70 fromString(String s) {
+	@Override
+	public FdfLine fromString(String s) {
 		if (StringUtils.isEmpty(s) || s.length() != 550) {
 			return null;
 		}
