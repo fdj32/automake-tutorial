@@ -2,12 +2,12 @@ package com.heartlandportico.hps.daf;
 
 import org.apache.commons.lang.StringUtils;
 
-public class DetailTrailer80 {
+public class DetailTrailer80 extends DafLine {
 
 	/**
 	 * 1-10, Refer to Control Section – Record Type = '80'
 	 */
-	private ControlSection cs;
+//	private ControlSection cs;
 
 	/**
 	 * 11-15
@@ -53,13 +53,13 @@ public class DetailTrailer80 {
 
 	/* Filler, 72-250, AN 179, Space Filled. */
 
-	public ControlSection getCs() {
-		return cs;
-	}
-
-	public void setCs(ControlSection cs) {
-		this.cs = cs;
-	}
+//	public ControlSection getCs() {
+//		return cs;
+//	}
+//
+//	public void setCs(ControlSection cs) {
+//		this.cs = cs;
+//	}
 
 	public String getBatchSequenceNumber() {
 		return batchSequenceNumber;
@@ -128,7 +128,7 @@ public class DetailTrailer80 {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(cs.toString());
+		sb.append(getCs().toString());
 		sb.append(batchSequenceNumber);
 		sb.append(numberOfCompletedDebits);
 		sb.append(completedDebitsAmount);
@@ -142,7 +142,8 @@ public class DetailTrailer80 {
 		return sb.toString();
 	}
 
-	public static DetailTrailer80 fromString(String s) {
+	@Override
+	public DafLine fromString(String s) {
 		if (StringUtils.isEmpty(s) || s.length() != 250) {
 			return null;
 		}

@@ -2,12 +2,12 @@ package com.heartlandportico.hps.daf;
 
 import org.apache.commons.lang.StringUtils;
 
-public class CreditDetail51 {
+public class CreditDetail51 extends DafLine {
 
 	/**
 	 * 1-10, Refer to Control Section – Record Type = '51'
 	 */
-	private ControlSection cs;
+//	private ControlSection cs;
 
 	/**
 	 * 11-14, Transaction date - MMDD
@@ -68,13 +68,13 @@ public class CreditDetail51 {
 
 	/* Filler, 80-250, AN 171, Space Filled. */
 
-	public ControlSection getCs() {
-		return cs;
-	}
-
-	public void setCs(ControlSection cs) {
-		this.cs = cs;
-	}
+//	public ControlSection getCs() {
+//		return cs;
+//	}
+//
+//	public void setCs(ControlSection cs) {
+//		this.cs = cs;
+//	}
 
 	public String getTransactionDate() {
 		return transactionDate;
@@ -167,7 +167,7 @@ public class CreditDetail51 {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(cs.toString());
+		sb.append(getCs().toString());
 		sb.append(transactionDate);
 		sb.append(transactionTime);
 		sb.append(transactionSequenceNumber);
@@ -184,7 +184,7 @@ public class CreditDetail51 {
 		return sb.toString();
 	}
 
-	public static CreditDetail51 fromString(String s) {
+	public DafLine fromString(String s) {
 		if (StringUtils.isEmpty(s) || s.length() != 250) {
 			return null;
 		}

@@ -2,12 +2,12 @@ package com.heartlandportico.hps.daf;
 
 import org.apache.commons.lang.StringUtils;
 
-public class ReconciliationHeader70 {
+public class ReconciliationHeader70 extends DafLine {
 
 	/**
 	 * 1-10, Refer to Control Section – Record Type = '70'
 	 */
-	private ControlSection cs;
+//	private ControlSection cs;
 
 	/**
 	 * 11-16, ‘RECON’
@@ -24,24 +24,25 @@ public class ReconciliationHeader70 {
 		this.batchIdentifier = batchIdentifier;
 	}
 
-	public ControlSection getCs() {
-		return cs;
-	}
-
-	public void setCs(ControlSection cs) {
-		this.cs = cs;
-	}
+//	public ControlSection getCs() {
+//		return cs;
+//	}
+//
+//	public void setCs(ControlSection cs) {
+//		this.cs = cs;
+//	}
 
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(cs.toString());
+		sb.append(getCs().toString());
 		sb.append(batchIdentifier);
 		sb.append(StringUtils.repeat(" ", 234));
 		return sb.toString();
 	}
 
-	public static ReconciliationHeader70 fromString(String s) {
+	@Override
+	public DafLine fromString(String s) {
 		if (StringUtils.isEmpty(s) || s.length() != 250) {
 			return null;
 		}

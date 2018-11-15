@@ -2,12 +2,12 @@ package com.heartlandportico.hps.daf;
 
 import org.apache.commons.lang.StringUtils;
 
-public class DetailHeader20 {
+public class DetailHeader20 extends DafLine {
 
 	/**
 	 * 1-10, Refer to Control Section – Record Type = '20'
 	 */
-	private ControlSection cs;
+//	private ControlSection cs;
 
 	/**
 	 * 11-13, 'DTL'
@@ -45,13 +45,13 @@ public class DetailHeader20 {
 
 	/* Filler, 66-250, AN 185, Space Filled. */
 
-	public ControlSection getCs() {
-		return cs;
-	}
-
-	public void setCs(ControlSection cs) {
-		this.cs = cs;
-	}
+//	public ControlSection getCs() {
+//		return cs;
+//	}
+//
+//	public void setCs(ControlSection cs) {
+//		this.cs = cs;
+//	}
 
 	public String getBatchType() {
 		return batchType;
@@ -104,7 +104,7 @@ public class DetailHeader20 {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(cs.toString());
+		sb.append(getCs().toString());
 		sb.append(batchType);
 		sb.append(divisionNumber);
 		sb.append(StringUtils.repeat(" ", 4));
@@ -117,7 +117,8 @@ public class DetailHeader20 {
 		return sb.toString();
 	}
 
-	public static DetailHeader20 fromString(String s) {
+	@Override
+	public DafLine fromString(String s) {
 		if (StringUtils.isEmpty(s) || s.length() != 250) {
 			return null;
 		}

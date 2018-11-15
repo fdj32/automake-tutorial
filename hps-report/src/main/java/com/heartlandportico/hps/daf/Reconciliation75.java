@@ -2,12 +2,12 @@ package com.heartlandportico.hps.daf;
 
 import org.apache.commons.lang.StringUtils;
 
-public class Reconciliation75 {
+public class Reconciliation75 extends DafLine {
 
 	/**
 	 * 1-10, Refer to Control Section – Record Type = '75'
 	 */
-	private ControlSection cs;
+//	private ControlSection cs;
 
 	/**
 	 * 11-21
@@ -51,13 +51,13 @@ public class Reconciliation75 {
 
 	/* Filler, 59-250, AN 192, Space Filled. */
 
-	public ControlSection getCs() {
-		return cs;
-	}
-
-	public void setCs(ControlSection cs) {
-		this.cs = cs;
-	}
+//	public ControlSection getCs() {
+//		return cs;
+//	}
+//
+//	public void setCs(ControlSection cs) {
+//		this.cs = cs;
+//	}
 
 	public String getChargebackAmount() {
 		return chargebackAmount;
@@ -126,7 +126,7 @@ public class Reconciliation75 {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(cs.toString());
+		sb.append(getCs().toString());
 		sb.append(chargebackAmount);
 		sb.append(chargebackSign);
 		sb.append(adjustmentAmount);
@@ -139,7 +139,8 @@ public class Reconciliation75 {
 		return sb.toString();
 	}
 
-	public static Reconciliation75 fromString(String s) {
+	@Override
+	public DafLine fromString(String s) {
 		if (StringUtils.isEmpty(s) || s.length() != 250) {
 			return null;
 		}
