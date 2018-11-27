@@ -125,7 +125,7 @@ public class MerchantFundedBatchHMSActivity34 extends FdfLine {
 	 */
 	private String promoReversalTxnCount;
 
-	/* Filler, 161-550, AN 390, Space Filled. */
+	/* Filler, 161-550, AN 190, Space Filled. */
 
 //	public String getRecordType() {
 //		return recordType;
@@ -346,13 +346,13 @@ public class MerchantFundedBatchHMSActivity34 extends FdfLine {
 		sb.append(freezeTxnCount);
 		sb.append(unfreezeTxnCount);
 		sb.append(promoReversalTxnCount);
-		sb.append(StringUtils.repeat(" ", 390));
+		sb.append(StringUtils.repeat(" ", 190));
 		return sb.toString();
 	}
 
 	@Override
 	public FdfLine fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		MerchantFundedBatchHMSActivity34 o = new MerchantFundedBatchHMSActivity34();

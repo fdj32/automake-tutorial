@@ -80,7 +80,7 @@ public class ChainTotalFunding70 extends FdfLine {
 	 */
 	private char depositSign;
 
-	/* Filler, 87-550, AN 464, Space Filled. */
+	/* Filler, 87-350, AN 264, Space Filled. */
 
 //	public String getRecordType() {
 //		return recordType;
@@ -220,13 +220,13 @@ public class ChainTotalFunding70 extends FdfLine {
 		sb.append(adjustmentsSign);
 		sb.append(depositAmount);
 		sb.append(depositSign);
-		sb.append(StringUtils.repeat(" ", 464));
+		sb.append(StringUtils.repeat(" ", 264));
 		return sb.toString();
 	}
 
 	@Override
 	public FdfLine fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		ChainTotalFunding70 o = new ChainTotalFunding70();

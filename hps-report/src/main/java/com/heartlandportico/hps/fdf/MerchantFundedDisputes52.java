@@ -100,7 +100,7 @@ public class MerchantFundedDisputes52 extends FdfLine {
 	 */
 	private String returnReversalRepresentmentAmount;
 
-	/* Filler, 151-550, AN 400, Space Filled. */
+	/* Filler, 151-350, AN 200, Space Filled. */
 
 //	public String getRecordType() {
 //		return recordType;
@@ -276,13 +276,13 @@ public class MerchantFundedDisputes52 extends FdfLine {
 		sb.append(saleReversalRepresentmentAmount);
 		sb.append(returnReversalRepresentmentCount);
 		sb.append(returnReversalRepresentmentAmount);
-		sb.append(StringUtils.repeat(" ", 400));
+		sb.append(StringUtils.repeat(" ", 200));
 		return sb.toString();
 	}
 
 	@Override
 	public FdfLine fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		MerchantFundedDisputes52 o = new MerchantFundedDisputes52();

@@ -95,7 +95,7 @@ public class MerchantBatchHeader30 extends FdfLine {
 	 */
 	private String submitterName;
 
-	/* Filler, 168-550, AN 383, Space Filled. */
+	/* Filler, 168-350, AN 183, Space Filled. */
 
 //	public String getRecordType() {
 //		return recordType;
@@ -262,13 +262,13 @@ public class MerchantBatchHeader30 extends FdfLine {
 		sb.append(creditAmount);
 		sb.append(sicCode);
 		sb.append(submitterName);
-		sb.append(StringUtils.repeat(" ", 383));
+		sb.append(StringUtils.repeat(" ", 183));
 		return sb.toString();
 	}
 
 	@Override
 	public FdfLine fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		MerchantBatchHeader30 o = new MerchantBatchHeader30();

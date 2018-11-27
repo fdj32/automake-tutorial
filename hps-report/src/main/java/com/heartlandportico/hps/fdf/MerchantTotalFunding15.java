@@ -110,7 +110,7 @@ public class MerchantTotalFunding15 extends FdfLine {
 	 */
 	private char depositSign;
 
-	/* Filler, 157-550, AN 394, Space Filled. */
+	/* Filler, 157-350, AN 194, Space Filled. */
 
 //	public String getRecordType() {
 //		return recordType;
@@ -304,13 +304,13 @@ public class MerchantTotalFunding15 extends FdfLine {
 		sb.append(returnsSign);
 		sb.append(depositAmount);
 		sb.append(depositSign);
-		sb.append(StringUtils.repeat(" ", 394));
+		sb.append(StringUtils.repeat(" ", 194));
 		return sb.toString();
 	}
 
 	@Override
 	public FdfLine fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		MerchantTotalFunding15 o = new MerchantTotalFunding15();

@@ -20,7 +20,7 @@ public class MerchantBatchHeaderControl20 extends FdfLine {
 	 */
 	private String totalMerchantBatches;
 
-	/* Filler, 15-550, AN 536, Space Filled. */
+	/* Filler, 15-350, AN 336, Space Filled. */
 
 //	public String getRecordType() {
 //		return recordType;
@@ -52,13 +52,13 @@ public class MerchantBatchHeaderControl20 extends FdfLine {
 		sb.append(getRecordType());
 		sb.append(recordSequenceNumber);
 		sb.append(totalMerchantBatches);
-		sb.append(StringUtils.repeat(" ", 536));
+		sb.append(StringUtils.repeat(" ", 336));
 		return sb.toString();
 	}
 
 	@Override
 	public FdfLine fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		MerchantBatchHeaderControl20 o = new MerchantBatchHeaderControl20();

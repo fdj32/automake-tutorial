@@ -35,7 +35,7 @@ public class MerchantFundedOtherFundingControl50 extends FdfLine {
 	 */
 	private String adjustmentsCount;
 
-	/* Filler, 33-550, AN 518, Space Filled. */
+	/* Filler, 33-350, AN 318, Space Filled. */
 
 //	public String getRecordType() {
 //		return recordType;
@@ -94,13 +94,13 @@ public class MerchantFundedOtherFundingControl50 extends FdfLine {
 		sb.append(returnedItemsCount);
 		sb.append(disputesCount);
 		sb.append(adjustmentsCount);
-		sb.append(StringUtils.repeat(" ", 518));
+		sb.append(StringUtils.repeat(" ", 318));
 		return sb.toString();
 	}
 
 	@Override
 	public FdfLine fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		MerchantFundedOtherFundingControl50 o = new MerchantFundedOtherFundingControl50();

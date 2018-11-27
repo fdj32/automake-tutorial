@@ -173,24 +173,24 @@ public class MerchantDeposit31 extends FdfLine {
 	/**
 	 * 332-381
 	 */
-	private String description;
+//	private String description;
 
 	/**
 	 * 382-451
 	 */
-	private String invoiceNbr;
+//	private String invoiceNbr;
 
 	/**
 	 * 452-501
 	 */
-	private String customerId;
+//	private String customerId;
 
 	/**
 	 * 502-526
 	 */
-	private String directMktInvoiceNbr;
+//	private String directMktInvoiceNbr;
 
-	/* Filler, 527-550, AN 24, Space Filled. */
+	/* Filler, 332-350, AN 19, Space Filled. */
 
 //	public String getRecordType() {
 //		return recordType;
@@ -456,38 +456,6 @@ public class MerchantDeposit31 extends FdfLine {
 		this.transactionDisposition = transactionDisposition;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getInvoiceNbr() {
-		return invoiceNbr;
-	}
-
-	public void setInvoiceNbr(String invoiceNbr) {
-		this.invoiceNbr = invoiceNbr;
-	}
-
-	public String getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
-	}
-
-	public String getDirectMktInvoiceNbr() {
-		return directMktInvoiceNbr;
-	}
-
-	public void setDirectMktInvoiceNbr(String directMktInvoiceNbr) {
-		this.directMktInvoiceNbr = directMktInvoiceNbr;
-	}
-
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
@@ -524,17 +492,13 @@ public class MerchantDeposit31 extends FdfLine {
 		sb.append(visaTransId);
 		sb.append(onlineAccountNumber);
 		sb.append(transactionDisposition);
-		sb.append(description);
-		sb.append(invoiceNbr);
-		sb.append(customerId);
-		sb.append(directMktInvoiceNbr);
-		sb.append(StringUtils.repeat(" ", 24));
+		sb.append(StringUtils.repeat(" ", 19));
 		return sb.toString();
 	}
 
 	@Override
 	public FdfLine fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		MerchantDeposit31 o = new MerchantDeposit31();
@@ -571,10 +535,6 @@ public class MerchantDeposit31 extends FdfLine {
 		o.setVisaTransId(s.substring(300, 315));
 		o.setOnlineAccountNumber(s.substring(315, 330));
 		o.setTransactionDisposition(s.charAt(330));
-		o.setDescription(s.substring(331, 381));
-		o.setInvoiceNbr(s.substring(381, 451));
-		o.setCustomerId(s.substring(451, 501));
-		o.setDirectMktInvoiceNbr(s.substring(501, 526));
 		return o;
 	}
 

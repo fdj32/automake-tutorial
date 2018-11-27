@@ -110,7 +110,7 @@ public class FileTrailer90 extends FdfLine {
 	 */
 	private String chainFundedBatchHMSCount;
 
-	/* Filler, 123-550, AN 428, Space Filled. */
+	/* Filler, 123-350, AN 228, Space Filled. */
 
 //	public String getRecordType() {
 //		return recordType;
@@ -304,13 +304,13 @@ public class FileTrailer90 extends FdfLine {
 		sb.append(chainTotalFundingCount);
 		sb.append(chainTotalFundingByCardTypeCount);
 		sb.append(chainFundedBatchHMSCount);
-		sb.append(StringUtils.repeat(" ", 428));
+		sb.append(StringUtils.repeat(" ", 228));
 		return sb.toString();
 	}
 
 	@Override
 	public FdfLine fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		FileTrailer90 o = new FileTrailer90();

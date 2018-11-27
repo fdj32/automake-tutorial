@@ -46,7 +46,7 @@ public class MerchantFutureFundedTransactionLevelFees33 extends FdfLine {
 	 */
 	private String[] feeAmount = new String[4];
 
-	/* Filler, 293-550, AN 258, Space Filled. */
+	/* Filler, 293-350, AN 58, Space Filled. */
 
 //	public String getRecordType() {
 //		return recordType;
@@ -125,13 +125,13 @@ public class MerchantFutureFundedTransactionLevelFees33 extends FdfLine {
 			sb.append(debitCreditInd[i]);
 			sb.append(feeAmount[i]);
 		}
-		sb.append(StringUtils.repeat(" ", 258));
+		sb.append(StringUtils.repeat(" ", 58));
 		return sb.toString();
 	}
 
 	@Override
 	public FdfLine fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		MerchantFutureFundedTransactionLevelFees33 o = new MerchantFutureFundedTransactionLevelFees33();

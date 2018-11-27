@@ -51,7 +51,7 @@ public class FileHeader10 extends FdfLine {
 	 */
 	private String totalNumberOfRecords;
 
-	/* Filler, 84-550, AN 467, Space Filled. */
+	/* Filler, 84-350, AN 267, Space Filled. */
 
 //	public String getRecordType() {
 //		return recordType;
@@ -138,13 +138,13 @@ public class FileHeader10 extends FdfLine {
 		sb.append(' ');
 		sb.append(clientName);
 		sb.append(totalNumberOfRecords);
-		sb.append(StringUtils.repeat(" ", 467));
+		sb.append(StringUtils.repeat(" ", 267));
 		return sb.toString();
 	}
 
 	@Override
 	public FdfLine fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		FileHeader10 o = new FileHeader10();

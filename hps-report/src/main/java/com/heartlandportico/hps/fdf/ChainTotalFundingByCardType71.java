@@ -109,8 +109,18 @@ public class ChainTotalFundingByCardType71 extends FdfLine {
 	 * 122, Total GSBN Net Sales Amount Sign
 	 */
 	private char gsbnSign;
+	
+	/**
+	 * 123-133, Total Gift Card Activity Net Amount
+	 */
+	private String giftAmount;
 
-	/* Filler, 123-550, AN 428, Space Filled. */
+	/**
+	 * 134, Total Gift Card Activity Net Amount Sign
+	 */
+	private char giftSign;
+
+	/* Filler, 135-350, AN 216, Space Filled. */
 
 //	public String getRecordType() {
 //		return recordType;
@@ -280,6 +290,22 @@ public class ChainTotalFundingByCardType71 extends FdfLine {
 		this.gsbnSign = gsbnSign;
 	}
 
+	public String getGiftAmount() {
+		return giftAmount;
+	}
+
+	public void setGiftAmount(String giftAmount) {
+		this.giftAmount = giftAmount;
+	}
+
+	public char getGiftSign() {
+		return giftSign;
+	}
+
+	public void setGiftSign(char giftSign) {
+		this.giftSign = giftSign;
+	}
+
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
@@ -304,13 +330,15 @@ public class ChainTotalFundingByCardType71 extends FdfLine {
 		sb.append(ebtSign);
 		sb.append(gsbnAmount);
 		sb.append(gsbnSign);
-		sb.append(StringUtils.repeat(" ", 428));
+		sb.append(giftAmount);
+		sb.append(giftSign);
+		sb.append(StringUtils.repeat(" ", 216));
 		return sb.toString();
 	}
 
 	@Override
 	public FdfLine fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		ChainTotalFundingByCardType71 o = new ChainTotalFundingByCardType71();
@@ -335,6 +363,8 @@ public class ChainTotalFundingByCardType71 extends FdfLine {
 		o.setEbtSign(s.charAt(109));
 		o.setGsbnAmount(s.substring(110, 121));
 		o.setGsbnSign(s.charAt(121));
+		o.setGiftAmount(s.substring(122, 133));
+		o.setGiftSign(s.charAt(133));
 		return o;
 	}
 

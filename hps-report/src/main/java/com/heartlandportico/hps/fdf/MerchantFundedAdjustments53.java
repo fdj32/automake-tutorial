@@ -40,7 +40,7 @@ public class MerchantFundedAdjustments53 extends FdfLine {
 	 */
 	private String creditAdjustmentAmount;
 
-	/* Filler, 49-550, AN 502, Space Filled. */
+	/* Filler, 49-350, AN 302, Space Filled. */
 
 //	public String getRecordType() {
 //		return recordType;
@@ -108,13 +108,13 @@ public class MerchantFundedAdjustments53 extends FdfLine {
 		sb.append(debitAdjustmentAmount);
 		sb.append(creditAdjustmentCount);
 		sb.append(creditAdjustmentAmount);
-		sb.append(StringUtils.repeat(" ", 502));
+		sb.append(StringUtils.repeat(" ", 302));
 		return sb.toString();
 	}
 
 	@Override
 	public FdfLine fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		MerchantFundedAdjustments53 o = new MerchantFundedAdjustments53();
