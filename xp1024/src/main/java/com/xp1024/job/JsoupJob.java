@@ -31,7 +31,7 @@ public class JsoupJob {
 	@Autowired
 	private Postgres pg;
 
-	@Scheduled(fixedRate = 300000, initialDelay=300000)
+	//@Scheduled(fixedRate = 300000, initialDelay=300000)
 	public void img() throws IOException {
 		LOG.info("img() started");
 		long start = System.currentTimeMillis();
@@ -80,6 +80,7 @@ public class JsoupJob {
 		String title = e.text();
 		try {
 			int fid = Integer.parseInt((href.split("-")[3]).split("\\.")[0]);
+			if (3 != fid) return;
 			pg.saveThread(fid, title, -1);
 			fid2db(fid);
 		} catch (NumberFormatException e1) {
