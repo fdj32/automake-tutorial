@@ -56,7 +56,7 @@ public class JsoupJob {
 		LOG.info("save {} img", elements.size());
 	}
 
-	@Scheduled(fixedRate = 3000)
+	@Scheduled(fixedRate = 1000*60*60*24)
 	public void jsoup() throws IOException {
 		LOG.info("jsoup() started");
 		long start = System.currentTimeMillis();

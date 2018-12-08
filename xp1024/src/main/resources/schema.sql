@@ -180,18 +180,20 @@ create database xp1024;
 
 \c xp1024;
 
-CREATE SEQUENCE seq_xp024 START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE seq_xp1024 START WITH 1 INCREMENT BY 1;
 
 DROP TABLE htmdata;
 
 CREATE TABLE IF NOT EXISTS htmdata (
-	id INT PRIMARY KEY DEFAULT nextval('seq_xp024'),
+	id INT PRIMARY KEY DEFAULT nextval('seq_xp1024'),
 	fid INT NOT NULL,
 	link VARCHAR(50) UNIQUE NOT NULL,
 	title VARCHAR(200) UNIQUE NOT NULL,
 	data TEXT NOT NULL,
 	data_length INT NOT NULL
 );
+
+CREATE INDEX idx_htmdata_data ON htmdata(data);
 
 --CREATE INDEX idx_htmdata_link ON htmdata(link);
 
