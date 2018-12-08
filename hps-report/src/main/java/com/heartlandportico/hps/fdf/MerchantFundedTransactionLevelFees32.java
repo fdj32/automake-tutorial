@@ -2,12 +2,12 @@ package com.heartlandportico.hps.fdf;
 
 import org.apache.commons.lang.StringUtils;
 
-public class MerchantFundedTransactionLevelFees32 {
+public class MerchantFundedTransactionLevelFees32 extends FdfLine {
 
 	/**
 	 * 1-2, '32'
 	 */
-	private String recordType;
+//	private String recordType;
 
 	/**
 	 * 3-8, Sequential number of the record within file. Incremented by 1 for each
@@ -41,15 +41,15 @@ public class MerchantFundedTransactionLevelFees32 {
 	 */
 	private String[] feeAmount = new String[5];
 
-	/* Filler, 347-550, AN 204, Space Filled. */
+	/* Filler, 347-350, AN 4, Space Filled. */
 
-	public String getRecordType() {
-		return recordType;
-	}
-
-	public void setRecordType(String recordType) {
-		this.recordType = recordType;
-	}
+//	public String getRecordType() {
+//		return recordType;
+//	}
+//
+//	public void setRecordType(String recordType) {
+//		this.recordType = recordType;
+//	}
 
 	public String getRecordSequenceNumber() {
 		return recordSequenceNumber;
@@ -102,7 +102,7 @@ public class MerchantFundedTransactionLevelFees32 {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(recordType);
+		sb.append(getRecordType());
 		sb.append(recordSequenceNumber);
 		sb.append(uniqueBatchId);
 		sb.append(batchId);
@@ -111,12 +111,13 @@ public class MerchantFundedTransactionLevelFees32 {
 			sb.append(debitCreditInd[i]);
 			sb.append(feeAmount[i]);
 		}
-		sb.append(StringUtils.repeat(" ", 204));
+		sb.append(StringUtils.repeat(" ", 4));
 		return sb.toString();
 	}
 
-	public static MerchantFundedTransactionLevelFees32 fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+	@Override
+	public FdfLine fromString(String s) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		MerchantFundedTransactionLevelFees32 o = new MerchantFundedTransactionLevelFees32();

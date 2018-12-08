@@ -2,12 +2,12 @@ package com.heartlandportico.hps.fdf;
 
 import org.apache.commons.lang.StringUtils;
 
-public class MerchantDeposit31 {
+public class MerchantDeposit31 extends FdfLine {
 
 	/**
 	 * 1-2, '31'
 	 */
-	private String recordType;
+//	private String recordType;
 
 	/**
 	 * 3-8, Sequential number of the record within file. Incremented by 1 for each
@@ -173,32 +173,32 @@ public class MerchantDeposit31 {
 	/**
 	 * 332-381
 	 */
-	private String description;
+//	private String description;
 
 	/**
 	 * 382-451
 	 */
-	private String invoiceNbr;
+//	private String invoiceNbr;
 
 	/**
 	 * 452-501
 	 */
-	private String customerId;
+//	private String customerId;
 
 	/**
 	 * 502-526
 	 */
-	private String directMktInvoiceNbr;
+//	private String directMktInvoiceNbr;
 
-	/* Filler, 527-550, AN 24, Space Filled. */
+	/* Filler, 332-350, AN 19, Space Filled. */
 
-	public String getRecordType() {
-		return recordType;
-	}
-
-	public void setRecordType(String recordType) {
-		this.recordType = recordType;
-	}
+//	public String getRecordType() {
+//		return recordType;
+//	}
+//
+//	public void setRecordType(String recordType) {
+//		this.recordType = recordType;
+//	}
 
 	public String getRecordSequenceNumber() {
 		return recordSequenceNumber;
@@ -456,42 +456,10 @@ public class MerchantDeposit31 {
 		this.transactionDisposition = transactionDisposition;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getInvoiceNbr() {
-		return invoiceNbr;
-	}
-
-	public void setInvoiceNbr(String invoiceNbr) {
-		this.invoiceNbr = invoiceNbr;
-	}
-
-	public String getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
-	}
-
-	public String getDirectMktInvoiceNbr() {
-		return directMktInvoiceNbr;
-	}
-
-	public void setDirectMktInvoiceNbr(String directMktInvoiceNbr) {
-		this.directMktInvoiceNbr = directMktInvoiceNbr;
-	}
-
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(recordType);
+		sb.append(getRecordType());
 		sb.append(recordSequenceNumber);
 		sb.append(uniqueBatchId);
 		sb.append(uniqueTransactionId);
@@ -524,16 +492,13 @@ public class MerchantDeposit31 {
 		sb.append(visaTransId);
 		sb.append(onlineAccountNumber);
 		sb.append(transactionDisposition);
-		sb.append(description);
-		sb.append(invoiceNbr);
-		sb.append(customerId);
-		sb.append(directMktInvoiceNbr);
-		sb.append(StringUtils.repeat(" ", 24));
+		sb.append(StringUtils.repeat(" ", 19));
 		return sb.toString();
 	}
 
-	public static MerchantDeposit31 fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+	@Override
+	public FdfLine fromString(String s) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		MerchantDeposit31 o = new MerchantDeposit31();
@@ -570,10 +535,6 @@ public class MerchantDeposit31 {
 		o.setVisaTransId(s.substring(300, 315));
 		o.setOnlineAccountNumber(s.substring(315, 330));
 		o.setTransactionDisposition(s.charAt(330));
-		o.setDescription(s.substring(331, 381));
-		o.setInvoiceNbr(s.substring(381, 451));
-		o.setCustomerId(s.substring(451, 501));
-		o.setDirectMktInvoiceNbr(s.substring(501, 526));
 		return o;
 	}
 

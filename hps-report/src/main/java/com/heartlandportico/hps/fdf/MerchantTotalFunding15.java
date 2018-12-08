@@ -2,12 +2,12 @@ package com.heartlandportico.hps.fdf;
 
 import org.apache.commons.lang.StringUtils;
 
-public class MerchantTotalFunding15 {
+public class MerchantTotalFunding15 extends FdfLine {
 
 	/**
 	 * 1-2, '15'
 	 */
-	private String recordType;
+//	private String recordType;
 
 	/**
 	 * 3-8, Sequential number of the record within file. Incremented by 1 for each
@@ -110,15 +110,15 @@ public class MerchantTotalFunding15 {
 	 */
 	private char depositSign;
 
-	/* Filler, 157-550, AN 394, Space Filled. */
+	/* Filler, 157-350, AN 194, Space Filled. */
 
-	public String getRecordType() {
-		return recordType;
-	}
-
-	public void setRecordType(String recordType) {
-		this.recordType = recordType;
-	}
+//	public String getRecordType() {
+//		return recordType;
+//	}
+//
+//	public void setRecordType(String recordType) {
+//		this.recordType = recordType;
+//	}
 
 	public String getRecordSequenceNumber() {
 		return recordSequenceNumber;
@@ -283,7 +283,7 @@ public class MerchantTotalFunding15 {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(recordType);
+		sb.append(getRecordType());
 		sb.append(recordSequenceNumber);
 		sb.append(fundingDate);
 		sb.append(merchantNumber);
@@ -304,12 +304,13 @@ public class MerchantTotalFunding15 {
 		sb.append(returnsSign);
 		sb.append(depositAmount);
 		sb.append(depositSign);
-		sb.append(StringUtils.repeat(" ", 394));
+		sb.append(StringUtils.repeat(" ", 194));
 		return sb.toString();
 	}
 
-	public static MerchantTotalFunding15 fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+	@Override
+	public FdfLine fromString(String s) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		MerchantTotalFunding15 o = new MerchantTotalFunding15();

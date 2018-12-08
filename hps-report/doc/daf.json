@@ -1,0 +1,476 @@
+[
+	{
+		"fileTitle": "DAF ",
+		"chainNumber": "000111",
+		"hpsProcessingDate": "20181108",
+		"fileCreationDate": "20181109",
+		"fileCreationTime": "123552",
+		"clientName": "AVID4 ADVENTURE INC           ",
+		"cs": {
+			"logicalRecordNumber": "000001",
+			"recordSequenceNumber": "1",
+			"totalNumberOfRecords": "1",
+			"recordType": "10"
+		}
+	},
+	{
+		"batchType": "DTL",
+		"divisionNumber": "001",
+		"merchantNumber": "000000000000000 ",
+		"batchNumber": "00001",
+		"batchSequenceNumber": "00001",
+		"cs": {
+			"logicalRecordNumber": "000002",
+			"recordSequenceNumber": "1",
+			"totalNumberOfRecords": "1",
+			"recordType": "20"
+		}
+	},
+	{
+		"transactionDate": "1107",
+		"transactionTime": "    00",
+		"transactionSequenceNumber": "      ",
+		"transactionType": "05",
+		"transactionDisposition": "3",
+		"responseCode": "000",
+		"transactionAmount": "000124500",
+		"authorizationCode": "007916    ",
+		"posEntryCode": "01",
+		"accountNumber": "414721******9379   ",
+		"expirationDate": "0000",
+		"cs": {
+			"logicalRecordNumber": "000003",
+			"recordSequenceNumber": "1",
+			"totalNumberOfRecords": "3",
+			"recordType": "51"
+		}
+	},
+	{
+		"cardholderInstitutionId": "VISN",
+		"locatorNumber": "831130510054    ",
+		"sicmccCode": "    ",
+		"authorizedAmount": "000124500",
+		"cardholderIdMethod": "4",
+		"authorizationSource": " ",
+		"mailPhoneIndicator": " ",
+		"catIndicator": "0",
+		"cardProgramType": "C",
+		"debitNetworkId": "   ",
+		"frontEndVendorId": "1  ",
+		"premierFPI": "   ",
+		"cashBackAmount": "000000000",
+		"emvTransaction": " ",
+		"cs": {
+			"logicalRecordNumber": "000003",
+			"recordSequenceNumber": "2",
+			"totalNumberOfRecords": "3",
+			"recordType": "52"
+		}
+	},
+	{
+		"actualInterchangeCode": "220 ",
+		"currencyCode": "840",
+		"posConditionCode": "08",
+		"authorizationCharateristicsInd": " ",
+		"anticipatedInterchangeCode": "    ",
+		"actualInterchangeAmount": "0002438",
+		"actualInterchangeSign": "D",
+		"interchangeAdjustmentReasonCode": "        ",
+		"interchangeAdjustmentAmount": "0000000",
+		"interchangeAdjustmentSign": " ",
+		"avsResponseCode": " ",
+		"networkResponseFields": "0",
+		"visaTransactionId": "               ",
+		"visaValidationCode": "    ",
+		"visaAuthResponseCode": "  ",
+		"visaRealTimeClearingFlag": " ",
+		"cs": {
+			"logicalRecordNumber": "000003",
+			"recordSequenceNumber": "3",
+			"totalNumberOfRecords": "3",
+			"recordType": "53"
+		}
+	},
+	{
+		"transactionDate": "1107",
+		"transactionTime": "    00",
+		"transactionSequenceNumber": "      ",
+		"transactionType": "05",
+		"transactionDisposition": "3",
+		"responseCode": "000",
+		"transactionAmount": "000014900",
+		"authorizationCode": "04006B    ",
+		"posEntryCode": "01",
+		"accountNumber": "548897******1496   ",
+		"expirationDate": "0000",
+		"cs": {
+			"logicalRecordNumber": "000004",
+			"recordSequenceNumber": "1",
+			"totalNumberOfRecords": "3",
+			"recordType": "51"
+		}
+	},
+	{
+		"cardholderInstitutionId": "MCRD",
+		"locatorNumber": "831140624901    ",
+		"sicmccCode": "    ",
+		"authorizedAmount": "000014900",
+		"cardholderIdMethod": "4",
+		"authorizationSource": " ",
+		"mailPhoneIndicator": " ",
+		"catIndicator": " ",
+		"cardProgramType": "C",
+		"debitNetworkId": "   ",
+		"frontEndVendorId": "1  ",
+		"premierFPI": "   ",
+		"cashBackAmount": "000000000",
+		"emvTransaction": " ",
+		"cs": {
+			"logicalRecordNumber": "000004",
+			"recordSequenceNumber": "2",
+			"totalNumberOfRecords": "3",
+			"recordType": "52"
+		}
+	},
+	{
+		"actualInterchangeCode": "RP  ",
+		"currencyCode": "840",
+		"posConditionCode": "08",
+		"authorizationCharateristicsInd": " ",
+		"anticipatedInterchangeCode": "    ",
+		"actualInterchangeAmount": "0000314",
+		"actualInterchangeSign": "D",
+		"interchangeAdjustmentReasonCode": "TrakDt  ",
+		"interchangeAdjustmentAmount": "0000046",
+		"interchangeAdjustmentSign": "+",
+		"avsResponseCode": " ",
+		"networkResponseFields": "0",
+		"visaTransactionId": "               ",
+		"visaValidationCode": "    ",
+		"visaAuthResponseCode": "  ",
+		"visaRealTimeClearingFlag": " ",
+		"cs": {
+			"logicalRecordNumber": "000004",
+			"recordSequenceNumber": "3",
+			"totalNumberOfRecords": "3",
+			"recordType": "53"
+		}
+	},
+	{
+		"transactionDate": "1107",
+		"transactionTime": "    00",
+		"transactionSequenceNumber": "      ",
+		"transactionType": "05",
+		"transactionDisposition": "3",
+		"responseCode": "000",
+		"transactionAmount": "000022400",
+		"authorizationCode": "007420    ",
+		"posEntryCode": "01",
+		"accountNumber": "449547******4746   ",
+		"expirationDate": "0000",
+		"cs": {
+			"logicalRecordNumber": "000005",
+			"recordSequenceNumber": "1",
+			"totalNumberOfRecords": "3",
+			"recordType": "51"
+		}
+	},
+	{
+		"cardholderInstitutionId": "VISN",
+		"locatorNumber": "831141898054    ",
+		"sicmccCode": "    ",
+		"authorizedAmount": "000022400",
+		"cardholderIdMethod": "4",
+		"authorizationSource": " ",
+		"mailPhoneIndicator": " ",
+		"catIndicator": "0",
+		"cardProgramType": "C",
+		"debitNetworkId": "   ",
+		"frontEndVendorId": "1  ",
+		"premierFPI": "   ",
+		"cashBackAmount": "000000000",
+		"emvTransaction": " ",
+		"cs": {
+			"logicalRecordNumber": "000005",
+			"recordSequenceNumber": "2",
+			"totalNumberOfRecords": "3",
+			"recordType": "52"
+		}
+	},
+	{
+		"actualInterchangeCode": "220 ",
+		"currencyCode": "840",
+		"posConditionCode": "08",
+		"authorizationCharateristicsInd": " ",
+		"anticipatedInterchangeCode": "    ",
+		"actualInterchangeAmount": "0000447",
+		"actualInterchangeSign": "D",
+		"interchangeAdjustmentReasonCode": "        ",
+		"interchangeAdjustmentAmount": "0000000",
+		"interchangeAdjustmentSign": " ",
+		"avsResponseCode": " ",
+		"networkResponseFields": "0",
+		"visaTransactionId": "               ",
+		"visaValidationCode": "    ",
+		"visaAuthResponseCode": "  ",
+		"visaRealTimeClearingFlag": " ",
+		"cs": {
+			"logicalRecordNumber": "000005",
+			"recordSequenceNumber": "3",
+			"totalNumberOfRecords": "3",
+			"recordType": "53"
+		}
+	},
+	{
+		"batchSequenceNumber": "00001",
+		"numberOfCompletedDebits": "000003",
+		"completedDebitsAmount": "000161800",
+		"numberOfCompletedCredits": "000000",
+		"completedCreditsAmount": "000000000",
+		"netAmount": "000161800",
+		"netAmountSign": "D",
+		"logicalCount": "0000003",
+		"cs": {
+			"logicalRecordNumber": "000006",
+			"recordSequenceNumber": "1",
+			"totalNumberOfRecords": "1",
+			"recordType": "80"
+		}
+	},
+	{
+		"batchIdentifier": "RECON ",
+		"cs": {
+			"logicalRecordNumber": "000007",
+			"recordSequenceNumber": "1",
+			"totalNumberOfRecords": "1",
+			"recordType": "70"
+		}
+	},
+	{
+		"reconciliationRecordLevel": "ST",
+		"submissionDate": "1108",
+		"submissionTime": "0000",
+		"fileDate": "1109",
+		"fileType": "TCF",
+		"divisionNumber": "001",
+		"merchantNumber": "000000000000000 ",
+		"netSubmittedSalesAmount": "00000161800",
+		"netSubmittedSign": "C",
+		"rejectedAmount": "000000000",
+		"rejectedAmountSign": "C",
+		"cs": {
+			"logicalRecordNumber": "000008",
+			"recordSequenceNumber": "1",
+			"totalNumberOfRecords": "3",
+			"recordType": "71"
+		}
+	},
+	{
+		"visaSalesAmount": "00000146900",
+		"visaAmountSign": "C",
+		"mastercardSalesAmount": "00000014900",
+		"mastercardAmountSign": "C",
+		"discoverSalesAmount": "00000000000",
+		"discoverAmountSign": "C",
+		"discoverSettlementSupportInd": " ",
+		"amexSalesAmount": "00000000000",
+		"amexAmountSign": "C",
+		"amexSettlementSupportInd": "N",
+		"wexSalesAmount": "00000000000",
+		"wexAmountSign": "C",
+		"voyagerSalesAmount": "00000000000",
+		"voyagerAmountSign": "C",
+		"pinDebitSalesAmount": "00000000000",
+		"pinDebitAmountSign": "C",
+		"dinersSalesAmount": "00000000000",
+		"dinersAmountSign": "C",
+		"dinersSettlementSupportInd": "\u0000",
+		"reserveSalesAmount1": "00000000000",
+		"reserveSalesAmountSign1": "D",
+		"reserveSalesAmount2": "00000000000",
+		"reserveSalesAmountSign2": "D",
+		"reserveSalesAmountSign3": "\u0000",
+		"cs": {
+			"logicalRecordNumber": "000009",
+			"recordSequenceNumber": "1",
+			"totalNumberOfRecords": "3",
+			"recordType": "73"
+		}
+	},
+	{
+		"chargebackAmount": "00000000000",
+		"chargebackSign": "C",
+		"adjustmentAmount": "00000000000",
+		"adjustmentSign": "C",
+		"feeAmount": "00000000000",
+		"feeSign": "D",
+		"netDepositAmount": "00000161800",
+		"netDepositSign": "C",
+		"cs": {
+			"logicalRecordNumber": "000010",
+			"recordSequenceNumber": "1",
+			"totalNumberOfRecords": "3",
+			"recordType": "75"
+		}
+	},
+	{
+		"reconciliationRecordLevel": "DV",
+		"submissionDate": "1108",
+		"submissionTime": "0000",
+		"fileDate": "1109",
+		"fileType": "TCF",
+		"divisionNumber": "001",
+		"merchantNumber": "                ",
+		"netSubmittedSalesAmount": "00000161800",
+		"netSubmittedSign": "C",
+		"rejectedAmount": "000000000",
+		"rejectedAmountSign": "C",
+		"cs": {
+			"logicalRecordNumber": "000011",
+			"recordSequenceNumber": "1",
+			"totalNumberOfRecords": "3",
+			"recordType": "71"
+		}
+	},
+	{
+		"visaSalesAmount": "00000146900",
+		"visaAmountSign": "C",
+		"mastercardSalesAmount": "00000014900",
+		"mastercardAmountSign": "C",
+		"discoverSalesAmount": "00000000000",
+		"discoverAmountSign": "C",
+		"discoverSettlementSupportInd": " ",
+		"amexSalesAmount": "00000000000",
+		"amexAmountSign": "C",
+		"amexSettlementSupportInd": "N",
+		"wexSalesAmount": "00000000000",
+		"wexAmountSign": "C",
+		"voyagerSalesAmount": "00000000000",
+		"voyagerAmountSign": "C",
+		"pinDebitSalesAmount": "00000000000",
+		"pinDebitAmountSign": "C",
+		"dinersSalesAmount": "00000000000",
+		"dinersAmountSign": "C",
+		"dinersSettlementSupportInd": "\u0000",
+		"reserveSalesAmount1": "00000000000",
+		"reserveSalesAmountSign1": "D",
+		"reserveSalesAmount2": "00000000000",
+		"reserveSalesAmountSign2": "D",
+		"reserveSalesAmountSign3": "\u0000",
+		"cs": {
+			"logicalRecordNumber": "000012",
+			"recordSequenceNumber": "1",
+			"totalNumberOfRecords": "3",
+			"recordType": "73"
+		}
+	},
+	{
+		"chargebackAmount": "00000000000",
+		"chargebackSign": "C",
+		"adjustmentAmount": "00000000000",
+		"adjustmentSign": "C",
+		"feeAmount": "00000000000",
+		"feeSign": "C",
+		"netDepositAmount": "00000161800",
+		"netDepositSign": "C",
+		"cs": {
+			"logicalRecordNumber": "000013",
+			"recordSequenceNumber": "1",
+			"totalNumberOfRecords": "3",
+			"recordType": "75"
+		}
+	},
+	{
+		"reconciliationRecordLevel": "CH",
+		"submissionDate": "1108",
+		"submissionTime": "0000",
+		"fileDate": "1109",
+		"fileType": "TCF",
+		"divisionNumber": "   ",
+		"merchantNumber": "                ",
+		"netSubmittedSalesAmount": "00000161800",
+		"netSubmittedSign": "C",
+		"rejectedAmount": "000000000",
+		"rejectedAmountSign": "C",
+		"cs": {
+			"logicalRecordNumber": "000014",
+			"recordSequenceNumber": "1",
+			"totalNumberOfRecords": "3",
+			"recordType": "71"
+		}
+	},
+	{
+		"visaSalesAmount": "00000146900",
+		"visaAmountSign": "C",
+		"mastercardSalesAmount": "00000014900",
+		"mastercardAmountSign": "C",
+		"discoverSalesAmount": "00000000000",
+		"discoverAmountSign": "C",
+		"discoverSettlementSupportInd": " ",
+		"amexSalesAmount": "00000000000",
+		"amexAmountSign": "C",
+		"amexSettlementSupportInd": "N",
+		"wexSalesAmount": "00000000000",
+		"wexAmountSign": "C",
+		"voyagerSalesAmount": "00000000000",
+		"voyagerAmountSign": "C",
+		"pinDebitSalesAmount": "00000000000",
+		"pinDebitAmountSign": "C",
+		"dinersSalesAmount": "00000000000",
+		"dinersAmountSign": "C",
+		"dinersSettlementSupportInd": "\u0000",
+		"reserveSalesAmount1": "00000000000",
+		"reserveSalesAmountSign1": "D",
+		"reserveSalesAmount2": "00000000000",
+		"reserveSalesAmountSign2": "D",
+		"reserveSalesAmountSign3": "\u0000",
+		"cs": {
+			"logicalRecordNumber": "000015",
+			"recordSequenceNumber": "1",
+			"totalNumberOfRecords": "3",
+			"recordType": "73"
+		}
+	},
+	{
+		"chargebackAmount": "00000000000",
+		"chargebackSign": "C",
+		"adjustmentAmount": "00000000000",
+		"adjustmentSign": "C",
+		"feeAmount": "00000000000",
+		"feeSign": "C",
+		"netDepositAmount": "00000161800",
+		"netDepositSign": "C",
+		"cs": {
+			"logicalRecordNumber": "000016",
+			"recordSequenceNumber": "1",
+			"totalNumberOfRecords": "3",
+			"recordType": "75"
+		}
+	},
+	{
+		"batchIdentifier": "RECON ",
+		"logicalCount": "0000003",
+		"cs": {
+			"logicalRecordNumber": "000018",
+			"recordSequenceNumber": "1",
+			"totalNumberOfRecords": "1",
+			"recordType": "79"
+		}
+	},
+	{
+		"numberOfBatches": "00001",
+		"physicalRecordCount": "000025",
+		"numberOfSales": "000003",
+		"amountOfSales": "00000161800",
+		"numberOfRefunds": "000000",
+		"amountOfRefunds": "00000000000",
+		"netAmount": "00000161800",
+		"netAmountSign": "D",
+		"cs": {
+			"logicalRecordNumber": "000019",
+			"recordSequenceNumber": "1",
+			"totalNumberOfRecords": "1",
+			"recordType": "90"
+		}
+	}
+]

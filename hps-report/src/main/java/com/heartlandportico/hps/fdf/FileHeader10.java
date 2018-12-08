@@ -2,12 +2,12 @@ package com.heartlandportico.hps.fdf;
 
 import org.apache.commons.lang.StringUtils;
 
-public class FileHeader10 {
+public class FileHeader10 extends FdfLine {
 
 	/**
 	 * 1-2, '10'
 	 */
-	private String recordType;
+//	private String recordType;
 
 	/**
 	 * 3-8, Sequential number of the record within file. Always 1
@@ -51,15 +51,15 @@ public class FileHeader10 {
 	 */
 	private String totalNumberOfRecords;
 
-	/* Filler, 84-550, AN 467, Space Filled. */
+	/* Filler, 84-350, AN 267, Space Filled. */
 
-	public String getRecordType() {
-		return recordType;
-	}
-
-	public void setRecordType(String recordType) {
-		this.recordType = recordType;
-	}
+//	public String getRecordType() {
+//		return recordType;
+//	}
+//
+//	public void setRecordType(String recordType) {
+//		this.recordType = recordType;
+//	}
 
 	public String getRecordSequenceNumber() {
 		return recordSequenceNumber;
@@ -128,7 +128,7 @@ public class FileHeader10 {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(recordType);
+		sb.append(getRecordType());
 		sb.append(recordSequenceNumber);
 		sb.append(fileTitle);
 		sb.append(chainNumber);
@@ -138,12 +138,13 @@ public class FileHeader10 {
 		sb.append(' ');
 		sb.append(clientName);
 		sb.append(totalNumberOfRecords);
-		sb.append(StringUtils.repeat(" ", 467));
+		sb.append(StringUtils.repeat(" ", 267));
 		return sb.toString();
 	}
 
-	public static FileHeader10 fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+	@Override
+	public FdfLine fromString(String s) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		FileHeader10 o = new FileHeader10();

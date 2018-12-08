@@ -2,12 +2,12 @@ package com.heartlandportico.hps.fdf;
 
 import org.apache.commons.lang.StringUtils;
 
-public class MerchantFundedByCardType41 {
+public class MerchantFundedByCardType41 extends FdfLine {
 
 	/**
 	 * 1-2, '41'
 	 */
-	private String recordType;
+//	private String recordType;
 
 	/**
 	 * 3-8, Sequential number of the record within file. Incremented by 1 for each
@@ -109,16 +109,26 @@ public class MerchantFundedByCardType41 {
 	 * 122, Total GSBN Net Sales Amount Sign
 	 */
 	private char gsbnSign;
+	
+	/**
+	 * 123-133, Total Gift Card Activity Net Amount
+	 */
+	private String giftAmount;
 
-	/* Filler, 123-550, AN 428, Space Filled. */
+	/**
+	 * 134, Total Gift Card Activity Net Amount Sign
+	 */
+	private char giftSign;
 
-	public String getRecordType() {
-		return recordType;
-	}
+	/* Filler, 135-350, AN 216, Space Filled. */
 
-	public void setRecordType(String recordType) {
-		this.recordType = recordType;
-	}
+//	public String getRecordType() {
+//		return recordType;
+//	}
+//
+//	public void setRecordType(String recordType) {
+//		this.recordType = recordType;
+//	}
 
 	public String getRecordSequenceNumber() {
 		return recordSequenceNumber;
@@ -280,10 +290,26 @@ public class MerchantFundedByCardType41 {
 		this.gsbnSign = gsbnSign;
 	}
 
+	public String getGiftAmount() {
+		return giftAmount;
+	}
+
+	public void setGiftAmount(String giftAmount) {
+		this.giftAmount = giftAmount;
+	}
+
+	public char getGiftSign() {
+		return giftSign;
+	}
+
+	public void setGiftSign(char giftSign) {
+		this.giftSign = giftSign;
+	}
+
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(recordType);
+		sb.append(getRecordType());
 		sb.append(recordSequenceNumber);
 		sb.append(fundingDate);
 		sb.append(visaAmount);
@@ -304,12 +330,15 @@ public class MerchantFundedByCardType41 {
 		sb.append(ebtSign);
 		sb.append(gsbnAmount);
 		sb.append(gsbnSign);
-		sb.append(StringUtils.repeat(" ", 428));
+		sb.append(giftAmount);
+		sb.append(giftSign);
+		sb.append(StringUtils.repeat(" ", 216));
 		return sb.toString();
 	}
 
-	public static MerchantFundedByCardType41 fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+	@Override
+	public FdfLine fromString(String s) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		MerchantFundedByCardType41 o = new MerchantFundedByCardType41();
@@ -334,6 +363,8 @@ public class MerchantFundedByCardType41 {
 		o.setEbtSign(s.charAt(109));
 		o.setGsbnAmount(s.substring(110, 121));
 		o.setGsbnSign(s.charAt(121));
+		o.setGiftAmount(s.substring(122, 133));
+		o.setGsbnSign(s.charAt(133));
 		return o;
 	}
 

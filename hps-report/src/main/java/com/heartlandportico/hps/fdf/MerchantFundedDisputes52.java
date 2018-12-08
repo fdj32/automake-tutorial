@@ -2,12 +2,12 @@ package com.heartlandportico.hps.fdf;
 
 import org.apache.commons.lang.StringUtils;
 
-public class MerchantFundedDisputes52 {
+public class MerchantFundedDisputes52 extends FdfLine {
 
 	/**
 	 * 1-2, '52'
 	 */
-	private String recordType;
+//	private String recordType;
 
 	/**
 	 * 3-8, Sequential number of the record within file. Incremented by 1 for each
@@ -100,15 +100,15 @@ public class MerchantFundedDisputes52 {
 	 */
 	private String returnReversalRepresentmentAmount;
 
-	/* Filler, 151-550, AN 400, Space Filled. */
+	/* Filler, 151-350, AN 200, Space Filled. */
 
-	public String getRecordType() {
-		return recordType;
-	}
-
-	public void setRecordType(String recordType) {
-		this.recordType = recordType;
-	}
+//	public String getRecordType() {
+//		return recordType;
+//	}
+//
+//	public void setRecordType(String recordType) {
+//		this.recordType = recordType;
+//	}
 
 	public String getRecordSequenceNumber() {
 		return recordSequenceNumber;
@@ -257,7 +257,7 @@ public class MerchantFundedDisputes52 {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(recordType);
+		sb.append(getRecordType());
 		sb.append(recordSequenceNumber);
 		sb.append(fundingDate);
 		sb.append(saleChargebackCount);
@@ -276,12 +276,13 @@ public class MerchantFundedDisputes52 {
 		sb.append(saleReversalRepresentmentAmount);
 		sb.append(returnReversalRepresentmentCount);
 		sb.append(returnReversalRepresentmentAmount);
-		sb.append(StringUtils.repeat(" ", 400));
+		sb.append(StringUtils.repeat(" ", 200));
 		return sb.toString();
 	}
 
-	public static MerchantFundedDisputes52 fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+	@Override
+	public FdfLine fromString(String s) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		MerchantFundedDisputes52 o = new MerchantFundedDisputes52();

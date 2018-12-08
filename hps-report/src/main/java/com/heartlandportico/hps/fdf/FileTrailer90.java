@@ -2,12 +2,12 @@ package com.heartlandportico.hps.fdf;
 
 import org.apache.commons.lang.StringUtils;
 
-public class FileTrailer90 {
+public class FileTrailer90 extends FdfLine {
 
 	/**
 	 * 1-2, '90'
 	 */
-	private String recordType;
+//	private String recordType;
 
 	/**
 	 * 3-8, Sequential number of the record within file. Incremented by 1 for each
@@ -110,15 +110,15 @@ public class FileTrailer90 {
 	 */
 	private String chainFundedBatchHMSCount;
 
-	/* Filler, 123-550, AN 428, Space Filled. */
+	/* Filler, 123-350, AN 228, Space Filled. */
 
-	public String getRecordType() {
-		return recordType;
-	}
-
-	public void setRecordType(String recordType) {
-		this.recordType = recordType;
-	}
+//	public String getRecordType() {
+//		return recordType;
+//	}
+//
+//	public void setRecordType(String recordType) {
+//		this.recordType = recordType;
+//	}
 
 	public String getRecordSequenceNumber() {
 		return recordSequenceNumber;
@@ -283,7 +283,7 @@ public class FileTrailer90 {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(recordType);
+		sb.append(getRecordType());
 		sb.append(recordSequenceNumber);
 		sb.append(fundingDate);
 		sb.append(physicalRecordCount);
@@ -304,12 +304,13 @@ public class FileTrailer90 {
 		sb.append(chainTotalFundingCount);
 		sb.append(chainTotalFundingByCardTypeCount);
 		sb.append(chainFundedBatchHMSCount);
-		sb.append(StringUtils.repeat(" ", 428));
+		sb.append(StringUtils.repeat(" ", 228));
 		return sb.toString();
 	}
 
-	public static FileTrailer90 fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+	@Override
+	public FdfLine fromString(String s) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		FileTrailer90 o = new FileTrailer90();

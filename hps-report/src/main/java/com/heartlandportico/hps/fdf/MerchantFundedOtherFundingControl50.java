@@ -2,12 +2,12 @@ package com.heartlandportico.hps.fdf;
 
 import org.apache.commons.lang.StringUtils;
 
-public class MerchantFundedOtherFundingControl50 {
+public class MerchantFundedOtherFundingControl50 extends FdfLine {
 
 	/**
 	 * 1-2, '50'
 	 */
-	private String recordType;
+//	private String recordType;
 
 	/**
 	 * 3-8, Sequential number of the record within file. Incremented by 1 for each
@@ -35,15 +35,15 @@ public class MerchantFundedOtherFundingControl50 {
 	 */
 	private String adjustmentsCount;
 
-	/* Filler, 33-550, AN 518, Space Filled. */
+	/* Filler, 33-350, AN 318, Space Filled. */
 
-	public String getRecordType() {
-		return recordType;
-	}
-
-	public void setRecordType(String recordType) {
-		this.recordType = recordType;
-	}
+//	public String getRecordType() {
+//		return recordType;
+//	}
+//
+//	public void setRecordType(String recordType) {
+//		this.recordType = recordType;
+//	}
 
 	public String getRecordSequenceNumber() {
 		return recordSequenceNumber;
@@ -88,18 +88,19 @@ public class MerchantFundedOtherFundingControl50 {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(recordType);
+		sb.append(getRecordType());
 		sb.append(recordSequenceNumber);
 		sb.append(fundingDate);
 		sb.append(returnedItemsCount);
 		sb.append(disputesCount);
 		sb.append(adjustmentsCount);
-		sb.append(StringUtils.repeat(" ", 518));
+		sb.append(StringUtils.repeat(" ", 318));
 		return sb.toString();
 	}
 
-	public static MerchantFundedOtherFundingControl50 fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+	@Override
+	public FdfLine fromString(String s) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		MerchantFundedOtherFundingControl50 o = new MerchantFundedOtherFundingControl50();

@@ -2,12 +2,12 @@ package com.heartlandportico.hps.daf;
 
 import org.apache.commons.lang.StringUtils;
 
-public class CreditDetail53 {
+public class CreditDetail53 extends DafLine {
 
 	/**
 	 * 1-10, Refer to Control Section – Record Type = '53'
 	 */
-	private ControlSection cs;
+//	private ControlSection cs;
 
 	/**
 	 * 11-14
@@ -269,18 +269,18 @@ public class CreditDetail53 {
 		this.visaRealTimeClearingFlag = visaRealTimeClearingFlag;
 	}
 
-	public ControlSection getCs() {
-		return cs;
-	}
-
-	public void setCs(ControlSection cs) {
-		this.cs = cs;
-	}
+//	public ControlSection getCs() {
+//		return cs;
+//	}
+//
+//	public void setCs(ControlSection cs) {
+//		this.cs = cs;
+//	}
 
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(cs.toString());
+		sb.append(getCs().toString());
 		sb.append(actualInterchangeCode);
 		sb.append(StringUtils.repeat(" ", 5));
 		sb.append(currencyCode);
@@ -310,7 +310,8 @@ public class CreditDetail53 {
 		return sb.toString();
 	}
 
-	public static CreditDetail53 fromString(String s) {
+	@Override
+	public DafLine fromString(String s) {
 		if (StringUtils.isEmpty(s) || s.length() != 250) {
 			return null;
 		}

@@ -2,12 +2,12 @@ package com.heartlandportico.hps.fdf;
 
 import org.apache.commons.lang.StringUtils;
 
-public class MerchantBatchHeaderControl20 {
+public class MerchantBatchHeaderControl20 extends FdfLine {
 
 	/**
 	 * 1-2, '20'
 	 */
-	private String recordType;
+//	private String recordType;
 
 	/**
 	 * 3-8, Sequential number of the record within file. Incremented by 1 for each
@@ -20,15 +20,15 @@ public class MerchantBatchHeaderControl20 {
 	 */
 	private String totalMerchantBatches;
 
-	/* Filler, 15-550, AN 536, Space Filled. */
+	/* Filler, 15-350, AN 336, Space Filled. */
 
-	public String getRecordType() {
-		return recordType;
-	}
-
-	public void setRecordType(String recordType) {
-		this.recordType = recordType;
-	}
+//	public String getRecordType() {
+//		return recordType;
+//	}
+//
+//	public void setRecordType(String recordType) {
+//		this.recordType = recordType;
+//	}
 
 	public String getRecordSequenceNumber() {
 		return recordSequenceNumber;
@@ -49,15 +49,16 @@ public class MerchantBatchHeaderControl20 {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(recordType);
+		sb.append(getRecordType());
 		sb.append(recordSequenceNumber);
 		sb.append(totalMerchantBatches);
-		sb.append(StringUtils.repeat(" ", 536));
+		sb.append(StringUtils.repeat(" ", 336));
 		return sb.toString();
 	}
 
-	public static MerchantBatchHeaderControl20 fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+	@Override
+	public FdfLine fromString(String s) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		MerchantBatchHeaderControl20 o = new MerchantBatchHeaderControl20();

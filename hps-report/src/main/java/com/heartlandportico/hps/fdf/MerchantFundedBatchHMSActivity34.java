@@ -2,12 +2,12 @@ package com.heartlandportico.hps.fdf;
 
 import org.apache.commons.lang.StringUtils;
 
-public class MerchantFundedBatchHMSActivity34 {
+public class MerchantFundedBatchHMSActivity34 extends FdfLine {
 
 	/**
 	 * 1-2, '34'
 	 */
-	private String recordType;
+//	private String recordType;
 
 	/**
 	 * 3-8, Sequential number of the record within file. Incremented by 1 for each
@@ -125,15 +125,15 @@ public class MerchantFundedBatchHMSActivity34 {
 	 */
 	private String promoReversalTxnCount;
 
-	/* Filler, 161-550, AN 390, Space Filled. */
+	/* Filler, 161-550, AN 190, Space Filled. */
 
-	public String getRecordType() {
-		return recordType;
-	}
-
-	public void setRecordType(String recordType) {
-		this.recordType = recordType;
-	}
+//	public String getRecordType() {
+//		return recordType;
+//	}
+//
+//	public void setRecordType(String recordType) {
+//		this.recordType = recordType;
+//	}
 
 	public String getRecordSequenceNumber() {
 		return recordSequenceNumber;
@@ -322,7 +322,7 @@ public class MerchantFundedBatchHMSActivity34 {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(recordType);
+		sb.append(getRecordType());
 		sb.append(recordSequenceNumber);
 		sb.append(uniqueBatchId);
 		sb.append(batchId);
@@ -346,12 +346,13 @@ public class MerchantFundedBatchHMSActivity34 {
 		sb.append(freezeTxnCount);
 		sb.append(unfreezeTxnCount);
 		sb.append(promoReversalTxnCount);
-		sb.append(StringUtils.repeat(" ", 390));
+		sb.append(StringUtils.repeat(" ", 190));
 		return sb.toString();
 	}
 
-	public static MerchantFundedBatchHMSActivity34 fromString(String s) {
-		if (StringUtils.isEmpty(s) || s.length() != 550) {
+	@Override
+	public FdfLine fromString(String s) {
+		if (StringUtils.isEmpty(s) || s.length() != 350) {
 			return null;
 		}
 		MerchantFundedBatchHMSActivity34 o = new MerchantFundedBatchHMSActivity34();

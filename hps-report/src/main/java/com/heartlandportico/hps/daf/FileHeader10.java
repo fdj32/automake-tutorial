@@ -2,12 +2,12 @@ package com.heartlandportico.hps.daf;
 
 import org.apache.commons.lang.StringUtils;
 
-public class FileHeader10 {
+public class FileHeader10 extends DafLine {
 
 	/**
 	 * 1-10, Refer to Control Section – Record Type = '10'
 	 */
-	private ControlSection cs;
+//	private ControlSection cs;
 
 	/**
 	 * 11-14, ‘DAF’
@@ -45,13 +45,13 @@ public class FileHeader10 {
 
 	/* Filler, 76-250, AN 175, Space Filled. */
 
-	public ControlSection getCs() {
-		return cs;
-	}
-
-	public void setCs(ControlSection cs) {
-		this.cs = cs;
-	}
+//	public ControlSection getCs() {
+//		return cs;
+//	}
+//
+//	public void setCs(ControlSection cs) {
+//		this.cs = cs;
+//	}
 
 	public String getFileTitle() {
 		return fileTitle;
@@ -104,7 +104,7 @@ public class FileHeader10 {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(cs.toString());
+		sb.append(getCs().toString());
 		sb.append(fileTitle);
 		sb.append(StringUtils.repeat(" ", 2));
 		sb.append(chainNumber);
@@ -117,7 +117,8 @@ public class FileHeader10 {
 		return sb.toString();
 	}
 
-	public static FileHeader10 fromString(String s) {
+	@Override
+	public DafLine fromString(String s) {
 		if (StringUtils.isEmpty(s) || s.length() != 250) {
 			return null;
 		}
