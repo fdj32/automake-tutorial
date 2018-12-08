@@ -24,7 +24,7 @@ public class JsoupJob {
 
 	private static final int RETRY_TIMES = 2;
 
-	private static final String BASE = "http://z3.xm1024p.net/pw/";
+	private static final String BASE = "http://93.cao1024lui99.xyz/pw/";
 
 	private static final Logger LOG = LoggerFactory.getLogger(JsoupJob.class);
 
