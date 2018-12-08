@@ -140,7 +140,7 @@ public class JsoupJob {
 			try {
 				pg.save(fid, href, title, data);
 			} catch (Exception e) {
-				LOG.error("Failed save({}, {}, {}, {})", fid, href, title, data);
+				LOG.error("Failed save({}, {}, {}, {})", fid, href, title, data, e);
 			}
 		} else {
 			LOG.info("Found link={} or title={}", href, title);
