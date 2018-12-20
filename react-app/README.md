@@ -42,3 +42,12 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+Bootstrap components built with React [react-bootstrap] (https://react-bootstrap.netlify.com)
+
+react-bootstrap [Github]
+(https://github.com/react-bootstrap/react-bootstrap)
+
+react-router [Github]
+(https://github.com/ReactTraining/react-router)
+
