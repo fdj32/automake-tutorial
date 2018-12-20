@@ -51,3 +51,7 @@ react-bootstrap [Github]
 react-router [Github]
 (https://github.com/ReactTraining/react-router)
 
+npm install -S react-router-bootstrap
+react-router-bootstrap [Github]
+(https://github.com/react-bootstrap/react-router-bootstrap)
+
