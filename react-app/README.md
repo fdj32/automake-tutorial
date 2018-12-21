@@ -116,4 +116,8 @@ https://github.com/gianu/react-fittext
 
 https://github.com/ReactTraining/react-media
 
+https://github.com/ElemeFE/element
 
+https://github.com/reactivex/rxjs
+
+https://reacttraining.com/react-router/web/guides/quick-start
