@@ -60,5 +60,60 @@ reactstrap [Github]
 
 https://reactstrap.github.io/
 
+https://github.com/JedWatson/classnames
+
+https://babeljs.io/
+
+https://ant.design/
+
+https://bizcharts.net/
+
+https://github.com/alibaba/BizCharts/tree/master/plugin/slider
+
+http://npm.taobao.org/package/@antv/data-set
+
+https://dvajs.com/
+
+https://github.com/dvajs/dva/tree/master/examples/user-dashboard
+
+https://facebook.github.io/immutable-js/
+
+https://github.com/AndrewKeig/enquire
+
+https://github.com/indutny/hash.js
+
+https://lodash.com/
+
+https://github.com/steelsojka/lodash-decorators
+
+https://github.com/alexreardon/memoize-one
+
+http://momentjs.com/
+
+http://numeraljs.com/
+
+https://github.com/cnwhy/nzh
+
+数字转中文（大写，小写）数字，金额。 https://cnwhy.github.io/nzh
+
+https://github.com/benjycui/omit.js
+
+https://github.com/pillarjs/path-to-regexp
+
+https://github.com/facebook/prop-types
+
+https://github.com/ljharb/qs
+
+https://github.com/react-component/animate
+
+https://github.com/d6u/react-container-query
+
+https://github.com/nkbt/react-copy-to-clipboard
+
+https://github.com/gaearon/react-document-title
+
+https://github.com/gianu/react-fittext
+
+https://github.com/ReactTraining/react-media
 
 
