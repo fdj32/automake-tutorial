@@ -148,3 +148,6 @@ https://auth0.com/blog/secure-your-react-and-redux-app-with-jwt-authentication//
 https://auth0.com/blog/adding-authentication-to-your-react-flux-app/
 
 nozzmo-redux-jwt
+
+https://github.com/auth0/jwt-decode
+
