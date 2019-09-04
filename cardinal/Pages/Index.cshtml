@@ -3,94 +3,356 @@
 @{
     ViewData["Title"] = "Home page";
 }
-
-<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <img src="~/images/banner1.svg" alt="ASP.NET" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Learn how to build ASP.NET apps that can run anywhere.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-primary" id="btn1Token">1.
+                    Token</button>
+                <button type="button" class="btn btn-secondary" id="btn2WalletSave"
+                    disabled>2. WALLET SAVE</button>
+                <button type="button" class="btn btn-info" id="btn3Pre3ds" disabled>3.
+                    Pre3DS</button>
+                <button type="button" class="btn btn-warning" id="btn4Init3ds"
+                    disabled>4. Init3DS</button>
+                <button type="button" class="btn btn-danger" id="btn5Com3ds"
+                    disabled>5. Com3DS</button>
+                <button type="button" class="btn btn-success" id=btn6Sale disabled>6.
+                    SALE</button>
             </div>
         </div>
-        <div class="item">
-            <img src="~/images/banner2.svg" alt="Visual Studio" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    There are powerful new features in Visual Studio for building modern web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner3.svg" alt="Microsoft Azure" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Learn how Microsoft's Azure cloud platform allows you to build, deploy, and scale web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525027&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input class="form-control" id="CCNumber"
+                                placeholder="Card Number" type="text" value="4000000000001091">
+                        </div>
+                        <div class="col-md-1">
+                            <input class="form-control" id="ExpMonth" placeholder="MM"
+                                type="text" value="12">
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control" id="ExpYear" placeholder="YYYY"
+                                type="text" value="2027">
+                        </div>
+                        <div class="col-md-6">
+                            <select class="form-control"
+                                onchange="document.getElementById('CCNumber').value=this.value">
+                                <option value="">Select PAN</option>
+                                <optgroup label="Verified by Visa">
+                                    <option value="4000000000001000">4000000000001000 -
+                                        #1.Successful Frictionless</option>
+                                    <option value="4000000000001018">4000000000001018 -
+                                        #2.Failed Frictionless</option>
+                                    <option value="4000000000001026">4000000000001026 -
+                                        #3.Attempts Frictionless</option>
+                                    <option value="4000000000001034">4000000000001034 -
+                                        #4.Unavailable Frictionless</option>
+                                    <option value="4000000000001042">4000000000001042 -
+                                        #5.Rejected Frictionless</option>
+                                    <option value="4000000000001059">4000000000001059 -
+                                        #6.Authentication Not Available on Lookup</option>
+                                    <option value="4000000000001067">4000000000001067 -
+                                        #7.Error on Lookup</option>
+                                    <option value="4000000000001075">4000000000001075 -
+                                        #8.Timeout on Lookup</option>
+                                    <option value="4000000000001083">4000000000001083 -
+                                        #9.Bypassed</option>
+                                    <option value="4000000000001091">4000000000001091 -
+                                        #10.Successful Step Up</option>
+                                    <option value="4000000000001109">4000000000001109 -
+                                        #11.Failed Step Up</option>
+                                    <option value="4000000000001117">4000000000001117 -
+                                        #12.Step Up Authentication is Unavailable</option>
+                                    <option value="4000000000001125">4000000000001125 -
+                                        #13.Error on Authentication</option>
+                                    <option value="4000000000001133">4000000000001133 -
+                                        #14.Step Up Authentication with Merchant Bypass</option>
+                                </optgroup>
+                                <optgroup label="Mastercard IdentityCheck">
+                                    <option value="5200000000001005">5200000000001005 -
+                                        #1.Successful Frictionless</option>
+                                    <option value="5200000000001013">5200000000001013 -
+                                        #2.Failed Frictionless</option>
+                                    <option value="5200000000001021">5200000000001021 -
+                                        #3.Attempts Frictionless</option>
+                                    <option value="5200000000001039">5200000000001039 -
+                                        #4.Unavailable Frictionless</option>
+                                    <option value="5200000000001047">5200000000001047 -
+                                        #5.Rejected Frictionless</option>
+                                    <option value="5200000000001054">5200000000001054 -
+                                        #6.Authentication Not Available on Lookup</option>
+                                    <option value="5200000000001062">5200000000001062 -
+                                        #7.Error on Lookup</option>
+                                    <option value="5200000000001070">5200000000001070 -
+                                        #8.Timeout on Lookup</option>
+                                    <option value="5200000000001088">5200000000001088 -
+                                        #9.Bypassed</option>
+                                    <option value="5200000000001096">5200000000001096 -
+                                        #10.Successful Step Up</option>
+                                    <option value="5200000000001104">5200000000001104 -
+                                        #11.Failed Step Up</option>
+                                    <option value="5200000000001112">5200000000001112 -
+                                        #12.Step Up Authentication is Unavailable</option>
+                                    <option value="5200000000001120">5200000000001120 -
+                                        #13.Error on Authentication</option>
+                                    <option value="5200000000001138">5200000000001138 -
+                                        #14.Step Up Authentication with Merchant Bypass</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item"><pre id="pre1"></pre></li>
+                <li class="list-group-item"><pre id="pre2"></pre></li>
+                <li class="list-group-item"><pre id="pre3"></pre></li>
+                <li class="list-group-item"><pre id="pre4"></pre></li>
+                <li class="list-group-item"><pre id="pre5"></pre></li>
+                <li class="list-group-item"><pre id="pre6"></pre></li>
+            </ul>
         </div>
     </div>
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
 </div>
 
-<div class="row">
-    <div class="col-md-3">
-        <h2>Application uses</h2>
-        <ul>
-            <li>Sample pages using ASP.NET Core Razor Pages</li>
-            <li>Theming using <a href="https://go.microsoft.com/fwlink/?LinkID=398939">Bootstrap</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>How to</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?linkid=852130">Working with Razor Pages.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699315">Manage User Secrets using Secret Manager.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699316">Use logging to log a message.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699317">Add packages using NuGet.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699319">Target development, staging or production environment.</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Overview</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518008">Conceptual overview of what is ASP.NET Core</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699320">Fundamentals of ASP.NET Core such as Startup and middleware.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398602">Working with Data</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398603">Security</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699321">Client side development</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699322">Develop on different platforms</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699323">Read more on the documentation site</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Run &amp; Deploy</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517851">Run your app</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517853">Run tools such as EF migrations and more</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure App Service</a></li>
-        </ul>
-    </div>
-</div>
+<script type="text/javascript">
+    var modulus, exponent, accountId, postUrl, jwt, pre3dsTransactionId, eci, cavv, threeDSVersion, dsTransactionId, init3dsTransactionId;
+    
+    window.addEventListener("message", function(event) {
+        console.log('Merchant received a message:');
+        console.dir(event);
+        var data = JSON.parse(event.data);
+        console.log("Got SessionID: " + data.SessionId);
+        $('#btn4Init3ds').attr("disabled", false);
+    });
+    
+    function getField(kvs, k) {
+        var kv = kvs.split("&").find(s =>s.startsWith(k));
+        return !!kv ? kv.split("=")[1] : "";
+    }
+    
+    function addIFrame(body, width=0, height=0) {
+        var authIFrame = document.createElement('iframe');
+        authIFrame.srcdoc = body;
+        authIFrame.style.width=width;
+        authIFrame.style.height=height;
+        document.body.appendChild(authIFrame);
+    }
+    
+    function show3DSecurePageIFrame(url) {
+        if (!document.getElementById("authIFrame")) {
+            var authIFrame = document.createElement('iframe');
+            authIFrame.src = url;
+            popup(authIFrame);
+        }
+    }
+
+    function popup(frame) {
+        var width = 600, height = 550;
+        function pageWidth(){
+            return window.innerWidth != null ? window.innerWidth : document.documentElement && document.documentElement.clientWidth ? document.documentElement.clientWidth : document.body != null ? document.body.clientWidth : null;
+        }
+        
+        function pageHeight(){
+            return window.innerHeight != null ? window.innerHeight : document.documentElement && document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body != null ? document.body.clientHeight : null;
+        }
+        
+        function posLeft(){
+            return typeof window.pageXOffset != 'undefined' ? window.pageXOffset : document.documentElement && document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ? document.body.scrollLeft : 0;
+        }
+        
+        function posTop(){
+            return typeof window.pageYOffset != 'undefined' ? window.pageYOffset : document.documentElement && document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ? document.body.scrollTop : 0;
+        }
+
+        var obody = document.getElementsByTagName('body')[0];
+        var frag = document.createDocumentFragment();
+        var authIFrame = document.createElement('div');
+        authIFrame.id = "authIFrame";
+        
+        var alphaBackground = document.createElement('div');
+        alphaBackground.style.position = 'absolute';
+        alphaBackground.style.top = 0;
+        alphaBackground.style.left = 0;
+        alphaBackground.style.zIndex = 998;
+        alphaBackground.style.width = pageWidth() + 'px';
+        alphaBackground.style.height = pageHeight() + 'px';
+        alphaBackground.style.top = posTop() + 'px';
+        alphaBackground.style.left = posLeft() + 'px';
+        alphaBackground.style.display = 'block';
+        alphaBackground.style.background = '#666';
+        alphaBackground.style.filter = 'alpha(opacity=50)';
+        alphaBackground.style.opacity = 0.5;
+        authIFrame.appendChild(alphaBackground);
+        
+        var popupFrame = document.createElement('div');
+        popupFrame.style.position = 'absolute';
+        popupFrame.style.zIndex = 999;
+        var tp = posTop() + ((pageHeight() - height) / 2) - 12;
+        var lt = posLeft() + ((pageWidth() - width) / 2) - 12;
+        popupFrame.style.top = (tp < 0 ? 0 : tp) + 'px';
+        popupFrame.style.left = (lt < 0 ? 0 : lt) + 'px';
+        popupFrame.style.width = width + 'px';
+        popupFrame.style.height = height + 'px';
+        popupFrame.style.display = 'block';
+        popupFrame.style.background = '#FFF';
+        
+        frame.style.width = width + 'px';
+        frame.style.height = height + 'px';
+        frame.style.border = 'none';
+        
+        popupFrame.appendChild(frame);
+        authIFrame.appendChild(popupFrame);
+        frag.appendChild(authIFrame);
+        document.body.appendChild(frag);
+        
+        window.onscroll = function() {
+            alphaBackground.style.top = posTop() + 'px';
+            alphaBackground.style.left = posLeft() + 'px'
+        };
+        window.onresize = function() {
+            alphaBackground.style.height = pageHeight() + 'px';
+            alphaBackground.style.width = pageWidth() + 'px';
+        };
+    }
+    
+    function close3DSecurePageIFrame() {
+        if (document.getElementById("authIFrame")) {
+            document.body.removeChild(document.getElementById("authIFrame"));
+        }
+    }
+
+    function authCallback(transactionId, resp, md) {
+        close3DSecurePageIFrame();
+        $('#init3dsResult').html("TransactionID=" + transactionId + ", Response=" + resp + ", MD=" + md);
+    }
+    
+    function btn1Token() {
+        NProgress.start();
+        var token = "ams.jsp?MerchantUser=AMS34USD&merchantPassword=AMS34USD&action=token";
+        $('#pre1').html(token);
+        $.get(token, function(data) {
+            modulus = getField(data.result, "modulus");
+            exponent = getField(data.result, "exponent");
+            $('#pre1').html(token + "<br/>" + data.result + "<br/>modulus: " + modulus + "<br/>exponent: " + exponent);
+            $('#btn2WalletSave').attr("disabled", false);
+            NProgress.done();
+        });
+    }
+
+    function btn2WalletSave() {
+        NProgress.start();
+        var accountInfo = new AMS.AccountInfo();
+        accountInfo.setCCNumber($("#CCNumber").val());
+        accountInfo.setCCExpMonth($("#ExpMonth").val());
+        accountInfo.setCCExpYear($("#ExpYear").val());
+        accountInfo.setModulus(modulus);
+        accountInfo.setExponent(exponent);
+        var cipherText = AMS.getCipher(accountInfo);
+        var walletSave = "ams.jsp?action=charge&TenderType=WALLET&TransactionType=SAVE&MerchantUser=AMS34USD&merchantPassword=AMS34USD&CipherText="
+                + encodeURIComponent(cipherText) + "&Modulus=" + modulus;
+        $('#pre2').html(walletSave);
+        $.get(walletSave, function(data) {
+            accountId = getField(data.result, "AccountID");
+            $('#pre2').html(walletSave + "<br/>" + data.result + "<br/>accountId: " + accountId);
+            $('#btn3Pre3ds').attr("disabled", false);
+            NProgress.done();
+        });
+    }
+
+    function btn3Pre3ds() {
+        NProgress.start();
+        var pre3ds = "ams.jsp?TenderType=CC&TransactionType=PRE3DS&OrderID=Test&MerchantDescriptor=Test&OrderAmount=100&MerchantUser=AMS34USD&merchantPassword=AMS34USD&AccountID="
+                + accountId;
+        $('#pre3').html(pre3ds);
+        $.get(pre3ds, function(data) {
+            jwt = decodeURIComponent(getField(data.result, "JWT"));
+            postUrl = decodeURIComponent(getField(data.result, "POSTURL"));
+            pre3dsTransactionId = getField(data.result, "TransactionID");
+            $('#pre3').html(pre3ds + "<br/>" + data.result + "<br/>jwt: " + jwt + "<br/>postUrl: " + postUrl + "<br/>pre3dsTransactionId: " + pre3dsTransactionId);
+            var body = "<form id='f' method='POST' action='" + postUrl + "'>"
+            + "<input type='hidden' name='JWT' value='" + jwt + "'></form>"
+            + "<script>window.onload = function() {document.getElementById('f').submit();}</" + "script>";
+            addIFrame(body);
+            NProgress.done();
+        });
+    }
+    function btn4Init3ds() {
+        NProgress.start();
+        var href = document.location.href;
+        var returnUrl = href.endsWith("/") ? href + "return.jsp" : href.replace("index.html", "return.jsp");
+        var init3ds = "ams.jsp?TenderType=CC&TransactionType=INIT3DS" 
+            + "&OrderID=Test&MerchantDescriptor=Test&OrderAmount=100"
+            + "&MerchantUser=AMS34USD&merchantPassword=AMS34USD"
+            + "&ReturnURL=" + encodeURIComponent(returnUrl)
+            + "&ReferenceID=" + pre3dsTransactionId
+            + "&AccountID=" + accountId;
+        $('#pre4').html(init3ds);
+        $.get(init3ds, function(data) {
+            postUrl = decodeURIComponent(getField(data.result, "POSTURL"));
+            jwt = decodeURIComponent(getField(data.result, "JWT"));
+            eci = decodeURIComponent(getField(data.result, "ECI"));
+            cavv = decodeURIComponent(getField(data.result, "AuthenticationVerificationValue"));
+            threeDSVersion = getField(data.result, "ThreeDSVersion")
+            dsTransactionId = getField(data.result, "DirectServerTransactionID")
+            init3dsTransactionId = decodeURIComponent(getField(data.result, "TransactionID"));
+            $('#pre4').html(init3ds + "<br/>" + data.result + "<br/>postUrl: " + postUrl + "<br/>jwt: " + jwt + "<br/>eci: " + eci
+                    + "<br/>cavv: " + cavv + "<br/>threeDSVersion: " + threeDSVersion + "<br/>dsTransactionId: " + dsTransactionId
+                    + "<br/>init3dsTransactionId: " + init3dsTransactionId);
+            if (!!jwt && !!postUrl){
+                $('#btn5Com3ds').attr("disabled", false);
+                var pageUrl = "auth.jsp?jwt=" + jwt + "&md=123456&postUrl=" + postUrl;
+                show3DSecurePageIFrame(pageUrl);
+            }
+            NProgress.done();
+        });
+    }
+    
+    function btn5Com3ds() {
+        NProgress.start();
+        var com3ds = "ams.jsp?TenderType=CC&TransactionType=COM3DS" 
+            + "&OrderID=Test&MerchantDescriptor=Test&OrderAmount=100"
+            + "&MerchantUser=AMS34USD&merchantPassword=AMS34USD"
+            + "&ReferenceID=" + init3dsTransactionId
+            + "&AccountID=" + accountId;
+        $('#pre5').html(com3ds);
+        $.get(com3ds, function(data) {
+            eci = getField(data.result, "ECI");
+            cavv = getField(data.result, "AuthenticationVerificationValue");
+            threeDSVersion = getField(data.result, "ThreeDSVersion");
+            dsTransactionId = getField(data.result, "DirectServerTransactionID");
+            $('#pre5').html(com3ds + "<br/>" + data.result + "<br/>eci: " + eci + "<br/>cavv: " + cavv
+                    + "<br/>threeDSVersion: " + threeDSVersion + "<br/>dsTransactionId: " + dsTransactionId);
+            $('#btn6Sale').attr("disabled", false);
+            NProgress.done();
+        });
+    }
+
+    function btn6Sale() {
+        NProgress.start();
+        var sale = "ams.jsp?TenderType=CC&TransactionType=SALE" 
+            + "&OrderID=Test&MerchantDescriptor=Test"
+            + "&MerchantUser=AMS34USD&merchantPassword=AMS34USD"
+            + "&AccountID=" + accountId
+            + "&OrderAmount=100"
+            + "&ECI=" + eci
+            + "&AuthenticationVerificationValue=" + cavv
+            + "&ThreeDSVersion=" + threeDSVersion
+            + "&DirectServerTransactionID=" + dsTransactionId;
+        $('#pre6').html(sale);
+        $.get(sale, function(data) {
+            $('#pre6').html(sale + "<br/>" + data.result);
+            NProgress.done();
+        });
+    }
+
+    $(function() {
+        $('#btn1Token').click(btn1Token);
+        $('#btn2WalletSave').click(btn2WalletSave);
+        $('#btn3Pre3ds').click(btn3Pre3ds);
+        $('#btn4Init3ds').click(btn4Init3ds);
+        $('#btn5Com3ds').click(btn5Com3ds);
+        $('#btn6Sale').click(btn6Sale);
+    });
+</script>
