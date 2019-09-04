@@ -302,7 +302,7 @@
                     + "<br/>init3dsTransactionId: " + init3dsTransactionId);
             if (!!jwt && !!postUrl){
                 $('#btn5Com3ds').attr("disabled", false);
-                var pageUrl = "auth.jsp?jwt=" + jwt + "&md=123456&postUrl=" + postUrl;
+                var pageUrl = "auth?jwt=" + jwt + "&md=123456&postUrl=" + postUrl;
                 show3DSecurePageIFrame(pageUrl);
             }
             NProgress.done();
