@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cardinal.Controllers
@@ -12,9 +9,25 @@ namespace cardinal.Controllers
     {
         // GET ams.jsp
         [HttpGet]
-        public ActionResult<string> Get()
+        public ActionResult<Result> Get()
         {
-            return Request.QueryString.ToString();
+            var amsURL = "https://mstest.active.com/MS/MSServer";
+            var fullURL = amsURL + Request.QueryString.ToString();
+            HttpClient client = new HttpClient();
+            var result = client.GetStringAsync(fullURL).Result;
+            result = result.Replace("\n", "");
+            System.Console.WriteLine(">>>" + result);
+            return new Result(result);
+        }
+    }
+
+    public class Result
+    {
+        public string result;
+
+        public Result(string _result)
+        {
+            result = _result;
         }
     }
 }
