@@ -1,0 +1,16 @@
+﻿@page
+@model AuthModel
+@{
+}
+<!-- Submit JWT and MD automatically -->
+<form name="mainform" id="mainform" method="post" action=@Model.postUrl>
+	<input type="hidden" name="JWT" value=@Model.jwt /> 
+	<input type="hidden" name="MD" value=@Model.md /> 
+	<noscript>
+		<input type="submit" value="Click to continue"/>
+	</noscript>
+</form>
+
+<script type="text/javascript">
+	document.getElementById("mainform").submit();
+</script>
