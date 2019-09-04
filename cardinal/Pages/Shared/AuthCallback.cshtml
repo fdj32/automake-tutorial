@@ -1,0 +1,11 @@
+﻿@page
+@{
+}
+<script type="text/javascript">
+if (window.opener) {
+    window.opener.authCallback('@ViewBag.TransactionId', '@ViewBag.Resp', '@ViewBag.MD');
+    window.close();
+} else {
+    parent.authCallback('@ViewBag.TransactionId', '@ViewBag.Resp', '@ViewBag.MD');
+}
+</script>
