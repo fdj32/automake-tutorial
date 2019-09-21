@@ -4,11 +4,13 @@
   "description": "Manage device via nodejs, start a web server to wrap card devices with https://serialport.io/ .",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "node test/serialport.js"
   },
   "author": "Nick Feng",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
     "serialport": "^7.1.5"
   }
 }
