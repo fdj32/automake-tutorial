@@ -9,6 +9,6 @@
   "author": "Nick Feng",
   "license": "ISC",
   "dependencies": {
-    "http": "0.0.0"
+    "serialport": "^7.1.5"
   }
 }
