@@ -1,5 +1,6 @@
 'use strict';
-var fetch = require("node-fetch");
+const fetch = require("node-fetch");
+const xml2js = require("xml2js");
 const config = require('../config');
 
 const service = (req, res) => {
@@ -13,7 +14,10 @@ const service = (req, res) => {
     pd += "&paymentDeviceSerialNumber=" + paymentDeviceSerialNumber;
     console.log(pd);
     fetch(pd).then(response => response.text()).then(response => {
-        console.log(response);
+        //console.log(response);
+        xml2js.parseString(response, (err, result) => {
+            console.log(result);
+        });
         res.setHeader("Content-Type", "text/plain");
         res.write(response);
         res.end();
