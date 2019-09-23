@@ -46,7 +46,6 @@ const cpx58display = (line1, line2, line3, line4) => {
     out += fill(line4, 16, SPACE);
     out += ETX;
     var c = lrc(out);
-    console.log(c);
     out += c;
     return out;
 }
