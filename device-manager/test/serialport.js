@@ -4,7 +4,7 @@ const util = require('../src/util');
 var msg = protocol.cpx58display("Hello", "    Nick", "Well done", "  President Xi");
 console.log(msg);
 console.log(msg.length);
-util.hexOutput(msg);
+util.hexOutput(msg, 10);
 const SerialPort = require('serialport')
 SerialPort.list().then(PortInfos => {
 	console.log(PortInfos)
