@@ -29,6 +29,9 @@ const lrc = s => {
 }
 
 const fill = (s, length, c) => {
+    if (s.length > length) {
+        return s.substring(0, length);
+    }
     var out = s;
     for (var i = 0; i < length - s.length; i++) {
         out += c;
