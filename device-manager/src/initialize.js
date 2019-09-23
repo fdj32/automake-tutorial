@@ -16,7 +16,7 @@ const service = (req, res) => {
     fetch(pd).then(response => response.text()).then(response => {
         //console.log(response);
         xml2js.parseString(response, (err, result) => {
-            console.log(result);
+            console.log(JSON.stringify(result));
         });
         res.setHeader("Content-Type", "text/plain");
         res.write(response);
