@@ -92,7 +92,7 @@ public class DatabaseMetaDataUtil {
                     }
                 }
             }
-            BeautifyOutputUtil.printTable(columnList);
+            //BeautifyOutputUtil.printTable(columnList);
             toMysql(columnList);
         }
     }
@@ -126,7 +126,7 @@ public class DatabaseMetaDataUtil {
                         sb.append(pkList.stream().filter(pk -> keySeq.equals(pk[25])).findFirst().get()[3]).append(", ");
                     }
                     sb.append(pkList.stream().filter(pk -> (pkList.size() + "").equals(pk[25])).findFirst().get()[3]);
-                    sb.append(")\n");
+                    sb.append(')');
                 }
             } else {
                 sb.append(',');
