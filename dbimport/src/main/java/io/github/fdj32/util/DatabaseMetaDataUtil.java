@@ -104,7 +104,11 @@ public class DatabaseMetaDataUtil {
         StringBuilder sb = new StringBuilder();
         sb.append("DROP TABLE ").append(table).append(";\n");
         sb.append("CREATE TABLE ").append(table).append(" (\n");
+        List<String[]> pkList = new ArrayList<>();
         for (int i = 1; i < list.size(); i++) {
+            if ("YES".equals(list.get(i)[24])) {
+                pkList.add(list.get(i));
+            }
             sb.append("\t").append(list.get(i)[3]).append(" ");
             int[] indexes = dataType(list.get(i)[5], MSSQLSERVER, MySQL);
             sb.append(DATA_TYPE_MAP[indexes[0]][indexes[1]]); // append type
@@ -114,8 +118,19 @@ public class DatabaseMetaDataUtil {
             if ("0".equals(list.get(i)[10])) {
                 sb.append(" NOT NULL");
             }
-            if (i != list.size() - 1)
+            if (i == list.size() - 1) {
+                if (!pkList.isEmpty()) {
+                    sb.append(",\n\tPRIMARY KEY(");
+                    for (int j = 0; j < pkList.size() - 1; j++) {
+                        String keySeq = (j + 1) + "";
+                        sb.append(pkList.stream().filter(pk -> keySeq.equals(pk[25])).findFirst().get()[3]).append(", ");
+                    }
+                    sb.append(pkList.stream().filter(pk -> (pkList.size() + "").equals(pk[25])).findFirst().get()[3]);
+                    sb.append(")\n");
+                }
+            } else {
                 sb.append(',');
+            }
             sb.append(System.lineSeparator());
         }
         sb.append(");");
