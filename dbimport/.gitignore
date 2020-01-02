@@ -5,4 +5,3 @@
 build
 .idea
 dbimport.log
-src/main/resources/application.yml
