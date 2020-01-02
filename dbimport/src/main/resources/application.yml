@@ -1,9 +1,9 @@
 spring:
   application:
     name: dbimport
+  profiles:
+    active: ods
   datasource:
-    ods:
-      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     mysql:
       driver-class-name: com.mysql.cj.jdbc.Driver
       jdbcUrl: jdbc:mysql://localhost:3306/ods
