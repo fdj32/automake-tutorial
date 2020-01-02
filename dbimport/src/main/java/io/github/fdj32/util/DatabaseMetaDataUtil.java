@@ -21,7 +21,7 @@ public class DatabaseMetaDataUtil {
             new String[]{"varbinary", "VARBINARY"},
             new String[]{"datetime", "DATETIME"},
             new String[]{"int", "INTEGER"},
-            new String[]{"int identity", "INTEGER AUTOINCREMENT"},
+            new String[]{"int identity", "INTEGER AUTO_INCREMENT"},
             new String[]{"money", "DECIMAL(19, 2)"},
             new String[]{"tinyint", "TINYINT"},
             new String[]{"uniqueidentifier", "VARCHAR(36)"},
