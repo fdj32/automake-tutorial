@@ -102,7 +102,7 @@ public class DatabaseMetaDataUtil {
             return;
         String table = list.get(1)[2];
         StringBuilder sb = new StringBuilder();
-        sb.append("DROP TABLE ").append(table).append(";\n");
+        //sb.append("DROP TABLE ").append(table).append(";\n");
         sb.append("CREATE TABLE ").append(table).append(" (\n");
         List<String[]> pkList = new ArrayList<>();
         for (int i = 1; i < list.size(); i++) {
