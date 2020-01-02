@@ -6,6 +6,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DatabaseMetaDataUtil {
@@ -15,17 +16,19 @@ public class DatabaseMetaDataUtil {
 
     private static final String[][] DATA_TYPE_MAP = new String[][]{
             new String[]{MSSQLSERVER, MySQL},
-            new String[]{"int", "INTEGER"},
             new String[]{"char", "CHAR"},
             new String[]{"varchar", "VARCHAR"},
-            new String[]{"datetime", "DATETIME"},
-            new String[]{"int identity", "INTEGER AUTOINCREMENT"},
-            new String[]{"money", "DECIMAL"},
-            new String[]{"tinyint", "TINYINT"},
-            new String[]{"uniqueidentifier", "VARCHAR"},
             new String[]{"varbinary", "VARBINARY"},
+            new String[]{"datetime", "DATETIME"},
+            new String[]{"int", "INTEGER"},
+            new String[]{"int identity", "INTEGER AUTOINCREMENT"},
+            new String[]{"money", "DECIMAL(19, 2)"},
+            new String[]{"tinyint", "TINYINT"},
+            new String[]{"uniqueidentifier", "VARCHAR(36)"},
             new String[]{"bit", "BIT"}
     };
+
+    private static final List LENGTH_REQUIED = Arrays.asList(1, 2, 3);
 
     private static String defaultNull(String s) {
         return null == s ? "null" : s;
@@ -103,19 +106,23 @@ public class DatabaseMetaDataUtil {
         sb.append("CREATE TABLE ").append(table).append(" (\n");
         for (int i = 1; i < list.size(); i++) {
             sb.append("\t").append(list.get(i)[3]).append(" ");
-            sb.append(dataType(list.get(i)[5], MSSQLSERVER, MySQL));
+            int[] indexes = dataType(list.get(i)[5], MSSQLSERVER, MySQL);
+            sb.append(DATA_TYPE_MAP[indexes[0]][indexes[1]]); // append type
+            if (LENGTH_REQUIED.contains(indexes[0]) && !(Integer.MAX_VALUE + "").equals(list.get(i)[6])) { // append length
+                sb.append('(').append(list.get(i)[6]).append(')');
+            }
             if ("0".equals(list.get(i)[10])) {
                 sb.append(" NOT NULL");
             }
-            if(i != list.size() - 1)
-                sb.append(",");
-            sb.append("\n");
+            if (i != list.size() - 1)
+                sb.append(',');
+            sb.append(System.lineSeparator());
         }
         sb.append(");");
         System.out.println(sb.toString());
     }
 
-    private static String dataType(String srcDataType, String srcDatabase, String destDatabase) {
+    private static int[] dataType(String srcDataType, String srcDatabase, String destDatabase) {
         if (StringUtils.isEmpty(srcDataType) || StringUtils.isEmpty(srcDatabase) || StringUtils.isEmpty(destDatabase)) {
             return null;
         }
@@ -131,7 +138,7 @@ public class DatabaseMetaDataUtil {
         }
         for (int i = 1; i < DATA_TYPE_MAP.length; i++) {
             if (srcDataType.equals(DATA_TYPE_MAP[i][srcIndex])) {
-                return DATA_TYPE_MAP[i][destIndex];
+                return new int[]{i, destIndex};
             }
         }
         return null;
