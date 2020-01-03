@@ -4,5 +4,5 @@
 # Ignore Gradle build output directory
 build
 .idea
-dbimport.log
+dbimport.log*
 src/main/resources/application-ods.yml

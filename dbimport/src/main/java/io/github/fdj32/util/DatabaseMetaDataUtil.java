@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DatabaseMetaDataUtil {
 
@@ -80,21 +81,67 @@ public class DatabaseMetaDataUtil {
                         defaultNull(rsColumn.getString(24)),
                         "", "", ""
                 });
-
-                ResultSet rsPk = metaData.getPrimaryKeys(catalog, schema, table);
-                while (rsPk.next()) {
-                    for (String[] array : columnList) {
-                        if (array[3].equals(rsPk.getString(4))) {
-                            array[24] = "YES";
-                            array[25] = rsPk.getString(5);
-                            array[26] = rsPk.getString(6);
-                        }
+            }
+            // add primary key info
+            ResultSet rsPk = metaData.getPrimaryKeys(catalog, schema, table);
+            while (rsPk.next()) {
+                for (String[] array : columnList) {
+                    if (array[3].equals(rsPk.getString(4))) {
+                        array[24] = "YES";
+                        array[25] = rsPk.getString(5);
+                        array[26] = rsPk.getString(6);
                     }
                 }
             }
             //BeautifyOutputUtil.printTable(columnList);
             toMysql(columnList);
+            // add index info
+            List<Object[]> indexColumnList = new ArrayList<>();
+            ResultSet rsIndex = metaData.getIndexInfo(catalog, schema, table, false, false);
+            while (rsIndex.next()) {
+                if (null == rsIndex.getString(6) || 1 == rsIndex.getShort(7)) {
+                    continue; // tableIndexStatistic, primary key index
+                }
+                indexColumnList.add(new Object[]{
+                        rsIndex.getString(1),
+                        rsIndex.getString(2),
+                        rsIndex.getString(3),
+                        rsIndex.getBoolean(4),
+
+                        rsIndex.getString(5),
+                        rsIndex.getString(6),
+                        rsIndex.getShort(7),
+                        rsIndex.getShort(8),
+
+                        rsIndex.getString(9),
+                        rsIndex.getString(10),
+                        rsIndex.getLong(11),
+                        rsIndex.getLong(12),
+
+                        rsIndex.getString(13)
+                });
+            }
+            createIndex(indexColumnList);
         }
+    }
+
+    private static void createIndex(List<Object[]> indexColumnList) {
+        indexColumnList.stream().collect(Collectors.groupingBy(obis -> obis[5])).entrySet().forEach(entry -> {
+            String indexName = (String) entry.getKey();
+            List<Object[]> columns = entry.getValue();
+            StringBuilder sbIndex = new StringBuilder();
+            sbIndex.append("CREATE INDEX ").append(indexName).append(" ON ");
+            sbIndex.append(columns.get(0)[2]).append('(');
+            for (int i = 0; i < columns.size(); i++) {
+                final short columnIndex = (short) (i + 1);
+                sbIndex.append(columns.stream().filter(cols -> columnIndex == (short) cols[7]).findFirst().get()[8]);
+                if (i != columns.size() - 1) {
+                    sbIndex.append(", ");
+                }
+            }
+            sbIndex.append(");");
+            System.out.println(sbIndex.toString());
+        });
     }
 
     private static void toMysql(List<String[]> list) {
@@ -102,7 +149,6 @@ public class DatabaseMetaDataUtil {
             return;
         String table = list.get(1)[2];
         StringBuilder sb = new StringBuilder();
-        //sb.append("DROP TABLE ").append(table).append(";\n");
         sb.append("CREATE TABLE ").append(table).append(" (\n");
         List<String[]> pkList = new ArrayList<>();
         for (int i = 1; i < list.size(); i++) {
