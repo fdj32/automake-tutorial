@@ -151,12 +151,22 @@ public class DatabaseMetaDataUtil {
         String table = list.get(1)[2];
         StringBuilder sb = new StringBuilder();
         sb.append("CREATE TABLE ").append(table).append(" (\n");
+        StringBuilder sbSelect = new StringBuilder();
+        sbSelect.append("SELECT ");
+        StringBuilder sbInsert = new StringBuilder();
+        sbInsert.append("INSERT INTO ").append(table).append(" (");
         List<String[]> pkList = new ArrayList<>();
         for (int i = 1; i < list.size(); i++) {
             if ("YES".equals(list.get(i)[24])) {
                 pkList.add(list.get(i));
             }
             sb.append("\t").append(list.get(i)[3]).append(" ");
+            sbSelect.append(list.get(i)[3]);
+            sbInsert.append(list.get(i)[3]);
+            if (i != list.size() - 1) {
+                sbSelect.append(", ");
+                sbInsert.append(", ");
+            }
             int[] indexes = dataType(list.get(i)[5], MSSQLSERVER, MySQL);
             sb.append(DATA_TYPE_MAP[indexes[0]][indexes[1]]); // append type
             if (LENGTH_REQUIED.contains(indexes[0]) && !(Integer.MAX_VALUE + "").equals(list.get(i)[6])) { // append length
@@ -182,6 +192,17 @@ public class DatabaseMetaDataUtil {
         }
         sb.append(");");
         System.out.println(sb.toString());
+        sbSelect.append(") FROM ").append(table);
+        System.out.println(sbSelect.toString());
+        sbInsert.append(") VALUES(");
+        for (int i = 1; i < list.size(); i++) {
+            sbInsert.append('?');
+            if (i != list.size() - 1) {
+                sbInsert.append(", ");
+            }
+        }
+        sbInsert.append(')');
+        System.out.println(sbInsert.toString());
     }
 
     private static int[] dataType(String srcDataType, String srcDatabase, String destDatabase) {
