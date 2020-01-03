@@ -22,6 +22,7 @@ public class DatabaseMetaDataUtil {
             new String[]{"varbinary", "VARBINARY"},
             new String[]{"datetime", "DATETIME"},
             new String[]{"int", "INTEGER"},
+            // remove AUTO_INCREMENT if you jst want to import data
             new String[]{"int identity", "INTEGER AUTO_INCREMENT"},
             new String[]{"money", "DECIMAL(19, 2)"},
             new String[]{"tinyint", "TINYINT"},
