@@ -19,18 +19,27 @@ public class DatabaseMetaDataUtil {
             new String[]{MSSQLSERVER, MySQL},
             new String[]{"char", "CHAR"},
             new String[]{"varchar", "VARCHAR"},
+            new String[]{"nvarchar", "NVARCHAR"},
             new String[]{"varbinary", "VARBINARY"},
             new String[]{"datetime", "DATETIME"},
+            new String[]{"smallint", "SMALLINT"},
             new String[]{"int", "INTEGER"},
+            new String[]{"bigint", "BIGINT"},
+            new String[]{"decimal", "DECIMAL"},
             // remove AUTO_INCREMENT if you jst want to import data
             new String[]{"int identity", "INTEGER AUTO_INCREMENT"},
+            new String[]{"bigint identity", "BIGINT AUTO_INCREMENT"},
+            new String[]{"decimal() identity", "DECIMAL AUTO_INCREMENT"},
             new String[]{"money", "DECIMAL(19, 2)"},
             new String[]{"tinyint", "TINYINT"},
+            new String[]{"float", "FLOAT"},
+            new String[]{"text", "TEXT"},
+            new String[]{"image", "BLOB"},
             new String[]{"uniqueidentifier", "VARCHAR(36)"},
             new String[]{"bit", "BIT"}
     };
 
-    private static final List LENGTH_REQUIED = Arrays.asList(1, 2, 3);
+    private static final List LENGTH_REQUIED = Arrays.asList(1, 2, 3, 4);
 
     private static String defaultNull(String s) {
         return null == s ? "null" : s;
@@ -190,10 +199,10 @@ public class DatabaseMetaDataUtil {
             }
             sb.append(System.lineSeparator());
         }
-        sb.append(");");
+        sb.append(") engine=MyISAM;");
         System.out.println(sb.toString());
         sbSelect.append(" FROM ").append(table);
-        System.out.println(sbSelect.toString());
+//        System.out.println(sbSelect.toString());
         sbInsert.append(") VALUES(");
         for (int i = 1; i < list.size(); i++) {
             sbInsert.append('?');
@@ -202,7 +211,7 @@ public class DatabaseMetaDataUtil {
             }
         }
         sbInsert.append(')');
-        System.out.println(sbInsert.toString());
+//        System.out.println(sbInsert.toString());
     }
 
     private static int[] dataType(String srcDataType, String srcDatabase, String destDatabase) {
