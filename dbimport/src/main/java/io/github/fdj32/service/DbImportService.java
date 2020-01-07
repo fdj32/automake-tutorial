@@ -44,9 +44,9 @@ public class DbImportService {
     private void replicate() {
         String select = "SELECT account_id, account_ms_id, account_type, account_zip, account_owner, account_date_created, account_date_updated, account_address, account_state, account_country, instance_id, account_sub_type, account_number_pre_six FROM account_info WHERE account_id >= ? AND account_id < ?";
         String insert = "INSERT INTO account_info (account_id, account_ms_id, account_type, account_zip, account_owner, account_date_created, account_date_updated, account_address, account_state, account_country, instance_id, account_sub_type, account_number_pre_six) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        int min = 1;
-        int max= 10000;
-        int batchSize = 1000;
+        int min = 2890001;
+        int max= 452100000;
+        int batchSize = 10000;
         DataReplicateUtil.replicate(odsJdbcTemplate, select, mysqlJdbcTemplate, insert, min, max, batchSize);
     }
 }
