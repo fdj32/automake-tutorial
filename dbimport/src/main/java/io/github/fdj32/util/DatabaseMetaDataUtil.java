@@ -192,7 +192,7 @@ public class DatabaseMetaDataUtil {
         }
         sb.append(");");
         System.out.println(sb.toString());
-        sbSelect.append(") FROM ").append(table);
+        sbSelect.append(" FROM ").append(table);
         System.out.println(sbSelect.toString());
         sbInsert.append(") VALUES(");
         for (int i = 1; i < list.size(); i++) {
