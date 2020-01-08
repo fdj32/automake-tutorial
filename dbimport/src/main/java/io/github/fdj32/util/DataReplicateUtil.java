@@ -27,6 +27,9 @@ public class DataReplicateUtil {
             LOG.info("min={}, max={}, from database result set size: {}", index, index + batchSize, null == resultList ? 0 : resultList.size());
             List<Map<String, Object>> toList = to.queryForList(select, index, index + batchSize);
             LOG.info("min={}, max={}, to database result set size: {}", index, index + batchSize, null == resultList ? 0 : toList.size());
+            if (null != resultList && null != toList && resultList.size() == toList.size()) {
+                continue;
+            }
             resultList.retainAll(toList);
             if (null == resultList || 0 == resultList.size()) {
                 LOG.info("min={}, max={}, after retainAll result set size: {}", index, index + batchSize, null == resultList ? 0 : resultList.size());
