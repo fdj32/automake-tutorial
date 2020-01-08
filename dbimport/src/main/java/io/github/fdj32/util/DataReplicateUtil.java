@@ -31,9 +31,9 @@ public class DataReplicateUtil {
                 LOG.info("min={}, max={}, from and to database result set size are the same: {}", index, index + batchSize, resultList.size());
                 continue;
             }
-            resultList.retainAll(toList);
+            resultList.removeAll(toList);
             if (null == resultList || 0 == resultList.size()) {
-                LOG.info("min={}, max={}, after retainAll result set size: {}", index, index + batchSize, null == resultList ? 0 : resultList.size());
+                LOG.info("min={}, max={}, after removeAll result set size: {}", index, index + batchSize, null == resultList ? 0 : resultList.size());
                 continue;
             }
             int[] returnCodes = to.batchUpdate(insert, resultList.stream().map(m -> m.values().toArray()).collect(Collectors.toList()));
