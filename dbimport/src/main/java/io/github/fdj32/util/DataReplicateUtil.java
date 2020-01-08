@@ -25,7 +25,7 @@ public class DataReplicateUtil {
         for (int index = min; index < max; index += batchSize) {
             List<Map<String, Object>> resultList = from.queryForList(select, index, index + batchSize);
             if (null == resultList || 0 == resultList.size())
-                return;
+                continue;
             int[] returnCodes = to.batchUpdate(insert, resultList.stream().map(m -> m.values().toArray()).collect(Collectors.toList()));
             LOG.info("{} rows affected", returnCodes.length);
         }
