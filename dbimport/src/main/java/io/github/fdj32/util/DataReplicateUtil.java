@@ -24,10 +24,14 @@ public class DataReplicateUtil {
     public static void replicate(JdbcTemplate from, String select, JdbcTemplate to, String insert, int min, int max, int batchSize) {
         for (int index = min; index < max; index += batchSize) {
             List<Map<String, Object>> resultList = from.queryForList(select, index, index + batchSize);
+            LOG.info("min={}, max={}, from database result set size: {}", min, max, null == resultList ? 0 : resultList.size());
             List<Map<String, Object>> toList = to.queryForList(select, index, index + batchSize);
+            LOG.info("min={}, max={}, from database result set size: {}", min, max, null == resultList ? 0 : toList.size());
             resultList.retainAll(toList);
-            if (null == resultList || 0 == resultList.size())
+            if (null == resultList || 0 == resultList.size()) {
+                LOG.info("min={}, max={}, after retainAll result set size: {}", min, max, null == resultList ? 0 : resultList.size());
                 continue;
+            }
             int[] returnCodes = to.batchUpdate(insert, resultList.stream().map(m -> m.values().toArray()).collect(Collectors.toList()));
             LOG.info("{} rows affected", returnCodes.length);
         }
