@@ -25,6 +25,7 @@ public class DataReplicateUtil {
         for (int index = min; index < max; index += batchSize) {
             List<Map<String, Object>> resultList = from.queryForList(select, index, index + batchSize);
             LOG.info("min={}, max={}, from database result set size: {}", index, index + batchSize, null == resultList ? 0 : resultList.size());
+            /*
             List<Map<String, Object>> toList = to.queryForList(select, index, index + batchSize);
             LOG.info("min={}, max={}, to database result set size: {}", index, index + batchSize, null == toList ? 0 : toList.size());
             if (null != resultList && null != toList && resultList.size() == toList.size()) {
@@ -36,6 +37,7 @@ public class DataReplicateUtil {
                 LOG.info("min={}, max={}, after removeAll result set size: {}", index, index + batchSize, null == resultList ? 0 : resultList.size());
                 continue;
             }
+            */
             int[] returnCodes = to.batchUpdate(insert, resultList.stream().map(m -> m.values().toArray()).collect(Collectors.toList()));
             LOG.info("{} rows affected", returnCodes.length);
         }
