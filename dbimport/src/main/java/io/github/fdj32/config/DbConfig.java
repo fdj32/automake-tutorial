@@ -33,4 +33,15 @@ public class DbConfig {
     public JdbcTemplate mysqlJdbcTemplate(@Qualifier("mysqlDataSource") DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
+
+    @Bean(name = "pgsqlDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.pgsql")
+    public DataSource pgsqlDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean(name = "pgsqlJdbcTemplate")
+    public JdbcTemplate pgsqlJdbcTemplate(@Qualifier("pgsqlDataSource") DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
+    }
 }
