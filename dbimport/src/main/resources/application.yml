@@ -9,5 +9,10 @@ spring:
       jdbcUrl: jdbc:mysql://localhost:3306/ods
       username: root
       password: root
+    pgsql:
+      driver-class-name: org.postgresql.Driver
+      jdbcUrl: jdbc:postgresql://localhost:5432/ods
+      username: root
+      password: root
 logging:
   file: dbimport.log
